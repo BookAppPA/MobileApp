@@ -1,0 +1,15 @@
+import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:flutter/material.dart';
+
+final ThemeData appThemeData = ThemeData(
+  primaryColor: ConstantColor.colorBackground,
+  splashColor: Colors.transparent,
+  highlightColor: Colors.transparent,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  scaffoldBackgroundColor: ConstantColor.white,
+  textSelectionHandleColor: Color(0xffFDC62A),
+
+  //textTheme: TextTheme(
+
+  //)
+);
