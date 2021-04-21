@@ -1,4 +1,4 @@
-package com.example.book_app
+package fr.esgi.bookapp
 
 import io.flutter.embedding.android.FlutterActivity
 

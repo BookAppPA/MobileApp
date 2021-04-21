@@ -11,8 +11,8 @@ class UserRepository {
 
   Stream<User> get onAuthStateChanged => this._authAPI.onAuthStateChanged;
 
-  getCurrentUser() async {
-    return await _authAPI.getCurrentUser();
+  getCurrentUser() {
+    return _authAPI.getCurrentUser();
   }
 
   getUser(String uid) async {
