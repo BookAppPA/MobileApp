@@ -7,7 +7,7 @@ class CustomCircularProgress extends StatelessWidget {
   final Color color;
   final double radius;
   CustomCircularProgress({
-    this.color: ConstantColor.colorBackground,
+    this.color: ConstantColor.background,
     this.radius: 10,
   });
 

@@ -12,7 +12,7 @@ abstract class BasicDialog {
       textCancel: "Non",
       onCancel: () => null,
       textConfirm: "Oui",
-      buttonColor: ConstantColor.colorAccent,
+      buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
       onConfirm: () =>
@@ -30,11 +30,11 @@ abstract class BasicDialog {
       textCancel: "Non",
       onCancel: () => null,
       textConfirm: "Oui",
-      buttonColor: ConstantColor.colorAccent,
+      buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
       onConfirm: ()  {},
     );
   }
-  
+
 }

@@ -11,6 +11,7 @@ class SplashScreenPage extends StatelessWidget {
         child: Container(
           height: 109,
           width: 100,
+          child: Text("SPLASH",),
          // child:
               /*SvgPicture.asset(
             "asset/bomb_splashscreen.svg",

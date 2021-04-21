@@ -2,7 +2,7 @@ import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData appThemeData = ThemeData(
-  primaryColor: ConstantColor.colorBackground,
+  primaryColor: ConstantColor.background,
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
   visualDensity: VisualDensity.adaptivePlatformDensity,
