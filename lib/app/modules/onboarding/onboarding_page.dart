@@ -10,7 +10,7 @@ class OnBoardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntroductionScreen(
       globalBackgroundColor: ConstantColor.background,
-      onDone: () => print("finish"),//Get.toNamed(Routes.AUTH),
+      onDone: () => Get.offAllNamed(Routes.AUTH),
       showDoneButton: true,
       showNextButton: false,
       curve: Curves.fastLinearToSlowEaseIn,

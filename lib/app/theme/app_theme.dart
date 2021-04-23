@@ -6,7 +6,7 @@ final ThemeData appThemeData = ThemeData(
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
   visualDensity: VisualDensity.adaptivePlatformDensity,
-  scaffoldBackgroundColor: ConstantColor.white,
+  scaffoldBackgroundColor: ConstantColor.background,
   textSelectionHandleColor: Color(0xffFDC62A),
 
   //textTheme: TextTheme(
