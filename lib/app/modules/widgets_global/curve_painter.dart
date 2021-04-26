@@ -2,7 +2,6 @@ import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 
 class CurvePainter extends CustomPainter {
-
   final Color color;
   CurvePainter({this.color: ConstantColor.white});
 
@@ -19,11 +18,12 @@ class CurvePainter extends CustomPainter {
         size.width / 2, size.height / 2 - 10, size.width, size.height * 0.32);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);*/
-    path.moveTo(0, size.height / 2);
-    path.quadraticBezierTo(size.width / 3, -((size.height / 2)) + 100, size.width, size.height / 2);
-    path.quadraticBezierTo(size.width * 0.6, -((size.height / 2)) + 100, size.width, size.height / 2);
-    path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
+    path.quadraticBezierTo(
+        size.width / 4, size.height - 20, size.width / 2, size.height - 10);
+    path.quadraticBezierTo(
+        3 / 4 * size.width, size.height, size.width, size.height - 15);
+    path.lineTo(size.width, 0);
 
     canvas.drawPath(path, paint);
   }

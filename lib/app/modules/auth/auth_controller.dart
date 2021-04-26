@@ -1,3 +1,4 @@
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -16,6 +17,6 @@ class AuthController extends GetxController {
     else
       print("Signup process");
     
-    
+    Get.offAllNamed(Routes.CHOICE_THEME);
   }
 }

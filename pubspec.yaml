@@ -54,6 +54,7 @@ dependencies:
   the_validator:               # validator textfield
   shared_preferences:
   introduction_screen: ^2.1.0  # OnBoarding
+  adobe_xd: ^1.1.0+1
 
 
 dev_dependencies:
