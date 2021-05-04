@@ -6,5 +6,5 @@ abstract class Routes{
   static const ONBOARDING = "onboarding";
   static const AUTH = "auth";
   static const CHOICE_THEME = "theme";
-  static const HOME = "home";
+  static const SQUELETON = "squeleton";
 }

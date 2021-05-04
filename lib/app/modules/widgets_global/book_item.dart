@@ -7,7 +7,7 @@ class BookItem extends StatelessWidget {
   final Book book;
 
   BookItem(
-      {this.width: 100,
+      {this.width: 110,
       this.height: 170,
       this.showTitle: false,
       this.showAuthor: false,
@@ -17,9 +17,9 @@ class BookItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.yellow,
+      //color: Colors.yellow,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: width,
@@ -65,7 +65,7 @@ class BookItem extends StatelessWidget {
         children: <Widget>[
           SizedBox(height: 7),
           Text(
-            book.author,
+            book.authors[0],
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

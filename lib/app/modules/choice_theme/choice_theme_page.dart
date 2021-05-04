@@ -57,7 +57,7 @@ class ChoiceThemePage extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 22),
                 child: ButtonArround(
-                  onTap: () => Get.toNamed(Routes.HOME),
+                  onTap: () => Get.toNamed(Routes.SQUELETON),
                   height: 50,
                   text: "Terminer",
                 ),

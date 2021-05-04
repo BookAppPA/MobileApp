@@ -1,52 +1,26 @@
 import 'package:book_app/app/data/model/book.dart';
-import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
+import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => BasicDialog.showExitAppDialog(),
-      child: Scaffold(
-        body: Container(
-          width: Get.width,
-          height: Get.height,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: <Widget>[
-                  _buildHeader(),
-                  _buildMostPopularBooks(),
-                  _buildBooksWant(),
-                  SizedBox(height: 25),
-                ],
-              ),
-            ),
+    return Container(
+      width: Get.width,
+      height: Get.height,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: <Widget>[
+              _buildHeader(),
+              _buildMostPopularBooks(),
+              _buildBooksWant(),
+              SizedBox(height: 25),
+            ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              backgroundColor: Colors.green,
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-          ],
         ),
       ),
     );
@@ -60,10 +34,18 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildMostPopularBooks() {
-    List<Widget> _books = List.generate(3, (index) => Expanded(child: BookItem(book: Book("", ""), height: 150,)),);
-    List<Widget> _books2 = List.generate(3, (index) => Expanded(child: BookItem(book: Book("", ""), height: 150,)),);
+    List<Widget> _books = List.generate(
+      3,
+      (index) =>
+          Expanded(child: BookItem(book: Book(title: "", authors: [""]))),
+    );
+    List<Widget> _books2 = List.generate(
+      3,
+      (index) =>
+          Expanded(child: BookItem(book: Book(title: "", authors: [""]))),
+    );
     return Container(
-      height: 400,
+      height: 430,
       //color: Colors.yellow,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,21 +58,21 @@ class HomePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+          SizedBox(height: 20),
           Expanded(
             child: Container(
-              color: Colors.red,
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: _books,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: _books2,
-                  ),
-                ],
-              )
-            ),
+                //color: Colors.red,
+                child: Column(
+              children: <Widget>[
+                Row(
+                  children: _books,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: _books2,
+                ),
+              ],
+            )),
           ),
         ],
       ),
@@ -99,8 +81,8 @@ class HomePage extends StatelessWidget {
 
   Widget _buildBooksWant() {
     return Container(
-      height: 300,
-      //color: Colors.red,
+      height: 325,
+      // color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -121,7 +103,14 @@ class HomePage extends StatelessWidget {
               },
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return BookItem(book: Book("Fatherhood", "Christopher Wilson"), showAuthor: true, showTitle: true,);
+                return BookItem(
+                  book: Book(
+                      title: "Fatherhood", authors: ["Christopher Wilson"]),
+                  showAuthor: true,
+                  showTitle: true,
+                  width: 125,
+                  height: 200,
+                );
               },
             ),
           ),
