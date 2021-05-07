@@ -1,8 +1,9 @@
+import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'widgets/button_gradient.dart';
+import 'widgets/rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
   @override
@@ -147,13 +148,76 @@ class ProfilPage extends StatelessWidget {
 
   Widget _buildLastBooks() {
     return Container(
-      color: Colors.blue,
+      height: 275,
+      //color: Colors.blue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(45, 20, 0, 20),
+            child: Text(
+              'Mes Dernier Livres',
+              style: TextStyle(
+                fontFamily: 'SF Pro Text',
+                fontSize: 20,
+                color: Color(0x80212121),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              itemCount: 6,
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
+              separatorBuilder: (context, index) => SizedBox(width: 15),
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 200,
+                  width: 133,
+                  color: Colors.grey,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildLastRatings() {
     return Container(
-      color: Colors.yellow,
+      height: 800,
+      //color: Colors.blue,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(45, 10, 0, 20),
+            child: Text(
+              'Mes Dernier Avis',
+              style: TextStyle(
+                fontFamily: 'SF Pro Text',
+                fontSize: 20,
+                color: Color(0x80212121),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: 5,
+              padding: EdgeInsets.fromLTRB(40, 0, 40, 30),
+              separatorBuilder: (context, index) => SizedBox(height: 25),
+              itemBuilder: (context, index) {
+                return RatingItem(Rating());
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

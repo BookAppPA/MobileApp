@@ -55,6 +55,7 @@ dependencies:
   shared_preferences:
   introduction_screen: ^2.1.0  # OnBoarding
   adobe_xd: ^1.1.0+1
+  flutter_rating_bar: ^4.0.0
 
 
 dev_dependencies:
