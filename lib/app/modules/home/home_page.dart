@@ -37,12 +37,12 @@ class HomePage extends StatelessWidget {
     List<Widget> _books = List.generate(
       3,
       (index) =>
-          Expanded(child: BookItem(book: Book(title: "", authors: [""]))),
+          Expanded(child: BookItem(book: Book(title: "THE FIRM", authors: [""]))),
     );
     List<Widget> _books2 = List.generate(
       3,
       (index) =>
-          Expanded(child: BookItem(book: Book(title: "", authors: [""]))),
+          Expanded(child: BookItem(book: Book(title: "Fatherhood", authors: [""]))),
     );
     return Container(
       height: 430,

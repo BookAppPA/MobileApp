@@ -1,5 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BookItem extends StatelessWidget {
   final double width, height;
@@ -16,22 +18,25 @@ class BookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //color: Colors.yellow,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.grey,
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.BOOK_DETAIL, arguments: book),
+          child: Container(
+        //color: Colors.yellow,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey,
+              ),
             ),
-          ),
-          showTitle ? _buildTitle() : Container(),
-          showAuthor ? _buildAuthor() : Container(),
-        ],
+            showTitle ? _buildTitle() : Container(),
+            showAuthor ? _buildAuthor() : Container(),
+          ],
+        ),
       ),
     );
   }

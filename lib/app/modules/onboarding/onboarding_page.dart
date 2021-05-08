@@ -85,6 +85,68 @@ class OnBoardingPage extends StatelessWidget {
           ),
           bodyWidget: _buildImage('onboarding_2.svg'),
         ),
+        PageViewModel(
+          titleWidget: Column(
+            children: <Widget>[
+              SizedBox(height: 50),
+              Text(
+                  "Partage ton avis",
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 30,
+                    color: ConstantColor.accent,
+                    letterSpacing: 0.3,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 25),
+                Text(
+                  "Donne ton avis sur ta bibliothèque personnelle ",
+                  style: TextStyle(
+                    fontFamily: 'Helvetica-Normal',
+                    fontSize: 14,
+                    color: ConstantColor.accent,
+                    letterSpacing: 0.14,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 50),
+            ],
+          ),
+          bodyWidget: _buildImage('onboarding_2.svg'),
+        ),
+        PageViewModel(
+          titleWidget: Column(
+            children: <Widget>[
+              SizedBox(height: 50),
+              Text(
+                  "Partage ton avis",
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 30,
+                    color: ConstantColor.accent,
+                    letterSpacing: 0.3,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 25),
+                Text(
+                  "Donne ton avis sur ta bibliothèque personnelle ",
+                  style: TextStyle(
+                    fontFamily: 'Helvetica-Normal',
+                    fontSize: 14,
+                    color: ConstantColor.accent,
+                    letterSpacing: 0.14,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 50),
+            ],
+          ),
+          bodyWidget: _buildImage('onboarding_2.svg'),
+        ),
       ],
     );
   }

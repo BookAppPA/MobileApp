@@ -1,8 +1,10 @@
+import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/rating.dart';
+import 'package:book_app/app/modules/widgets_global/book_item.dart';
+import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'widgets/button_gradient.dart';
 import 'widgets/rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
@@ -76,7 +78,7 @@ class ProfilPage extends StatelessWidget {
                     SizedBox(height: 20),
                     ButtonGradient(
                       onTap: () => print("clic edit profil"),
-                      text: "Edit Profile",
+                      text: "Modifier",
                     ),
                   ],
                 ),
@@ -113,7 +115,7 @@ class ProfilPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(width: 50),
+                SizedBox(width: 40),
                 Column(
                   children: <Widget>[
                     Text(
@@ -137,7 +139,32 @@ class ProfilPage extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
+                SizedBox(width: 40),
+                Column(
+                  children: <Widget>[
+                    Text(
+                      '19',
+                      style: TextStyle(
+                        fontFamily: 'SF Pro Text',
+                        fontSize: 24,
+                        color: Color(0x80212121),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Followers',
+                      style: TextStyle(
+                        fontFamily: 'SF Pro Text',
+                        fontSize: 13,
+                        color: Color(0x80212121),
+                        letterSpacing: 0.16,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -148,7 +175,7 @@ class ProfilPage extends StatelessWidget {
 
   Widget _buildLastBooks() {
     return Container(
-      height: 275,
+      height: 250,
       //color: Colors.blue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +183,7 @@ class ProfilPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(45, 20, 0, 20),
             child: Text(
-              'Mes Dernier Livres',
+              'Mes Derniers Livres',
               style: TextStyle(
                 fontFamily: 'SF Pro Text',
                 fontSize: 20,
@@ -172,11 +199,7 @@ class ProfilPage extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
               separatorBuilder: (context, index) => SizedBox(width: 15),
               itemBuilder: (context, index) {
-                return Container(
-                  height: 200,
-                  width: 133,
-                  color: Colors.grey,
-                );
+                return BookItem(book: Book());
               },
             ),
           ),
@@ -196,7 +219,7 @@ class ProfilPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(45, 10, 0, 20),
             child: Text(
-              'Mes Dernier Avis',
+              'Mes Derniers Avis',
               style: TextStyle(
                 fontFamily: 'SF Pro Text',
                 fontSize: 20,

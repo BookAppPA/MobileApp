@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 class BackButtonAppBar extends AppBar {
   final Color iconColor, appBarColor;
   BackButtonAppBar(
-      {this.appBarColor: ConstantColor.white,
-      this.iconColor: ConstantColor.background})
+      {this.appBarColor: ConstantColor.background,
+      this.iconColor: ConstantColor.accent})
       : super(
           elevation: 0,
           backgroundColor: appBarColor,
