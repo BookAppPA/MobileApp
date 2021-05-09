@@ -19,13 +19,13 @@ admin.initializeApp({
 });
 
 const config = {
-  apiKey: "AIzaSyDkIM4fkJauoBuipNT7qk_rBFbyDxSLeiI",
-  authDomain: "book-app-7f51e.firebaseapp.com",
-  projectId: "book-app-7f51e",
-  storageBucket: "book-app-7f51e.appspot.com",
-  messagingSenderId: "276286363904",
-  appId: "1:276286363904:web:4527a6dfb3756c9fdcbbe5",
-  measurementId: "G-GY017BZWTV"
+  apiKey: "api-key",
+  authDomain: "project-id.firebaseapp.com",
+  databaseURL: "https://project-id.firebaseio.com",
+  projectId: "project-id",
+  storageBucket: "project-id.appspot.com",
+  messagingSenderId: "sender-id",
+  appID: "app-id",
 }
 
 firebase.initializeApp(config);
