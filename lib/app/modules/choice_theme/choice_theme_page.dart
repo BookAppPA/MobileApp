@@ -14,20 +14,21 @@ class ChoiceThemePage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Container(
-            height: 160,
+            height: 170,
             width: Get.width,
             child: CustomPaint(
               painter: CurvePainter(color: ConstantColor.accent),
               child: Padding(
-                padding: EdgeInsets.only(left: 22, top: 50),
+                padding: EdgeInsets.only(left: 22, top: 50, right: 22),
                 child: Text(
-                  'Bienvenue,\nchoisissez des thèmes',
+                  'Bienvenue,\nPour commencer, quels sont tes genres favoris ?',
                   style: TextStyle(
-                      fontFamily: 'SF Rounded',
-                      fontSize: 22,
-                      color: ConstantColor.white,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5),
+                    fontFamily: 'SF Rounded',
+                    fontSize: 22,
+                    color: ConstantColor.white,
+                    fontWeight: FontWeight.w600,
+                    height: 1.5,
+                  ),
                 ),
               ),
             ),

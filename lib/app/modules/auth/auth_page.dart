@@ -18,7 +18,6 @@ class AuthPage extends StatelessWidget {
             height: Get.height,
             padding: EdgeInsets.all(22),
             child: GetBuilder<AuthController>(
-              init: AuthController(),
               builder: (controller) => Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,6 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
+import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,38 +12,74 @@ class HomePage extends StatelessWidget {
       width: Get.width,
       height: Get.height,
       child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            children: <Widget>[
-              _buildHeader(),
-              _buildMostPopularBooks(),
-              _buildBooksWant(),
-              SizedBox(height: 25),
-            ],
-          ),
+        child: Column(
+          children: <Widget>[
+            _buildHeader(),
+            Padding(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                children: <Widget>[
+                  _buildMostPopularBooks(),
+                  _buildBooksWant(),
+                ],
+              ),
+            ),
+            SizedBox(height: 25),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildHeader() {
-    return Container(
-      height: 200,
-      color: Colors.blue,
+    return CustomPaint(
+      painter: CurvePainter(color: ConstantColor.accent),
+      child: Container(
+        height: 300,
+        // color: ConstantColor.accent,
+        padding: EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            Text(
+              'Les choix des libraires',
+              style: TextStyle(
+                fontFamily: 'SF Rounded',
+                fontSize: 24,
+                color: Color(0xffffffff),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.separated(
+                itemCount: 6,
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (ctx, index) {
+                  return SizedBox(width: 20);
+                },
+                itemBuilder: (ctx, index) {
+                  return BookItem(book: Book());
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildMostPopularBooks() {
     List<Widget> _books = List.generate(
       3,
-      (index) =>
-          Expanded(child: BookItem(book: Book(title: "THE FIRM", authors: [""]))),
+      (index) => Expanded(
+          child: BookItem(book: Book(title: "THE FIRM", authors: [""]))),
     );
     List<Widget> _books2 = List.generate(
       3,
-      (index) =>
-          Expanded(child: BookItem(book: Book(title: "Fatherhood", authors: [""]))),
+      (index) => Expanded(
+          child: BookItem(book: Book(title: "Fatherhood", authors: [""]))),
     );
     return Container(
       height: 430,

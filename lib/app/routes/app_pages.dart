@@ -1,3 +1,4 @@
+import 'package:book_app/app/bindings/auth_binding.dart';
 import 'package:book_app/app/modules/auth/auth_page.dart';
 import 'package:book_app/app/modules/book_detail/book_detail_page.dart';
 import 'package:book_app/app/modules/choice_theme/choice_theme_page.dart';
@@ -12,7 +13,7 @@ class AppPages {
   static final routes = [
     GetPage(name: Routes.SPLASHSCREEN, page: () => SplashScreenPage(),),
     GetPage(name: Routes.ONBOARDING, page: () => OnBoardingPage(),),
-    GetPage(name: Routes.AUTH, page: () => AuthPage(),),
+    GetPage(name: Routes.AUTH, page: () => AuthPage(), binding: AuthBinding()),
     GetPage(name: Routes.CHOICE_THEME, page: () => ChoiceThemePage()),
     GetPage(name: Routes.SQUELETON, page: () => SqueletonPage()),
     GetPage(name: Routes.BOOK_DETAIL, page: () => BookDetailPage()),
