@@ -6,6 +6,7 @@ class ButtonArround extends StatelessWidget {
   final String text;
   final double height, borderRadius;
   final Color colorBackground, colorText;
+  final bool isLoading;
   TextStyle textStyle;
 
   ButtonArround({
@@ -15,6 +16,7 @@ class ButtonArround extends StatelessWidget {
     this.borderRadius: 10,
     this.colorBackground: ConstantColor.accent,
     this.colorText: ConstantColor.white,
+    this.isLoading: false,
   }) : assert(onTap != null);
 
   @override
@@ -28,18 +30,22 @@ class ButtonArround extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Center(
-          child: Text(
-            text,
-            style: textStyle ??
-                TextStyle(
-                  fontFamily: 'SF Pro Display',
-                  fontSize: 17,
-                  color: colorText,
-                  letterSpacing: 0.0425,
-                  fontWeight: FontWeight.w800,
+          child: isLoading
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                )
+              : Text(
+                  text,
+                  style: textStyle ??
+                      TextStyle(
+                        fontFamily: 'SF Pro Display',
+                        fontSize: 17,
+                        color: colorText,
+                        letterSpacing: 0.0425,
+                        fontWeight: FontWeight.w800,
+                      ),
+                  textAlign: TextAlign.center,
                 ),
-            textAlign: TextAlign.center,
-          ),
         ),
       ),
     );

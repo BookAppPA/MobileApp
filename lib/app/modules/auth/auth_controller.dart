@@ -32,6 +32,9 @@ class AuthController extends GetxController {
   bool _isLoginvView = true;
   bool get isLoginView => this._isLoginvView;
 
+  bool _isLoading = false;
+  bool get isLoading => this._isLoading;
+
   String get _pseudo => _pseudoController.text.trim();
   String get _email => _emailController.text.trim();
   String get _password => _passwordController.text.trim();
@@ -101,7 +104,11 @@ class AuthController extends GetxController {
       update();
       return;
     }
+    _isLoading = true;
+    update();
     UserModel user = await authRepository.login(_email, _password);
+    _isLoading = false;
+    update();
     if (user == null) {
       print("USER LOGIN IS NULL");
     } else {
@@ -115,7 +122,11 @@ class AuthController extends GetxController {
       update();
       return;
     }
+    _isLoading = true;
+    update();
     UserModel user = await authRepository.signup(_pseudo, _email, _password);
+    _isLoading = false;
+    update();
     if (user == null) {
       print("USER SIGNUP IS NULL");
     } else {

@@ -173,7 +173,8 @@ class _MyTextfieldState extends State<MyTextfield> {
                         setState(() {
                           clickSuffix = false;
                         });
-                        widget.onSubmitted(t);
+                        if (widget.onSubmitted != null)
+                          widget.onSubmitted(t);
                       },
                       textInputAction: widget.inputAction,
                       decoration: InputDecoration(

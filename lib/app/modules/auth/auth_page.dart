@@ -157,6 +157,7 @@ class AuthPage extends StatelessWidget {
                               ),
                         ButtonArround(
                           onTap: () => controller.submitAuth(),
+                          isLoading: controller.isLoading,
                           text: controller.isLoginView
                               ? "Se connecter"
                               : "S'inscrire",
