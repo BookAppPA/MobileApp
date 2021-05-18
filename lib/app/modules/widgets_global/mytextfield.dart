@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyTextfield extends StatefulWidget {
+  final TextEditingController controller;
   final BorderRadius cornerRadius;
   final double width, height, wordSpacing, fontSize;
-  final Color backgroundColor, accentColor, textColor;
+  final Color backgroundColor,
+      borderColor,
+      accentColor,
+      textColor,
+      prefixIconColor;
   final String placeholder, fontFamily;
   final Icon prefixIcon, suffixIcon;
   final TextInputType inputType;
@@ -25,11 +30,14 @@ class MyTextfield extends StatefulWidget {
       @required this.height,
       @required this.prefixIcon,
       @required this.inputType,
+      this.controller,
       this.suffixIcon,
       this.duration = const Duration(milliseconds: 500),
       this.margin = const EdgeInsets.all(10),
       this.obscureText = false,
       this.backgroundColor = const Color(0xff111823),
+      this.borderColor = Colors.grey,
+      this.prefixIconColor = const Color(0x993C3C43),
       this.cornerRadius = const BorderRadius.all(Radius.circular(10)),
       this.textColor = const Color(0xff5c5bb0),
       this.accentColor = Colors.white,
@@ -77,7 +85,8 @@ class _MyTextfieldState extends State<MyTextfield> {
               ? [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 1)]
               : [BoxShadow(spreadRadius: 0, blurRadius: 0)],
           borderRadius: widget.cornerRadius,
-          color: widget.backgroundColor),
+          color: widget.backgroundColor,
+          border: Border.all(color: widget.borderColor)),
       child: Stack(
         children: <Widget>[
           widget.suffixIcon == null
@@ -90,11 +99,10 @@ class _MyTextfieldState extends State<MyTextfield> {
                     margin: EdgeInsets.only(right: clickSuffix ? 0 : 8),
                     duration: widget.duration,
                     decoration: BoxDecoration(
-                      borderRadius: clickSuffix
-                          ? widget.cornerRadius
-                          : BorderRadius.all(Radius.circular(60)),
-                      color: widget.accentColor,
-                    ),
+                        borderRadius: clickSuffix
+                            ? widget.cornerRadius
+                            : BorderRadius.all(Radius.circular(60)),
+                        color: widget.accentColor),
                   ),
                 ),
           widget.suffixIcon == null
@@ -126,7 +134,7 @@ class _MyTextfieldState extends State<MyTextfield> {
                   flex: 1,
                   child: Icon(
                     widget.prefixIcon.icon,
-                    color: Color(0x993C3C43),
+                    color: widget.prefixIconColor,
                     size: widget.prefixIcon.size,
                   ),
                 ),
@@ -135,6 +143,7 @@ class _MyTextfieldState extends State<MyTextfield> {
                   child: Container(
                     margin: EdgeInsets.only(right: 50, top: 3),
                     child: TextField(
+                      controller: widget.controller,
                       cursorWidth: 2,
                       obscureText: clickSuffix ? false : widget.obscureText,
                       keyboardType: widget.inputType,

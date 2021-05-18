@@ -55,12 +55,14 @@ class AuthPage extends StatelessWidget {
                       children: <Widget>[
                         controller.isLoginView ? Container() :
                         MyTextfield(
+                          controller: controller.pseudoController,
                           width: double.maxFinite,
                           height: 75,
                           accentColor: Colors.white, // On Focus Color
-                          textColor: Color(0xff3C3C43), //Text Color
+                          textColor: controller.isPseudoValid ? Color(0xff3C3C43) : Colors.red, //Text Color
                           backgroundColor:
                               Color(0xffE8E8E8), //Not Focused Color
+                          borderColor: controller.isPseudoValid ? Colors.grey : Colors.red,
                           textBaseline: TextBaseline.alphabetic,
                           autocorrect: true,
                           fontFamily: 'Righteous', //Text Fontfamily
@@ -71,23 +73,17 @@ class AuthPage extends StatelessWidget {
                           inputAction: TextInputAction.next,
                           placeholder: "Saisissez votre pseudo",
                           prefixIcon: Icon(FontAwesomeIcons.userAlt, size: 20),
-                          onTap: () {
-                            print('Click');
-                          },
-                          onChanged: (text) {
-                            print(text);
-                          },
-                          onSubmitted: (data) {
-                            print(data.length);
-                          },
+                          prefixIconColor: controller.isPseudoValid ? Color(0x993C3C43) : Colors.redAccent,
                         ),
                         MyTextfield(
+                          controller: controller.emailController,
                           width: double.maxFinite,
                           height: 75,
                           accentColor: Colors.white, // On Focus Color
-                          textColor: Color(0xff3C3C43), //Text Color
+                          textColor: controller.isEmailValid ? Color(0xff3C3C43) : Colors.red,
                           backgroundColor:
                               Color(0xffE8E8E8), //Not Focused Color
+                          borderColor: controller.isEmailValid ? Colors.grey : Colors.red,
                           textBaseline: TextBaseline.alphabetic,
                           autocorrect: true,
                           fontFamily: 'Righteous', //Text Fontfamily
@@ -98,23 +94,17 @@ class AuthPage extends StatelessWidget {
                           inputAction: TextInputAction.next,
                           placeholder: "Saisissez une adresse email",
                           prefixIcon: Icon(Icons.email),
-                          onTap: () {
-                            print('Click');
-                          },
-                          onChanged: (text) {
-                            print(text);
-                          },
-                          onSubmitted: (data) {
-                            print(data.length);
-                          },
+                          prefixIconColor: controller.isEmailValid ? Color(0x993C3C43) : Colors.redAccent,
                         ),
                         MyTextfield(
+                          controller: controller.passwordController,
                           width: double.maxFinite,
                           height: 75,
                           accentColor: Colors.white, // On Focus Color
-                          textColor: Color(0xff3C3C43), //Text Color
+                          textColor: controller.isPasswordValid ? Color(0xff3C3C43) : Colors.red,
                           backgroundColor:
                               Color(0xffE8E8E8), //Not Focused Color
+                          borderColor: controller.isPasswordValid ? Colors.grey : Colors.red,
                           textBaseline: TextBaseline.alphabetic,
                           fontFamily: 'Righteous', //Text Fontfamily
                           maxLines: 1,
@@ -125,19 +115,8 @@ class AuthPage extends StatelessWidget {
                           placeholder: "Saisissez un mot de passe",
                           obscureText: true,
                           prefixIcon: Icon(Icons.lock_outline),
+                          prefixIconColor: controller.isPasswordValid ? Color(0x993C3C43) : Colors.redAccent,
                           suffixIcon: Icon(Icons.remove_red_eye),
-                          onClickSuffix: () {
-                            print('Suffix Clicked');
-                          },
-                          onTap: () {
-                            print('Click');
-                          },
-                          onChanged: (text) {
-                            print(text);
-                          },
-                          onSubmitted: (data) {
-                            print(data.length);
-                          },
                         ),
                       ],
                     ),
