@@ -18,8 +18,8 @@ class AuthRepository {
     return await _databaseAPI.isEmailExist(email);
   }
 
-  /*logout() async {
-    await _authAPI.signOut();
-  }*/
+  logout() async {
+    return await _authAPI.logout();
+  }
 
 }

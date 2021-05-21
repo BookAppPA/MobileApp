@@ -19,4 +19,7 @@ abstract class UrlAPI {
 
   static final String signup =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/auth/signup";
+
+  static final String logout =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/auth/logout";
 }

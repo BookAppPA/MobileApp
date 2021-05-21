@@ -20,7 +20,7 @@ abstract class BasicDialog {
     );
   }
 
-  static showLogoutDialog() {
+  static showLogoutDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
       title: "Déconnexion",
       content: Text(
@@ -33,8 +33,12 @@ abstract class BasicDialog {
       buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
-      onConfirm: ()  {},
+      onConfirm: onConfirm != null
+          ? () {
+              onConfirm();
+              Get.back();
+            }
+          : () => null,
     );
   }
-
 }
