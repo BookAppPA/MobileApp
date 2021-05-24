@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant.dart';
 import 'package:flutter/material.dart';
@@ -113,6 +114,7 @@ class AuthController extends GetxController {
       print("USER LOGIN IS NULL");
     } else {
       print("USER LOGIN --> ${user.email}");
+      UserController.to.user = user;
       Get.offAllNamed(Routes.CHOICE_THEME);
     }
   }
@@ -131,6 +133,7 @@ class AuthController extends GetxController {
       print("USER SIGNUP IS NULL");
     } else {
       print("USER SIGNUP --> ${user.email}");
+      UserController.to.user = user;
       Get.offAllNamed(Routes.CHOICE_THEME);
     }
   }

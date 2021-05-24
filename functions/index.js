@@ -170,6 +170,20 @@ app.post('/api/auth/updateUser', checkIfAuthenticated, (req, res) => {
 });
 
 
+// get user by id
+app.get('/api/bdd/getUserById', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      const doc = await db.collection('users').doc(req.headers.uid).get();
+      return res.status(200).send(doc.data());
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
+
 // create item
 app.post('/api/create', checkIfAuthenticated, (req, res) => {
   (async () => {

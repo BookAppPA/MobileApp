@@ -64,6 +64,7 @@ class NodeJSAuthAPI {
       http.Response resp = await http.post(Uri.parse(UrlAPI.logout),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
+        FirebaseAuth.instance.signOut();
         return true;
       } else {
         print("error get http call");
@@ -72,6 +73,15 @@ class NodeJSAuthAPI {
     } catch (e) {
       print(e.toString());
       return false;
+    }
+  }
+
+  User getCurrentUser() {
+    try {
+      return FirebaseAuth.instance.currentUser;
+    } catch (_) {
+      print("ERROR: Firebase Auth API: GetCurrentUser()");
+      return null;
     }
   }
 
