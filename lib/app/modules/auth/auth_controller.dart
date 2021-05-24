@@ -115,7 +115,7 @@ class AuthController extends GetxController {
     } else {
       print("USER LOGIN --> ${user.email}");
       UserController.to.user = user;
-      Get.offAllNamed(Routes.CHOICE_THEME);
+      Get.offAllNamed(Routes.SQUELETON);
     }
   }
 

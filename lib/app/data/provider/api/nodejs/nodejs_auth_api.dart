@@ -10,9 +10,9 @@ class NodeJSAuthAPI {
     try {
       http.Response resp = await http.post(Uri.parse(UrlAPI.login),
           body: {"email": email, "password": password});
+      Map<String, dynamic> map = json.decode(resp.body);
       if (resp.statusCode == 200) {
         print("response: ${resp.body}");
-        Map<String, dynamic> map = json.decode(resp.body);
         try {
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password);
@@ -26,7 +26,12 @@ class NodeJSAuthAPI {
           return null;
         }
       } else {
-        print("error get http call");
+        if (map["code"] == "auth/user-not-found")
+          CustomSnackbar.snackbar("Cet email n'existe pas");
+        else if (map["code"] == 'auth/wrong-password')
+          CustomSnackbar.snackbar("Mot de passe erroné");
+        else
+          CustomSnackbar.snackbar(map["message"]);
         return null;
       }
     } catch (e) {
@@ -46,8 +51,9 @@ class NodeJSAuthAPI {
       } else {
         print("error get http call");
         if (map["code"] == "auth/email-already-exists")
-        // The email address is already in use by another account.
-          CustomSnackbar.snackbar("L'adresse email est déjà utilisé par un autre compte");
+          // The email address is already in use by another account.
+          CustomSnackbar.snackbar(
+              "L'adresse email est déjà utilisé par un autre compte");
         else
           CustomSnackbar.snackbar(map["message"]);
         return null;

@@ -137,7 +137,7 @@ app.post('/api/auth/login', (req, res) => {
       return res.status(200).send(doc.data());
     } catch (error) {
       console.log(error);
-      return res.status(500).send(error);
+      return res.status(500).send(error.toJSON());
     }
   })();
 });
@@ -150,7 +150,7 @@ app.post('/api/auth/logout', checkIfAuthenticated, (req, res) => {
       return res.status(200).send("logout");
     } catch (error) {
       console.log(error);
-      return res.status(500).send(error);
+      return res.status(500).send(error.toJSON());
     }
   })();
 });
@@ -164,7 +164,7 @@ app.post('/api/auth/updateUser', checkIfAuthenticated, (req, res) => {
       return res.status(200).send();
     } catch (error) {
       console.log(error);
-      return res.status(500).send(error);
+      return res.status(500).send(error.toJSON());
     }
   })();
 });
@@ -178,7 +178,7 @@ app.get('/api/bdd/getUserById', checkIfAuthenticated, (req, res) => {
       return res.status(200).send(doc.data());
     } catch (error) {
       console.log(error);
-      return res.status(500).send(error);
+      return res.status(500).send(error.toJSON());
     }
   })();
 });

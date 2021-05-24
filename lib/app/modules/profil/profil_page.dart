@@ -1,6 +1,8 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/rating.dart';
+import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
@@ -11,8 +13,15 @@ import 'profil_controller.dart';
 import 'widgets/rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
+
+  final UserModel user;
+  ProfilPage({@required this.user});
+
+  bool isMe = false;
+
   @override
   Widget build(BuildContext context) {
+    isMe = user.id == UserController.to.user.id;
     return Scaffold(
       body: Container(
         width: Get.width,
@@ -35,6 +44,7 @@ class ProfilPage extends StatelessWidget {
   Widget _buildInfoUser() {
     return Column(
       children: [
+        isMe ?
         Container(
           padding: EdgeInsets.only(top: 25, right: 15),
           child: Row(
@@ -50,9 +60,9 @@ class ProfilPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        ) : Container(),
         Container(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+          padding: EdgeInsets.fromLTRB(20, isMe ? 10 : 50, 20, 20),
           child: Column(
             children: <Widget>[
               //INFOS
@@ -64,7 +74,7 @@ class ProfilPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Will Newman',
+                          user.pseudo,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -76,7 +86,7 @@ class ProfilPage extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Constantly travelling and keeping up to date with business related books.',
+                          user.bio ?? "Aucune bio",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -98,7 +108,7 @@ class ProfilPage extends StatelessWidget {
                         SizedBox(height: 20),
                         ButtonGradient(
                           onTap: () => print("clic edit profil"),
-                          text: "Modifier",
+                          text: isMe ? "Modifier" : "Suivre",
                         ),
                       ],
                     ),

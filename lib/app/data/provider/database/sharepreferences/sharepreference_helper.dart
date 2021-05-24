@@ -14,7 +14,7 @@ class SharePreferenceHelper {
 
   Future<bool> isFirstTime() async {
     _prefs = await SharedPreferences.getInstance();
-    return _prefs.getBool(_IS_FIRST_TIME) ?? false;
+    return _prefs.getBool(_IS_FIRST_TIME) ?? true;
   }
 
   setFirstTime(bool res) async {

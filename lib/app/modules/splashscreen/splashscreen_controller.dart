@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/data/provider/database/sharepreferences/sharepreference_helper.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/my_check_internet.dart';
@@ -44,7 +45,11 @@ class SplashScreenController extends GetxController {
       } else
         Get.offAllNamed(Routes.AUTH);
     } else {
-      Get.offAllNamed(Routes.ONBOARDING);
+      if (await SharePreferenceHelper.instance.isFirstTime()) {
+        await SharePreferenceHelper.instance.setFirstTime(false);
+        Get.offAllNamed(Routes.ONBOARDING);
+      } else
+        Get.offAllNamed(Routes.AUTH);
     }
   }
 }
