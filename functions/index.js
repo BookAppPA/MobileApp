@@ -26,7 +26,7 @@ const config = {
   messagingSenderId: "276286363904",
   appId: "1:276286363904:web:4527a6dfb3756c9fdcbbe5",
   measurementId: "G-GY017BZWTV"
- } 
+ }
 
 firebase.initializeApp(config);
 
@@ -122,7 +122,7 @@ app.post('/api/auth/signup', (req, res) => {
       return res.status(200).send(user.toJSON());
     } catch (error) {
       console.log(error);
-      return res.status(500).send(error);
+      return res.status(500).send(error.toJSON());
     }
   })();
 });
