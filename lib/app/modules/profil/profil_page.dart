@@ -5,7 +5,9 @@ import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
+import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -106,7 +108,47 @@ class ProfilPage extends StatelessWidget {
                   Expanded(
                     child: Column(
                       children: <Widget>[
-                        CircleAvatar(radius: 42),
+                        Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: SizedBox(
+                                child: GestureDetector(
+                                  onTap: () => isMe && user.picture == ""
+                                      ? ProfilController.to.changePicture()
+                                      : null,
+                                  child: CircleAvatar(
+                                    radius: 42,
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      child: isMe && user.picture == ""
+                                          ? Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.white,
+                                                radius: 12.0,
+                                                child: Icon(
+                                                  Icons.camera_alt,
+                                                  size: 15.0,
+                                                  color: Color(0xFF404040),
+                                                ),
+                                              ),
+                                            )
+                                          : Container(),
+                                      radius: 40,
+                                      backgroundImage: user.picture == ""
+                                          ? AssetImage(
+                                              'assets/defaut_user.jpeg')
+                                          : NetworkImage(
+                                              user.picture,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(height: 20),
                         ButtonGradient(
                           onTap: () => isMe

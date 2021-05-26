@@ -6,7 +6,7 @@ class BackButtonAppBar extends AppBar {
   final Color iconColor, appBarColor;
   BackButtonAppBar(
       {this.appBarColor: ConstantColor.background,
-      this.iconColor: ConstantColor.accent})
+      this.iconColor: ConstantColor.grey})
       : super(
           elevation: 0,
           backgroundColor: appBarColor,
