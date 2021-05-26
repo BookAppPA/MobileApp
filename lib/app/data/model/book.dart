@@ -1,8 +1,9 @@
 class Book {
 
   String id, title, description, publisher, publishedDate, coverImage, language, previewLink, buyLink;
-  List<String> authors, categories;
-  int pageCount;
+  List authors, categories;
+  int pageCount, nbUserRead;
+  double note;
   Map<String, dynamic> listPrice, retailPrice;
 
   Book({
@@ -20,7 +21,12 @@ class Book {
     this.pageCount,
     this.listPrice,
     this.retailPrice,
+    this.note: 0.0,
+    this.nbUserRead: 0,
   });
+
+  setNote(double note) => this.note = note;
+  setUserRead(int nb) => this.nbUserRead = nb;
 
   Book.fromJson(Map<String, dynamic> json){
       this.id = json['id'];
@@ -59,5 +65,5 @@ class Book {
   }
 
   @override
-  String toString() => "$id, $title";
+  String toString() => "$id - $title";
 }

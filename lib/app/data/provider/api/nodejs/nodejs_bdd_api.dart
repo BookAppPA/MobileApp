@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
@@ -41,5 +42,26 @@ class NodeJSBddAPI {
       return false;
     }
   }
+
+  Future<List<Book>> getPopularBooks() async {
+    try {
+     // var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.popularBooks));
+      if (resp.statusCode == 200) {
+        var listBooks = json.decode(resp.body);
+        List<Book> books = [];
+        listBooks.forEach((book) => books.add(Book.fromJson(book)));
+        return books;
+      } else {
+        print("error get http call --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  
   
 }

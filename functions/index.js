@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const firebase = require('firebase');
 const express = require('express');
 const cors = require('cors');
+const requestExternalAPI = require('request');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -35,6 +36,9 @@ const adminAuth = admin.auth();
 
 const app = express();
 app.use(cors({ origin: true }));
+
+const baseUrlGoogleBooksAPI = "https://www.googleapis.com/books/v1/";
+
 
 app.get('/hello-world', (req, res) => {
   return res.status(200).send('Hello World!');
@@ -176,6 +180,28 @@ app.get('/api/bdd/getUserById', checkIfAuthenticated, (req, res) => {
     try {
       const doc = await db.collection('users').doc(req.headers.uid).get();
       return res.status(200).send(doc.data());
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error.toJSON());
+    }
+  })();
+});
+
+
+// get popular books
+app.get('/api/bdd/popularBooks', (req, res) => {
+  (async () => {
+    try {
+      let url = `${baseUrlGoogleBooksAPI}volumes?q=harry+potter&filter=partial&maxResults=6`;
+      requestExternalAPI(url, function (error, response, body) {
+        if(error){
+          console.log('error:', error);
+          return res.status(500).send(error.toJSON());
+        } else {
+          let books = JSON.parse(body);
+          return res.status(200).send(books.items);
+        }
+      });
     } catch (error) {
       console.log(error);
       return res.status(500).send(error.toJSON());

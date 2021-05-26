@@ -1,7 +1,5 @@
-import 'package:book_app/app/data/repository/user_repository.dart';
-import 'package:book_app/app/routes/app_pages.dart';
-import 'package:book_app/app/utils/constant/constant.dart';
-import 'package:book_app/app/utils/functions.dart';
+import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:meta/meta.dart';
@@ -9,41 +7,44 @@ import 'package:meta/meta.dart';
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
 
-  final UserRepository repository;
+  final BookRepository repository;
   HomeController({@required this.repository}) : assert(repository != null);
 
   DateTime _dateServer;
   bool _loadData = true;
   bool get loadData => this._loadData;
-  bool _showBadgeMsg = false;
-  bool get showBadgeMsg => this._showBadgeMsg;
 
-
-  updateShowBadgeMsgAppBar(bool show) {
-    _showBadgeMsg = show;
-    update();
-  }
+  List<Book> _listPopularBooks = [];
+  List<Book> get listPopularBooks => this._listPopularBooks;
+  bool _hasDataPopularBooks = false;
+  get hasDataPopularBooks => this._hasDataPopularBooks;
 
   @override
   void onInit() {
     super.onInit();
-    initApp();
+    _getPopularBooks();
   }
 
-  initApp({bool updateVisibility: false}) async {
+  _getPopularBooks() async {
+
+    var res = await repository.getPopularBooks();
+    print("books popular => $res");
+    _listPopularBooks = res;
+    _hasDataPopularBooks = true;
+    update();
     //_loadData = false;
     //update(["appbar"]);
-    await Jiffy.locale("fr");
+   // await Jiffy.locale("fr");
     //var user = UserController.to.user;
-    await _initDateServer();
-    repository.listenCallbackNotification();
+    //await _initDateServer();
+   // repository.listenCallbackNotification();
     // Run SwipeController
     //_loadData = true;
     //update(["appbar"]);
   }
 
-  _initDateServer() async {
+  /*_initDateServer() async {
     _dateServer = await getDateServer();
     Constant.today = _dateServer;
-  }
+  }*/
 }

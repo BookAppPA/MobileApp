@@ -1,6 +1,8 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
+import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,8 @@ class BookDetailPage extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 25, left: 50, right: 50),
                 child: Text(
                   book.title.toUpperCase(),
-                  maxLines: 1,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontFamily: 'SF Pro Text',
@@ -34,9 +37,26 @@ class BookDetailPage extends StatelessWidget {
               Container(
                 width: 180,
                 height: 275,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(23),
+                child: Hero(
+                  tag: book.id ?? DateTime.now(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(23),
+                    child: book.coverImage != null && book.coverImage != ""
+                      ? CachedNetworkImage(
+                          imageUrl: book.coverImage,
+                          fit: BoxFit.cover,
+                          useOldImageOnUrlChange: true,
+                          placeholder: (context, url) =>
+                              CustomCircularProgress(radius: 15),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                  ),
                 ),
               ),
               SizedBox(height: 25),
@@ -50,8 +70,8 @@ class BookDetailPage extends StatelessWidget {
               SizedBox(height: 25),
               book.description != null && book.description != ""
                   ? Padding(
-                    padding: EdgeInsets.only(bottom: 25),
-                    child: Text(
+                      padding: EdgeInsets.only(bottom: 25),
+                      child: Text(
                         book.description,
                         style: TextStyle(
                           fontFamily: 'SF Pro Text',
@@ -61,7 +81,7 @@ class BookDetailPage extends StatelessWidget {
                           fontWeight: FontWeight.w300,
                         ),
                       ),
-                  )
+                    )
                   : Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +103,6 @@ class BookDetailPage extends StatelessWidget {
                   ),
                 ],
               ),
-              
             ],
           ),
         ),

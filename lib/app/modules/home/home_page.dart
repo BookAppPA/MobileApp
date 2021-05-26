@@ -1,4 +1,6 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/repository/book_repository.dart';
+import 'package:book_app/app/modules/home/home_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
@@ -6,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
+  final controller = Get.put(HomeController(repository: BookRepository()));
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,16 +75,6 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildMostPopularBooks() {
-    List<Widget> _books = List.generate(
-      3,
-      (index) => Expanded(
-          child: BookItem(book: Book(title: "THE FIRM", authors: [""]))),
-    );
-    List<Widget> _books2 = List.generate(
-      3,
-      (index) => Expanded(
-          child: BookItem(book: Book(title: "Fatherhood", authors: [""]))),
-    );
     return Container(
       height: 430,
       //color: Colors.yellow,
@@ -97,19 +91,35 @@ class HomePage extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Expanded(
-            child: Container(
-                //color: Colors.red,
-                child: Column(
-              children: <Widget>[
-                Row(
-                  children: _books,
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: _books2,
-                ),
-              ],
-            )),
+            child: GetBuilder<HomeController>(
+              builder: (_) => Container(
+                  //color: Colors.red,
+                  child: Column(
+                children: <Widget>[
+                  Row(
+                    children: List.generate(
+                      3,
+                      (index) => Expanded(
+                        child: BookItem(
+                          book: _.hasDataPopularBooks ? _.listPopularBooks[index] : Book(),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: List.generate(
+                      3,
+                      (index) => Expanded(
+                        child: BookItem(
+                          book: _.hasDataPopularBooks ? _.listPopularBooks[index + 3] : Book(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+            ),
           ),
         ],
       ),
