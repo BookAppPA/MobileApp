@@ -18,4 +18,12 @@ class ProfilController extends GetxController {
     else 
       print("LOGOUT ERREUR....");
   }
+
+  clickEditProfil() {
+    Get.toNamed(Routes.EDIT_PROFIL);
+  }
+
+  clickFollow() {
+    print("click follow user");
+  }
 }

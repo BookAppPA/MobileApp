@@ -24,4 +24,22 @@ class NodeJSBddAPI {
       return null;
     }
   }
+
+  Future<bool> updateUser(String idUser, Map<String, String> data) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.post(Uri.parse(UrlAPI.updateUser),
+          headers: {"authorization": "Bearer $token", "uid": idUser}, body: data);
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http call --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+  
 }

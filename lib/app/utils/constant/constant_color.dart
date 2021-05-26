@@ -6,6 +6,7 @@ abstract class ConstantColor {
   static const white = Colors.white;
   static const grey = Colors.grey;
   static const greyWhite = Color(0xffE5E5E5);
+  static const greyDark = Color(0x80212121);
   static const black = Colors.black;
   static const testColor = Colors.green;
   

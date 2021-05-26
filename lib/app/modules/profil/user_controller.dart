@@ -16,6 +16,10 @@ class UserController extends GetxController {
   Map<String, dynamic> _userData = {};
   Map<String, dynamic> get userData => this._userData;
 
+  updateBio(String bio) {
+    _user.bio = bio;
+    update();
+  }
 
   /*changeDomain(String domain) {
     Map<String, dynamic> map = {'domain': domain};

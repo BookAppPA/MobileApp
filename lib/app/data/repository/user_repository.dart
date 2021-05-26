@@ -24,9 +24,11 @@ class UserRepository {
     await _databaseAPI.initUser(idUser, phoneNumber, email);
   }
 
-  updateUser(String idUser, Map<String, dynamic> data) {
-    _databaseAPI.updateUser(idUser, data);
-  }*/
+  */
+
+  updateUser(String idUser, Map<String, String> data) {
+    return _databaseAPI.updateUser(idUser, data);
+  }
 
   configurePushNotification(String idUser) async {
    // final token = await _notificationAPI.getToken();

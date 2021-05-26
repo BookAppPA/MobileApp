@@ -13,7 +13,6 @@ import 'profil_controller.dart';
 import 'widgets/rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
-
   final UserModel user;
   ProfilPage({@required this.user});
 
@@ -44,23 +43,24 @@ class ProfilPage extends StatelessWidget {
   Widget _buildInfoUser() {
     return Column(
       children: [
-        isMe ?
-        Container(
-          padding: EdgeInsets.only(top: 25, right: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.powerOff,
-                  color: Color(0xbf212121),
+        isMe
+            ? Container(
+                padding: EdgeInsets.only(top: 25, right: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        FontAwesomeIcons.powerOff,
+                        color: Color(0xbf212121),
+                      ),
+                      onPressed: () => BasicDialog.showLogoutDialog(
+                          onConfirm: () => ProfilController.to.clickLogout()),
+                    ),
+                  ],
                 ),
-                onPressed: () => BasicDialog.showLogoutDialog(
-                    onConfirm: () => ProfilController.to.clickLogout()),
-              ),
-            ],
-          ),
-        ) : Container(),
+              )
+            : Container(),
         Container(
           padding: EdgeInsets.fromLTRB(20, isMe ? 10 : 50, 20, 20),
           child: Column(
@@ -85,18 +85,20 @@ class ProfilPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 20),
-                        Text(
-                          user.bio ?? "Aucune bio",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 13,
-                            color: Color(0x80212121),
-                            letterSpacing: 0.16,
-                            fontWeight: FontWeight.w300,
+                        GetBuilder<UserController>(
+                          builder: (_) => Text(
+                            _.user.bio ?? "Aucune bio",
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 13,
+                              color: ConstantColor.greyDark,
+                              letterSpacing: 0.16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          textAlign: TextAlign.left,
                         ),
                       ],
                     ),
@@ -107,7 +109,9 @@ class ProfilPage extends StatelessWidget {
                         CircleAvatar(radius: 42),
                         SizedBox(height: 20),
                         ButtonGradient(
-                          onTap: () => print("clic edit profil"),
+                          onTap: () => isMe
+                              ? ProfilController.to.clickEditProfil()
+                              : ProfilController.to.clickFollow(),
                           text: isMe ? "Modifier" : "Suivre",
                         ),
                       ],
@@ -124,11 +128,11 @@ class ProfilPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          '21',
+                          "${user.nbBooks}",
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 24,
-                            color: Color(0x80212121),
+                            color: ConstantColor.greyDark,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -138,7 +142,7 @@ class ProfilPage extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 13,
-                            color: Color(0x80212121),
+                            color: ConstantColor.greyDark,
                             letterSpacing: 0.16,
                             fontWeight: FontWeight.w300,
                           ),
@@ -149,11 +153,11 @@ class ProfilPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          '5',
+                          "${user.nbRatings}",
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 24,
-                            color: Color(0x80212121),
+                            color: ConstantColor.greyDark,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -163,7 +167,7 @@ class ProfilPage extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 13,
-                            color: Color(0x80212121),
+                            color: ConstantColor.greyDark,
                             letterSpacing: 0.16,
                             fontWeight: FontWeight.w300,
                           ),
@@ -174,11 +178,11 @@ class ProfilPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          '19',
+                          "${user.nbFollowers}",
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 24,
-                            color: Color(0x80212121),
+                            color: ConstantColor.greyDark,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -188,7 +192,7 @@ class ProfilPage extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 13,
-                            color: Color(0x80212121),
+                            color: ConstantColor.greyDark,
                             letterSpacing: 0.16,
                             fontWeight: FontWeight.w300,
                           ),
@@ -206,73 +210,77 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _buildLastBooks() {
-    return Container(
-      height: 250,
-      //color: Colors.blue,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(45, 20, 0, 20),
-            child: Text(
-              'Mes Derniers Livres',
-              style: TextStyle(
-                fontFamily: 'SF Pro Text',
-                fontSize: 20,
-                color: Color(0x80212121),
-                fontWeight: FontWeight.w700,
-              ),
+    return user.nbBooks > 0
+        ? Container(
+            height: 250,
+            //color: Colors.blue,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(45, 20, 0, 20),
+                  child: Text(
+                    'Mes Derniers Livres',
+                    style: TextStyle(
+                      fontFamily: 'SF Pro Text',
+                      fontSize: 20,
+                      color: ConstantColor.greyDark,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: 6,
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
+                    separatorBuilder: (context, index) => SizedBox(width: 15),
+                    itemBuilder: (context, index) {
+                      return BookItem(book: Book());
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-          Expanded(
-            child: ListView.separated(
-              itemCount: 6,
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
-              separatorBuilder: (context, index) => SizedBox(width: 15),
-              itemBuilder: (context, index) {
-                return BookItem(book: Book());
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+          )
+        : Container();
   }
 
   Widget _buildLastRatings() {
-    return Container(
-      height: 800,
-      //color: Colors.blue,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(45, 10, 0, 20),
-            child: Text(
-              'Mes Derniers Avis',
-              style: TextStyle(
-                fontFamily: 'SF Pro Text',
-                fontSize: 20,
-                color: Color(0x80212121),
-                fontWeight: FontWeight.w700,
-              ),
+    return user.nbRatings > 0
+        ? Container(
+            height: 800,
+            //color: Colors.blue,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(45, 10, 0, 20),
+                  child: Text(
+                    'Mes Derniers Avis',
+                    style: TextStyle(
+                      fontFamily: 'SF Pro Text',
+                      fontSize: 20,
+                      color: ConstantColor.greyDark,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 5,
+                    padding: EdgeInsets.fromLTRB(40, 0, 40, 30),
+                    separatorBuilder: (context, index) => SizedBox(height: 25),
+                    itemBuilder: (context, index) {
+                      return RatingItem(Rating());
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-          Expanded(
-            child: ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 5,
-              padding: EdgeInsets.fromLTRB(40, 0, 40, 30),
-              separatorBuilder: (context, index) => SizedBox(height: 25),
-              itemBuilder: (context, index) {
-                return RatingItem(Rating());
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+          )
+        : Container();
   }
 }

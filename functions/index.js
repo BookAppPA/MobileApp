@@ -159,8 +159,8 @@ app.post('/api/auth/logout', checkIfAuthenticated, (req, res) => {
 app.post('/api/auth/updateUser', checkIfAuthenticated, (req, res) => {
   (async () => {
     try {
-      await db.collection('users').doc(req.body.uid)
-        .update(req.body.update);
+      await db.collection('users').doc(req.headers.uid)
+        .set(req.body, { merge: true });
       return res.status(200).send();
     } catch (error) {
       console.log(error);
