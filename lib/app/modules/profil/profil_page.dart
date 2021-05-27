@@ -1,6 +1,7 @@
-import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/data/repository/auth_repository.dart';
+import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
@@ -16,7 +17,9 @@ import 'widgets/rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
   final UserModel user;
-  ProfilPage({@required this.user});
+  ProfilPage({@required this.user}) {
+    Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: user));
+  }
 
   bool isMe = false;
 
@@ -114,7 +117,7 @@ class ProfilPage extends StatelessWidget {
                               alignment: Alignment.topCenter,
                               child: SizedBox(
                                 child: GestureDetector(
-                                  onTap: () => ProfilController.to.changePicture(),
+                                  onTap: () => isMe ? ProfilController.to.changePicture() : null,
                                   child: CircleAvatar(
                                     radius: 42,
                                     backgroundColor: Colors.white,
@@ -253,38 +256,40 @@ class ProfilPage extends StatelessWidget {
 
   Widget _buildLastBooks() {
     return user.nbBooks > 0
-        ? Container(
-            height: 250,
-            //color: Colors.blue,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(45, 20, 0, 20),
-                  child: Text(
-                    'Mes Derniers Livres',
-                    style: TextStyle(
-                      fontFamily: 'SF Pro Text',
-                      fontSize: 20,
-                      color: ConstantColor.greyDark,
-                      fontWeight: FontWeight.w700,
+        ? GetBuilder<UserController>(
+                  builder: (_) => Container(
+              height: 250,
+              //color: Colors.blue,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(45, 20, 0, 20),
+                    child: Text(
+                      'Mes Derniers Livres',
+                      style: TextStyle(
+                        fontFamily: 'SF Pro Text',
+                        fontSize: 20,
+                        color: ConstantColor.greyDark,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: 6,
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
-                    separatorBuilder: (context, index) => SizedBox(width: 15),
-                    itemBuilder: (context, index) {
-                      return BookItem(book: Book());
-                    },
+                  Expanded(
+                    child: ListView.separated(
+                      itemCount: _.user.listBooksRead.length <= 5 ? _.user.listBooksRead.length : 5,
+                      scrollDirection: Axis.horizontal,
+                      padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
+                      separatorBuilder: (context, index) => SizedBox(width: 15),
+                      itemBuilder: (context, index) {
+                        return BookItem(book: _.user.listBooksRead[index]);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )
+        )
         : Container();
   }
 

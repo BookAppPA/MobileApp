@@ -7,12 +7,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class NodeJSBddAPI {
-
   Future<UserModel> getUserById(String uid) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.getUserById),
-          headers: {"authorization": "Bearer $token", "uid": uid}, );
+      http.Response resp = await http.get(
+        Uri.parse(UrlAPI.getUserById),
+        headers: {"authorization": "Bearer $token", "uid": uid},
+      );
       if (resp.statusCode == 200) {
         Map<String, dynamic> map = json.decode(resp.body);
         return UserModel.fromJson(map);
@@ -30,7 +31,8 @@ class NodeJSBddAPI {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.post(Uri.parse(UrlAPI.updateUser),
-          headers: {"authorization": "Bearer $token", "uid": idUser}, body: data);
+          headers: {"authorization": "Bearer $token", "uid": idUser},
+          body: data);
       if (resp.statusCode == 200) {
         return true;
       } else {
@@ -45,7 +47,7 @@ class NodeJSBddAPI {
 
   Future<List<Book>> getPopularBooks() async {
     try {
-     // var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      // var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.get(Uri.parse(UrlAPI.popularBooks));
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
@@ -62,6 +64,23 @@ class NodeJSBddAPI {
     }
   }
 
-  
-  
+  Future<List<Book>> getUserListBook(String idUser) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.userListBooks),
+          headers: {"authorization": "Bearer $token", "uid": idUser});
+      if (resp.statusCode == 200) {
+        var listBooks = json.decode(resp.body);
+        List<Book> books = [];
+        listBooks.forEach((book) => books.add(Book.fromJson(book)));
+        return books;
+      } else {
+        print("error get http call --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
 }

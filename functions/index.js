@@ -4,6 +4,7 @@ const firebase = require('firebase');
 const express = require('express');
 const cors = require('cors');
 const requestExternalAPI = require('request');
+const asyncjs = require('async');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -27,7 +28,7 @@ const config = {
   messagingSenderId: "276286363904",
   appId: "1:276286363904:web:4527a6dfb3756c9fdcbbe5",
   measurementId: "G-GY017BZWTV"
- }
+}
 
 firebase.initializeApp(config);
 
@@ -82,32 +83,32 @@ const checkIfAuthenticated = (req, res, next) => {
 
 // Passing & check Admin User
 const makeUserAdmin = async (req, res) => {
-  const {userId} = req.body; // userId is the firebase uid for the user
-  await admin.auth().setCustomUserClaims(userId, {admin: true});
-  return res.send({message: 'Success'})
+  const { userId } = req.body; // userId is the firebase uid for the user
+  await admin.auth().setCustomUserClaims(userId, { admin: true });
+  return res.send({ message: 'Success' })
 }
 
 const checkIfAdmin = (req, res, next) => {
   getAuthToken(req, res, async () => {
-     try {
-       const { authToken } = req;
-       const userInfo = await admin
-         .auth()
-         .verifyIdToken(authToken);
- 
-       if (userInfo.admin === true) {
-         req.authId = userInfo.uid;
-         return next();
-       }
- 
-       throw new Error('unauthorized')
-     } catch (e) {
-       return res
-         .status(401)
-         .send({ error: 'You are not authorized to make this request' });
-     }
-   });
- };
+    try {
+      const { authToken } = req;
+      const userInfo = await admin
+        .auth()
+        .verifyIdToken(authToken);
+
+      if (userInfo.admin === true) {
+        req.authId = userInfo.uid;
+        return next();
+      }
+
+      throw new Error('unauthorized')
+    } catch (e) {
+      return res
+        .status(401)
+        .send({ error: 'You are not authorized to make this request' });
+    }
+  });
+};
 
 // Signup user
 app.post('/api/auth/signup', (req, res) => {
@@ -194,7 +195,7 @@ app.get('/api/bdd/popularBooks', (req, res) => {
     try {
       let url = `${baseUrlGoogleBooksAPI}volumes?q=harry+potter&filter=partial&maxResults=6`;
       requestExternalAPI(url, function (error, response, body) {
-        if(error){
+        if (error) {
           console.log('error:', error);
           return res.status(500).send(error.toJSON());
         } else {
@@ -205,6 +206,43 @@ app.get('/api/bdd/popularBooks', (req, res) => {
     } catch (error) {
       console.log(error);
       return res.status(500).send(error.toJSON());
+    }
+  })();
+});
+
+
+// get list user books
+app.get('/api/bdd/userListBooks', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      let url = `${baseUrlGoogleBooksAPI}volumes/`;
+      let response = [];
+      let query = db.collection('books_users').where("user_id", "==", req.headers.uid).orderBy("timestamp", "desc").limit(5);
+      await query.get().then(querySnapshot => {
+        let docs = querySnapshot.docs;
+        for (let doc of docs) {
+          response.push(doc.data());
+        }
+      });
+      let urls = [];
+      for (let i = 0; i < response.length; i++) {
+        urls.push(url + response[i].book_id);
+      }
+
+      asyncjs.map(urls, function (url, callback) {
+        requestExternalAPI(url, function (err, response, body) {
+          callback(err, JSON.parse(body));
+        })
+      }, function (err, books) {
+        if (err) {
+          return res.status(500).send(err);
+        }
+        return res.status(200).send(books);
+      });
+
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
     }
   })();
 });

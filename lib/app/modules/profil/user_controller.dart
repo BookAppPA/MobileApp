@@ -1,3 +1,4 @@
+import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,11 @@ class UserController extends GetxController {
 
   updatePicture(String urlPic) {
     _user.picture = urlPic;
+    update();
+  }
+
+  setListBooks(List<Book> list) {
+    _user.listBooksRead = list;
     update();
   }
 

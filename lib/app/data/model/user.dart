@@ -27,7 +27,7 @@ class UserModel {
       this.nbBooks = json['nbBooks'] ?? 0;
       this.nbRatings = json['nbRatings'] ?? 0;
       this.nbFollowers = json['nbFollowers'] ?? 0;
-      this.listBooksRead = json['listBooksRead'] ?? [];
+      this.listBooksRead = [];
   }
 
   Map<String, dynamic> toJson(){
@@ -37,10 +37,9 @@ class UserModel {
     data['email'] = this.email;
     data['picture'] = this.picture;
     data['bio'] = this.bio;
-    data['nbBooks'] = this.bio;
-    data['nbRatings'] = this.bio;
-    data['nbFollowers'] = this.bio;
-    data['listBooksRead'] = this.bio;
+    data['nbBooks'] = this.nbBooks;
+    data['nbRatings'] = this.nbRatings;
+    data['nbFollowers'] = this.nbFollowers;
     return data;
   }
 

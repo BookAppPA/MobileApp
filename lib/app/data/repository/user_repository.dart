@@ -29,14 +29,12 @@ class UserRepository {
     return url;
   }
 
-  /*initUser(String idUser, String phoneNumber, String email) async {
-    await _databaseAPI.initUser(idUser, phoneNumber, email);
-  }
-
-  */
-
   updateUser(String idUser, Map<String, String> data) {
     return _databaseAPI.updateUser(idUser, data);
+  }
+
+  getUserListBook(String idUser) async {
+    return await _databaseAPI.getUserListBook(idUser);
   }
 
   configurePushNotification(String idUser) async {
