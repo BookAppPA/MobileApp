@@ -1,5 +1,6 @@
 import 'package:book_app/app/data/provider/api/firebase/firebase_firestore_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_messaging_api.dart';
+import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_auth_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_bdd_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ class UserRepository {
  
   final NodeJSAuthAPI _authAPI = NodeJSAuthAPI();
   final NodeJSBddAPI _databaseAPI = NodeJSBddAPI();
+  final FirebaseStorageAPI _firebaseStorageAPI = FirebaseStorageAPI();
   final FirebaseMessagingAPI _notificationAPI = FirebaseMessagingAPI();
 
   //Stream<User> get onAuthStateChanged => this._authAPI.onAuthStateChanged;
@@ -18,6 +20,13 @@ class UserRepository {
 
   getUserById(String uid) async {
     return await _databaseAPI.getUserById(uid);
+  }
+
+  changeUserPicture(String uid, String path, String urlToDelete) async {
+    String url = await _firebaseStorageAPI.uploadPicture(uid, path, urlToDelete);
+    if (url != null)
+      await _databaseAPI.updateUser(uid, {"picture": url});
+    return url;
   }
 
   /*initUser(String idUser, String phoneNumber, String email) async {

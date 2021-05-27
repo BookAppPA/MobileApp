@@ -114,34 +114,34 @@ class ProfilPage extends StatelessWidget {
                               alignment: Alignment.topCenter,
                               child: SizedBox(
                                 child: GestureDetector(
-                                  onTap: () => isMe && user.picture == ""
-                                      ? ProfilController.to.changePicture()
-                                      : null,
+                                  onTap: () => ProfilController.to.changePicture(),
                                   child: CircleAvatar(
                                     radius: 42,
                                     backgroundColor: Colors.white,
-                                    child: CircleAvatar(
-                                      child: isMe && user.picture == ""
-                                          ? Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: CircleAvatar(
-                                                backgroundColor: Colors.white,
-                                                radius: 12.0,
-                                                child: Icon(
-                                                  Icons.camera_alt,
-                                                  size: 15.0,
-                                                  color: Color(0xFF404040),
+                                    child: GetBuilder<UserController>(
+                                      builder: (_) => CircleAvatar(
+                                        child: isMe &&
+                                                (_.user.picture == null ||
+                                                    _.user.picture == "")
+                                            ? Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  radius: 12,
+                                                  child: Icon(
+                                                    Icons.camera_alt,
+                                                    size: 15,
+                                                    color: Color(0xFF404040),
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                          : Container(),
-                                      radius: 40,
-                                      backgroundImage: user.picture == ""
-                                          ? AssetImage(
-                                              'assets/defaut_user.jpeg')
-                                          : NetworkImage(
-                                              user.picture,
-                                            ),
+                                              )
+                                            : _.loadingPicture ? CustomCircularProgress(color: ConstantColor.accent) : Container(),
+                                        radius: 40,
+                                        backgroundImage: _.user.picture == null || _.user.picture == ""
+                                            ? AssetImage('assets/defaut_user.jpeg')
+                                            : NetworkImage(user.picture),
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -16,8 +16,21 @@ class UserController extends GetxController {
   Map<String, dynamic> _userData = {};
   Map<String, dynamic> get userData => this._userData;
 
+  bool _loadingPicture = false;
+  bool get loadingPicture => this._loadingPicture;
+
   updateBio(String bio) {
     _user.bio = bio;
+    update();
+  }
+
+  isLoadingPicture(bool value) {
+    _loadingPicture = value;
+    update();
+  }
+
+  updatePicture(String urlPic) {
+    _user.picture = urlPic;
     update();
   }
 

@@ -1,27 +1,13 @@
 import 'dart:io';
+import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as i;
 
 class FirebaseStorageAPI {
-  Future<String> sendPhotoChat(String idChat, String picture) async {
-    return await _uploadPicture(idChat, picture, inChat: true);
-  }
-
-  Future<List<String>> uploadPictures(
-      String idUser, List<String> listPicture) async {
-    List<String> _newList = [];
-    for (int i = 0; i < listPicture.length; i++) {
-      _newList.add(await _uploadPicture(idUser, listPicture[i]));
-    }
-    return _newList;
-  }
-
-  Future<String> _uploadPicture(String idUser, String path,
-      {bool inChat: false}) async {
-    return await _uploadFile(idUser, await _compressimage(File(path)),
-        inChat: inChat);
+  Future<String> uploadPicture(String idUser, String path, String urlToDelete) async {
+    return await _uploadFile(idUser, await _compressimage(File(path)), urlToDelete);
   }
 
   Future _compressimage(File image) async {
@@ -33,17 +19,16 @@ class FirebaseStorageAPI {
     return compressedImagefile;
   }
 
-  Future<String> _uploadFile(String idUser, File image, {inChat: false}) async {
+  Future<String> _uploadFile(String idUser, File image, String urlToDelete) async {
+
+    await deletePicture(idUser, [urlToDelete]);
+
     Reference storageReference;
-    if (inChat) {
-      int timestamp = new DateTime.now().millisecondsSinceEpoch;
-      storageReference = FirebaseStorage.instance
-          .ref()
-          .child('chats/$idUser/img_' + timestamp.toString() + '.jpg');
-    } else {
-      // storageReference = FirebaseStorage.instance.ref().child(
-      //   'users/${UserController.to.user.id}/pic_${image.hashCode}.jpg');
-    }
+
+    storageReference = FirebaseStorage.instance
+        .ref()
+        .child('users/$idUser/pic_${image.hashCode}.jpg');
+
     UploadTask uploadTask = storageReference.putFile(image);
 
     uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
@@ -68,8 +53,9 @@ class FirebaseStorageAPI {
     } on FirebaseException catch (e) {
       if (e.code == 'permission-denied') {
         print('User does not have permission to upload to this reference.');
+        CustomSnackbar.snackbar("Vous n'avez pas la permission");
       }
-      // ...
+      print(e);
       return null;
     }
     //CustomSnackbar.snackbar(Localization.errorAPInoUploadPicture.tr);
@@ -87,6 +73,8 @@ class FirebaseStorageAPI {
     String start = "pic_";
     String end = ".jpg";
     for (int i = 0; i < pictures.length; i++) {
+      if (pictures[i] == null || pictures[i] == "")
+        return;
       int startIndex = pictures[i].indexOf(start);
       int endIndex = pictures[i].indexOf(end, startIndex + start.length);
 
