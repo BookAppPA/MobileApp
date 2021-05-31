@@ -65,6 +65,41 @@ class NodeJSBddAPI {
     }
   }
 
+  Future<Book> getBook(String bookID) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.bookDetail),
+          headers: {"authorization": "Bearer $token", "bookid": bookID});
+      if (resp.statusCode == 200) {
+        var book = json.decode(resp.body);
+        return Book.fromJson(book);
+      } else {
+        print("error get http call --> ${resp.body}");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.ratingByBook),
+          headers: {"authorization": "Bearer $token", "bookid": bookID});
+      if (resp.statusCode == 200) {
+        return json.decode(resp.body);
+      } else {
+        print("error get http call --> ${resp.body}");
+        return {};
+      }
+    } catch (e) {
+      print(e.toString());
+      return {};
+    }
+  }
+
   Future<List<Book>> getUserListBook(String idUser) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
@@ -85,7 +120,8 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<List<Rating>> getLastRatings(String idUser, List<Book> listBooks) async {
+  Future<List<Rating>> getLastRatings(
+      String idUser, List<Book> listBooks) async {
     try {
       String list = "";
       listBooks.forEach((book) {
@@ -96,7 +132,11 @@ class NodeJSBddAPI {
 
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.get(Uri.parse(UrlAPI.userListRatings),
-          headers: {"authorization": "Bearer $token", "uid": idUser, "listbooks": list});
+          headers: {
+            "authorization": "Bearer $token",
+            "uid": idUser,
+            "listbooks": list
+          });
       if (resp.statusCode == 200) {
         var listRatings = json.decode(resp.body);
         List<Rating> ratings = [];
@@ -111,5 +151,4 @@ class NodeJSBddAPI {
       return [];
     }
   }
-  
 }

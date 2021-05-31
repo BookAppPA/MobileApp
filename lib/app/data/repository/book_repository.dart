@@ -8,4 +8,12 @@ class BookRepository {
     return await _databaseAPI.getPopularBooks();
   }
 
+  getBook(String bookID) async {
+    return await _databaseAPI.getBook(bookID);
+  }
+
+  getRatingsByBook(String bookID) async {
+    return await _databaseAPI.getRatingsByBook(bookID);
+  }
+
 }

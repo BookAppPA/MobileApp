@@ -8,5 +8,6 @@ abstract class Routes{
   static const CHOICE_THEME = "theme";
   static const SQUELETON = "squeleton";
   static const BOOK_DETAIL = "book_detail";
+  static const PROFIL = "profil";
   static const EDIT_PROFIL = "edit_profil";
 }

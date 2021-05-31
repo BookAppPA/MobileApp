@@ -34,22 +34,19 @@ class UserRatingItem extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     height: 45,
-                    child: Hero(
-                      tag: rating.bookId ?? DateTime.now(),
-                      child: rating.bookImage != null && rating.bookImage != ""
-                          ? CachedNetworkImage(
-                              imageUrl: rating.bookImage,
-                              fit: BoxFit.cover,
-                              useOldImageOnUrlChange: true,
-                              placeholder: (context, url) =>
-                                  CustomCircularProgress(radius: 15),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(color: Colors.grey),
-                            ),
-                    ),
+                    child: rating.bookImage != null && rating.bookImage != ""
+                        ? CachedNetworkImage(
+                            imageUrl: rating.bookImage,
+                            fit: BoxFit.cover,
+                            useOldImageOnUrlChange: true,
+                            placeholder: (context, url) =>
+                                CustomCircularProgress(radius: 15),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(color: Colors.grey),
+                          ),
                   ),
                   SizedBox(width: 15),
                   Expanded(

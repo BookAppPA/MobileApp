@@ -14,19 +14,18 @@ import 'profil_controller.dart';
 import 'widgets/user_rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
+  
   final UserModel user;
-  ProfilPage({@required this.user}) {
-    Get.put(ProfilController(
-        authRepository: AuthRepository(),
-        userRepository: UserRepository(),
-        user: user));
+  ProfilPage({this.user}) {
+    if (user != null) {
+      Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: user));
+    }
   }
 
   bool isMe = false;
-
   @override
   Widget build(BuildContext context) {
-    isMe = user.id == UserController.to.user.id;
+    isMe = ProfilController.to.user.id == UserController.to.user.id;
     return Scaffold(
       body: Container(
         width: Get.width,
@@ -80,7 +79,7 @@ class ProfilPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          user.pseudo,
+                          ProfilController.to.user.pseudo,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -152,7 +151,7 @@ class ProfilPage extends StatelessWidget {
                                                     _.user.picture == ""
                                                 ? AssetImage(
                                                     'assets/defaut_user.jpeg')
-                                                : NetworkImage(user.picture),
+                                                : NetworkImage(ProfilController.to.user.picture),
                                       ),
                                     ),
                                   ),
@@ -182,7 +181,7 @@ class ProfilPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          "${user.nbBooks}",
+                          "${ProfilController.to.user.nbBooks}",
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 24,
@@ -207,7 +206,7 @@ class ProfilPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          "${user.nbRatings}",
+                          "${ProfilController.to.user.nbRatings}",
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 24,
@@ -232,7 +231,7 @@ class ProfilPage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          "${user.nbFollowers}",
+                          "${ProfilController.to.user.nbFollowers}",
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 24,
@@ -264,7 +263,7 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _buildLastBooks() {
-    return user.nbBooks > 0
+    return ProfilController.to.user.nbBooks > 0
         ? GetBuilder<UserController>(
             builder: (_) => Container(
               height: 250,
@@ -321,7 +320,7 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _buildLastRatings() {
-    return user.nbRatings > 0
+    return ProfilController.to.user.nbRatings > 0
         ? GetBuilder<UserController>(
             builder: (_) => Container(
               height: 800,

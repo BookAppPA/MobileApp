@@ -2,8 +2,7 @@ class Book {
 
   String id, title, description, publisher, publishedDate, coverImage, language, previewLink, buyLink;
   List authors, categories;
-  int pageCount, nbUserRead;
-  double note;
+  int pageCount, note, nbRating;
   Map<String, dynamic> listPrice, retailPrice;
 
   Book({
@@ -21,12 +20,12 @@ class Book {
     this.pageCount,
     this.listPrice,
     this.retailPrice,
-    this.note: 0.0,
-    this.nbUserRead: 0,
+    this.note: 0,
+    this.nbRating: 0,
   });
 
-  setNote(double note) => this.note = note;
-  setUserRead(int nb) => this.nbUserRead = nb;
+  setNote(int note) => this.note = note;
+  setNbRatings(int nb) => this.nbRating = nb;
 
   Book.fromJson(Map<String, dynamic> json){
       this.id = json['id'];
@@ -43,6 +42,8 @@ class Book {
       this.pageCount = json['volumeInfo']['pageCount'];
       this.listPrice = json['saleInfo']['listPrice'];
       this.retailPrice = json['saleInfo']['retailPrice'];
+      this.nbRating = 0;
+      this.note = 0;
   }
 
   Map<String, dynamic> toJson(){

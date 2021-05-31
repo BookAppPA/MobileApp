@@ -210,6 +210,25 @@ app.get('/api/bdd/popularBooks', (req, res) => {
   })();
 });
 
+// get books by id
+app.get('/api/bdd/bookDetail', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      let url = `${baseUrlGoogleBooksAPI}volumes/${req.headers.bookid}`;
+      requestExternalAPI(url, function (error, response, body) {
+        if (error) {
+          console.log('error:', error);
+          return res.status(500).send(error.toJSON());
+        } else {
+          return res.status(200).send(JSON.parse(body));
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error.toJSON());
+    }
+  })();
+});
 
 // get list user books
 app.get('/api/bdd/userListBooks', checkIfAuthenticated, (req, res) => {
@@ -246,6 +265,32 @@ app.get('/api/bdd/userListBooks', checkIfAuthenticated, (req, res) => {
     }
   })();
 });
+
+// get list ratings by book ID
+app.get('/api/bdd/ratingByBook', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      let map = {};
+      let ratings = [];
+      let doc = await db.collection('ratings').doc(req.headers.bookid).get();
+      let result = doc.data();
+      map["nbRatings"] = result["nbRatings"];
+      map["note"] = result["note"];
+
+      let snap = await db.collection('ratings').doc(req.headers.bookid).collection("comments").orderBy("timestamp", "desc").limit(5).get();
+      let docs = snap.docs;
+      for (let doc of docs) {
+        ratings.push(doc.data());
+      }
+      map["ratings"] = ratings;
+      return res.status(200).send(map);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
 
 // get list last user ratings
 app.get('/api/bdd/userListRatings', checkIfAuthenticated, (req, res) => {
