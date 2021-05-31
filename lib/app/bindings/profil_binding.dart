@@ -8,6 +8,11 @@ class ProfilBinding extends Bindings {
   @override
   void dependencies() {
     final UserModel user = Get.arguments as UserModel;
-    Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: user));
+    if (user.pseudo != null)
+      Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: user));
+    else if (user.id != null)
+      Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), userId: user.id));
+    else
+      Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository()));
   }
 }

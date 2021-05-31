@@ -14,87 +14,206 @@ import 'profil_controller.dart';
 import 'widgets/user_rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
-  
   final UserModel user;
-  ProfilPage({this.user}) {
-    if (user != null) {
-      Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: user));
+  final bool back;
+  ProfilPage({this.user, this.back: false}) {
+    if (user != null && user.pseudo != null) {
+      Get.put(ProfilController(
+          authRepository: AuthRepository(),
+          userRepository: UserRepository(),
+          user: user));
     }
   }
 
-  bool isMe = false;
   @override
   Widget build(BuildContext context) {
-    isMe = ProfilController.to.user.id == UserController.to.user.id;
     return Scaffold(
-      body: Container(
-        width: Get.width,
-        height: Get.height,
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                _buildInfoUser(),
-                _buildLastBooks(),
-                _buildLastRatings(),
-              ],
-            ),
-          ),
-        ),
+      body: GetBuilder<ProfilController>(
+        builder: (_) => _.loadData && _.errorMessage == ""
+            ? CustomCircularProgress(color: ConstantColor.accent, radius: 20)
+            : _.loadData && _.errorMessage != ""
+                ? Center(child: Text(_.errorMessage))
+                : Container(
+                    width: Get.width,
+                    height: Get.height,
+                    child: SingleChildScrollView(
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            _buildInfoUser(),
+                            _buildLastBooks(),
+                            _buildLastRatings(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
       ),
     );
   }
 
   Widget _buildInfoUser() {
-    return Column(
-      children: [
-        isMe
-            ? Container(
-                padding: EdgeInsets.only(top: 25, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.powerOff,
-                        color: Color(0xbf212121),
+    return GetBuilder<ProfilController>(
+      builder: (controller) => Column(
+        children: [
+          controller.isMe
+              ? Container(
+                  padding: EdgeInsets.only(top: 25, right: 15, left: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      back ?
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: Color(0xbf212121),
+                        ),
+                        onPressed: () {
+                          FocusScope.of(Get.context).unfocus();
+                          Get.back();
+                        },
+                      ) : Container(),
+                      IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.powerOff,
+                          color: Color(0xbf212121),
+                        ),
+                        onPressed: () => BasicDialog.showLogoutDialog(
+                            onConfirm: () => ProfilController.to.clickLogout()),
                       ),
-                      onPressed: () => BasicDialog.showLogoutDialog(
-                          onConfirm: () => ProfilController.to.clickLogout()),
+                    ],
+                  ),
+                )
+              : Container(),
+          Container(
+            padding: EdgeInsets.fromLTRB(20, controller.isMe ? 10 : 50, 20, 20),
+            child: Column(
+              children: <Widget>[
+                //INFOS
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            ProfilController.to.user.pseudo,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 24,
+                              color: Color(0xbf212121),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          GetBuilder<UserController>(
+                            builder: (_) => Text(
+                              _.user.bio ?? "Aucune bio",
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: 'SF Pro Text',
+                                fontSize: 13,
+                                color: ConstantColor.greyDark,
+                                letterSpacing: 0.16,
+                                fontWeight: FontWeight.w300,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: SizedBox(
+                                  child: GestureDetector(
+                                    onTap: () => controller.isMe
+                                        ? controller.changePicture()
+                                        : null,
+                                    child: CircleAvatar(
+                                      radius: 42,
+                                      backgroundColor: Colors.white,
+                                      child: GetBuilder<UserController>(
+                                        builder: (_) => CircleAvatar(
+                                          child: controller.isMe &&
+                                                  (_.user.picture == null ||
+                                                      _.user.picture == "")
+                                              ? Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    radius: 12,
+                                                    child: Icon(
+                                                      Icons.camera_alt,
+                                                      size: 15,
+                                                      color: Color(0xFF404040),
+                                                    ),
+                                                  ),
+                                                )
+                                              : _.loadingPicture
+                                                  ? CustomCircularProgress(
+                                                      color:
+                                                          ConstantColor.accent)
+                                                  : Container(),
+                                          radius: 40,
+                                          backgroundImage: _.user.picture ==
+                                                      null ||
+                                                  _.user.picture == ""
+                                              ? AssetImage(
+                                                  'assets/defaut_user.jpeg')
+                                              : NetworkImage(ProfilController
+                                                  .to.user.picture),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          ButtonGradient(
+                            onTap: () => controller.isMe
+                                ? ProfilController.to.clickEditProfil()
+                                : ProfilController.to.clickFollow(),
+                            text: controller.isMe ? "Modifier" : "Suivre",
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            : Container(),
-        Container(
-          padding: EdgeInsets.fromLTRB(20, isMe ? 10 : 50, 20, 20),
-          child: Column(
-            children: <Widget>[
-              //INFOS
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          ProfilController.to.user.pseudo,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 24,
-                            color: Color(0xbf212121),
-                            fontWeight: FontWeight.w600,
+
+                //PROFIL
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            "${ProfilController.to.user.nbBooks}",
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 24,
+                              color: ConstantColor.greyDark,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        GetBuilder<UserController>(
-                          builder: (_) => Text(
-                            _.user.bio ?? "Aucune bio",
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
+                          SizedBox(height: 5),
+                          Text(
+                            'Livres',
                             style: TextStyle(
                               fontFamily: 'SF Pro Text',
                               fontSize: 13,
@@ -102,169 +221,73 @@ class ProfilPage extends StatelessWidget {
                               letterSpacing: 0.16,
                               fontWeight: FontWeight.w300,
                             ),
-                            textAlign: TextAlign.left,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: <Widget>[
-                        Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: SizedBox(
-                                child: GestureDetector(
-                                  onTap: () => isMe
-                                      ? ProfilController.to.changePicture()
-                                      : null,
-                                  child: CircleAvatar(
-                                    radius: 42,
-                                    backgroundColor: Colors.white,
-                                    child: GetBuilder<UserController>(
-                                      builder: (_) => CircleAvatar(
-                                        child: isMe &&
-                                                (_.user.picture == null ||
-                                                    _.user.picture == "")
-                                            ? Align(
-                                                alignment:
-                                                    Alignment.bottomRight,
-                                                child: CircleAvatar(
-                                                  backgroundColor: Colors.white,
-                                                  radius: 12,
-                                                  child: Icon(
-                                                    Icons.camera_alt,
-                                                    size: 15,
-                                                    color: Color(0xFF404040),
-                                                  ),
-                                                ),
-                                              )
-                                            : _.loadingPicture
-                                                ? CustomCircularProgress(
-                                                    color: ConstantColor.accent)
-                                                : Container(),
-                                        radius: 40,
-                                        backgroundImage:
-                                            _.user.picture == null ||
-                                                    _.user.picture == ""
-                                                ? AssetImage(
-                                                    'assets/defaut_user.jpeg')
-                                                : NetworkImage(ProfilController.to.user.picture),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                        ],
+                      ),
+                      SizedBox(width: 40),
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            "${ProfilController.to.user.nbRatings}",
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 24,
+                              color: ConstantColor.greyDark,
+                              fontWeight: FontWeight.w700,
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        ButtonGradient(
-                          onTap: () => isMe
-                              ? ProfilController.to.clickEditProfil()
-                              : ProfilController.to.clickFollow(),
-                          text: isMe ? "Modifier" : "Suivre",
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-
-              //PROFIL
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Row(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "${ProfilController.to.user.nbBooks}",
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 24,
-                            color: ConstantColor.greyDark,
-                            fontWeight: FontWeight.w700,
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Livres',
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 13,
-                            color: ConstantColor.greyDark,
-                            letterSpacing: 0.16,
-                            fontWeight: FontWeight.w300,
+                          SizedBox(height: 5),
+                          Text(
+                            'Avis',
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 13,
+                              color: ConstantColor.greyDark,
+                              letterSpacing: 0.16,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 40),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "${ProfilController.to.user.nbRatings}",
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 24,
-                            color: ConstantColor.greyDark,
-                            fontWeight: FontWeight.w700,
+                        ],
+                      ),
+                      SizedBox(width: 40),
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            "${ProfilController.to.user.nbFollowers}",
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 24,
+                              color: ConstantColor.greyDark,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Avis',
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 13,
-                            color: ConstantColor.greyDark,
-                            letterSpacing: 0.16,
-                            fontWeight: FontWeight.w300,
+                          SizedBox(height: 5),
+                          Text(
+                            'Followers',
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 13,
+                              color: ConstantColor.greyDark,
+                              letterSpacing: 0.16,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 40),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          "${ProfilController.to.user.nbFollowers}",
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 24,
-                            color: ConstantColor.greyDark,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Followers',
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 13,
-                            color: ConstantColor.greyDark,
-                            letterSpacing: 0.16,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildLastBooks() {
     return ProfilController.to.user.nbBooks > 0
-        ? GetBuilder<UserController>(
+        ? GetBuilder<ProfilController>(
             builder: (_) => Container(
               height: 250,
               //color: Colors.blue,
@@ -281,7 +304,7 @@ class ProfilPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Mes Derniers Livres',
+                              "${_.isMe ? 'Mes' : 'Ses'} Derniers Livres",
                               style: TextStyle(
                                 fontFamily: 'SF Pro Text',
                                 fontSize: 20,
@@ -289,11 +312,12 @@ class ProfilPage extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            _.books.length > 5 ?
                             Icon(
                               FontAwesomeIcons.chevronRight,
                               color: ConstantColor.greyDark,
                               size: 20,
-                            ),
+                            ) : Container(),
                           ],
                         ),
                       ),
@@ -321,7 +345,7 @@ class ProfilPage extends StatelessWidget {
 
   Widget _buildLastRatings() {
     return ProfilController.to.user.nbRatings > 0
-        ? GetBuilder<UserController>(
+        ? GetBuilder<ProfilController>(
             builder: (_) => Container(
               height: 800,
               //color: Colors.blue,
@@ -339,7 +363,7 @@ class ProfilPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Mes Derniers Avis',
+                              '${_.isMe ? 'Mes' : 'Ses'} Derniers Avis',
                               style: TextStyle(
                                 fontFamily: 'SF Pro Text',
                                 fontSize: 20,
@@ -347,11 +371,12 @@ class ProfilPage extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
+                            _.ratings.length > 5 ?
                             Icon(
                               FontAwesomeIcons.chevronRight,
                               color: ConstantColor.greyDark,
                               size: 20,
-                            ),
+                            ) : Container(),
                           ],
                         ),
                       ),
@@ -360,7 +385,7 @@ class ProfilPage extends StatelessWidget {
                   Expanded(
                     child: ListView.separated(
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount:  _.user.listLastRatings.length <= 5
+                      itemCount: _.user.listLastRatings.length <= 5
                           ? _.user.listLastRatings.length
                           : 5,
                       padding: EdgeInsets.fromLTRB(30, 0, 30, 30),

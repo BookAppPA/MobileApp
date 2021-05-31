@@ -30,54 +30,57 @@ class UserRatingItem extends StatelessWidget {
                   ? Get.toNamed(Routes.BOOK_DETAIL,
                       arguments: Book(id: rating.bookId))
                   : null,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    height: 45,
-                    child: rating.bookImage != null && rating.bookImage != ""
-                        ? CachedNetworkImage(
-                            imageUrl: rating.bookImage,
-                            fit: BoxFit.cover,
-                            useOldImageOnUrlChange: true,
-                            placeholder: (context, url) =>
-                                CustomCircularProgress(radius: 15),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          )
-                        : Container(
-                            decoration: BoxDecoration(color: Colors.grey),
-                          ),
-                  ),
-                  SizedBox(width: 15),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          rating.bookTitle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 17,
-                            color: ConstantColor.black,
-                            fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          "${rating.bookAuthor}  •  ${rating.bookPublished}",
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 14,
-                            color: ConstantColor.greyDark,
-                          ),
-                        ),
-                      ],
+              child: Container(
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: 45,
+                      child: rating.bookImage != null && rating.bookImage != ""
+                          ? CachedNetworkImage(
+                              imageUrl: rating.bookImage,
+                              fit: BoxFit.cover,
+                              useOldImageOnUrlChange: true,
+                              placeholder: (context, url) =>
+                                  CustomCircularProgress(radius: 15),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(color: Colors.grey),
+                            ),
                     ),
-                  ),
-                ],
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            rating.bookTitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 17,
+                              color: ConstantColor.black,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "${rating.bookAuthor}  •  ${rating.bookPublished}",
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 14,
+                              color: ConstantColor.greyDark,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             GestureDetector(

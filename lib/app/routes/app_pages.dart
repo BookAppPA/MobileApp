@@ -22,7 +22,7 @@ class AppPages {
     GetPage(name: Routes.CHOICE_THEME, page: () => ChoiceThemePage()),
     GetPage(name: Routes.SQUELETON, page: () => SqueletonPage()),
     GetPage(name: Routes.BOOK_DETAIL, page: () => BookDetailPage(), binding: BookDetailBinding()),
-    GetPage(name: Routes.PROFIL, page: () => ProfilPage(), binding: ProfilBinding()),
+    GetPage(name: Routes.PROFIL, page: () => ProfilPage(back: true), binding: ProfilBinding()),
     GetPage(name: Routes.EDIT_PROFIL, page: () => EditProfilPage(), binding: EditProfilBinding()),
     
     //GetPage(name: Routes.SQUELETON, page: () => SqueletonPage(), binding: SqueletonBinding()),

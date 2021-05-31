@@ -1,3 +1,5 @@
+import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
@@ -12,23 +14,65 @@ class ProfilController extends GetxController {
 
   final AuthRepository authRepository;
   final UserRepository userRepository;
-  final UserModel user;
-  ProfilController({@required this.authRepository, @required this.userRepository, @required this.user})
-      : assert(authRepository != null), assert(userRepository != null), assert(user != null);
+  ProfilController({@required this.authRepository, @required this.userRepository, this.user, this.userId})
+      : assert(authRepository != null), assert(userRepository != null);
+
+  UserModel user;
+  final String userId;
+
+  String errorMessage = "";
+  bool loadData = true;
+  bool isMe = false;
+
+  List<Book> books = [];
+  List<Rating> ratings = [];
 
   final _picker = ImagePicker();
   
   @override
   void onInit() {
     super.onInit();
+    if (user == null && userId != null)
+      _getUser();
+    else if (user == null && userId == null) {
+      _errorLoad();
+      return;
+    }
+    else {
+      loadData = false;
+      isMe = user.id == UserController.to.user.id;
+      update();
+    }
     _getData();
   }
 
+  _getUser() async {
+    print("GET USER");
+    user = await userRepository.getUserById(userId);
+    if (user != null) {
+      loadData = false;
+      isMe = user.id == UserController.to.user.id;
+    }
+    else _errorLoad();
+    update();
+  }
+
+  _errorLoad() {
+    errorMessage = "Erreur du serveur...";
+    update();
+  }
+
   _getData() async {
-    var books = await userRepository.getUserListBook(user.id);
-    UserController.to.setListBooks(books);
-    var ratings = await userRepository.getLastRatings(user.id, books);
-    UserController.to.setLastRatings(ratings);
+    if ((user != null && user.id != null) || userId != null) {
+      isMe = user.id == UserController.to.user.id;
+      books = await userRepository.getUserListBook(userId ?? user.id);
+      if (isMe)
+        UserController.to.setListBooks(books);
+      ratings = await userRepository.getLastRatings(userId ?? user.id, books);
+      if (isMe)
+        UserController.to.setLastRatings(ratings);
+      update();
+    }
   }
 
   clickLogout() async {
@@ -47,6 +91,8 @@ class ProfilController extends GetxController {
       String urlPic = await userRepository.changeUserPicture(UserController.to.user.id, pickedFile.path, UserController.to.user.picture);
       UserController.to.updatePicture(urlPic);
       UserController.to.isLoadingPicture(false);
+      user.picture = urlPic;
+      update();
     } else {
       print('No image selected.');
     }

@@ -1,5 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/rating.dart';
+import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
@@ -26,34 +28,37 @@ class RatingItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
-              onTap: () => null/*rating.userId != null
+              onTap: () => rating.userId != null
                   ? Get.toNamed(Routes.PROFIL,
-                      arguments: Book(id: rating.bookId))
-                  : null*/,
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage:
-                        rating.userImage == null || rating.userImage == ""
-                            ? AssetImage('assets/defaut_user.jpeg')
-                            : NetworkImage(rating.userImage),
-                  ),
-                  SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      rating.userName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Text',
-                        fontSize: 15,
-                        color: ConstantColor.black,
-                        fontWeight: FontWeight.w600,
+                      arguments: rating.userId == UserController.to.user.id ? UserController.to.user : UserModel(id: rating.userId))
+                  : null,
+              child: Container(
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundImage:
+                          rating.userImage == null || rating.userImage == ""
+                              ? AssetImage('assets/defaut_user.jpeg')
+                              : NetworkImage(rating.userImage),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Text(
+                        rating.userName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'SF Pro Text',
+                          fontSize: 15,
+                          color: ConstantColor.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             GestureDetector(

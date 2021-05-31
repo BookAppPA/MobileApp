@@ -14,7 +14,8 @@ class BookDetailController extends GetxController {
   Book book;
   final String bookId;
   List<Rating> listRatings = [];
-  int nbRatings = 0;
+  int _nbRatings = 0;
+  int _note = 0;
 
   String errorMessage = "";
   bool loadData = true;
@@ -24,8 +25,10 @@ class BookDetailController extends GetxController {
     super.onInit();
     if (book == null && bookId != null)
       _getBook();
-    else if (book == null && bookId == null)
+    else if (book == null && bookId == null) {
       _errorLoad();
+      return;
+    }
     else {
       loadData = false;
       update();
@@ -36,7 +39,11 @@ class BookDetailController extends GetxController {
   _getBook() async {
     print("GET BOOK");
     book = await repository.getBook(bookId);
-    if (book != null) loadData = false;
+    if (book != null) {
+      loadData = false;
+      book.setNote(_note);
+      book.setNbRatings(_nbRatings);
+    }
     else _errorLoad();
     update();
   }
@@ -49,8 +56,12 @@ class BookDetailController extends GetxController {
   _getRatings() async {
     if ((book != null && book.id != null) || bookId != null) {
         Map<String, dynamic> map = await repository.getRatingsByBook(bookId ?? book.id);
-        book.setNote(map["note"]);
-        book.setNbRatings(map["nbRatings"]);
+        _note = map["note"];
+        _nbRatings = map["nbRatings"];
+        if (book != null && book.id != null) {
+          book.setNote(_note);
+          book.setNbRatings(_nbRatings);
+        }
         List<Rating> ratings = [];
         map["ratings"].forEach((rating) => ratings.add(Rating.fromJson(rating)));
         listRatings = ratings;
