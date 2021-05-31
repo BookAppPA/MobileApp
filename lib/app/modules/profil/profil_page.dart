@@ -286,7 +286,7 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _buildLastBooks() {
-    return ProfilController.to.user.nbBooks > 0
+    return ProfilController.to.books.length > 0
         ? GetBuilder<ProfilController>(
             builder: (_) => Container(
               height: 250,
@@ -297,7 +297,7 @@ class ProfilPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(30, 20, 45, 20),
                     child: GestureDetector(
-                      onTap: () => print("click last books"),
+                      onTap: () => _.books.length > 5 ? print("click last books") : null,
                       child: Container(
                         color: Colors.transparent,
                         child: Row(
@@ -325,14 +325,14 @@ class ProfilPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: _.user.listBooksRead.length <= 5
-                          ? _.user.listBooksRead.length
+                      itemCount: _.books.length <= 5
+                          ? _.books.length
                           : 5,
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
                       separatorBuilder: (context, index) => SizedBox(width: 15),
                       itemBuilder: (context, index) {
-                        return BookItem(book: _.user.listBooksRead[index]);
+                        return BookItem(book: _.books[index]);
                       },
                     ),
                   ),
@@ -344,10 +344,10 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _buildLastRatings() {
-    return ProfilController.to.user.nbRatings > 0
+    return ProfilController.to.ratings.length > 0
         ? GetBuilder<ProfilController>(
             builder: (_) => Container(
-              height: 800,
+              height: _.ratings.length <= 5 ? (_.ratings.length * 250).toDouble() : 800,
               //color: Colors.blue,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -356,7 +356,7 @@ class ProfilPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(30, 10, 45, 20),
                     child: GestureDetector(
-                      onTap: () => print("click last ratings"),
+                      onTap: () => _.ratings.length > 5 ? print("click last ratings") : null,
                       child: Container(
                         color: Colors.transparent,
                         child: Row(
@@ -385,14 +385,14 @@ class ProfilPage extends StatelessWidget {
                   Expanded(
                     child: ListView.separated(
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: _.user.listLastRatings.length <= 5
-                          ? _.user.listLastRatings.length
+                      itemCount: _.ratings.length <= 5
+                          ? _.ratings.length
                           : 5,
                       padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 25),
                       itemBuilder: (context, index) {
-                        return UserRatingItem(_.user.listLastRatings[index]);
+                        return UserRatingItem(_.ratings[index]);
                       },
                     ),
                   ),
