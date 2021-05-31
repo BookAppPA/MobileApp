@@ -21,12 +21,14 @@ class ProfilController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _getUserListBook();
+    _getData();
   }
 
-  _getUserListBook() async {
+  _getData() async {
     var books = await userRepository.getUserListBook(user.id);
     UserController.to.setListBooks(books);
+    var ratings = await userRepository.getLastRatings(user.id, books);
+    UserController.to.setLastRatings(ratings);
   }
 
   clickLogout() async {

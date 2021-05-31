@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
@@ -83,4 +84,32 @@ class NodeJSBddAPI {
       return [];
     }
   }
+
+  Future<List<Rating>> getLastRatings(String idUser, List<Book> listBooks) async {
+    try {
+      String list = "";
+      listBooks.forEach((book) {
+        list += (book.id + "/");
+      });
+      list = list.substring(0, list.length - 1);
+      print(list);
+
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.userListRatings),
+          headers: {"authorization": "Bearer $token", "uid": idUser, "listbooks": list});
+      if (resp.statusCode == 200) {
+        var listRatings = json.decode(resp.body);
+        List<Rating> ratings = [];
+        listRatings.forEach((rating) => ratings.add(Rating.fromJson(rating)));
+        return ratings;
+      } else {
+        print("error get http call --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+  
 }

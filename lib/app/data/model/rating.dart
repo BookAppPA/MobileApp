@@ -1,32 +1,44 @@
 class Rating {
 
-  String id, message, bookImage;
-  int nbStars;
+  String bookId, message, bookImage, userId, userImage, userName;
+  int note;
+  DateTime timestamp;
 
 
   Rating({
-    this.id,
+    this.bookId,
     this.message,
     this.bookImage,
-    this.nbStars,
+    this.userId,
+    this.userImage,
+    this.userName,
+    this.note,
+    this.timestamp
   });
 
   Rating.fromJson(Map<String, dynamic> json){
-      this.id = json['id'];
+      this.bookId = json['book_id'];
+      this.bookImage = json['book_pic'];
       this.message = json['message'];
-      this.bookImage = json['bookImage'];
-      this.nbStars = json['nbStars'];
+      this.note = json['note'];
+      this.timestamp = DateTime.fromMillisecondsSinceEpoch(json["timestamp"]["_seconds"] * 1000);
+      this.userId = json["user_id"];
+      this.userImage = json["user_pic"];
+      this.userName = json["username"];
   }
 
   Map<String, dynamic> toJson(){
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['book_id'] = this.bookId;
+    data['book_pic'] = this.bookImage;
     data['message'] = this.message;
-    data['bookImage'] = this.bookImage;
-    data['nbStars'] = this.nbStars;
+    data['note'] = this.note;
+    data['user_id'] = this.userId;
+    data['user_pic'] = this.userImage;
+    data['username'] = this.userName;
     return data;
   }
 
   @override
-  String toString() => "$message: $nbStars/5";
+  String toString() => "$message: $note/5";
 }

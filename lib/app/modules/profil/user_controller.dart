@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,11 @@ class UserController extends GetxController {
 
   setListBooks(List<Book> list) {
     _user.listBooksRead = list;
+    update();
+  }
+
+  setLastRatings(List<Rating> ratings) {
+    _user.listLastRatings = ratings;
     update();
   }
 

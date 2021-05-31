@@ -1,10 +1,12 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/rating.dart';
 
 class UserModel {
 
   String id, pseudo, email, picture, bio;
   int nbBooks, nbRatings, nbFollowers;
   List<Book> listBooksRead;
+  List<Rating> listLastRatings;
 
   UserModel({
     this.id,
@@ -15,7 +17,8 @@ class UserModel {
     this.nbBooks,
     this.nbRatings,
     this.nbFollowers,
-    this.listBooksRead
+    this.listBooksRead,
+    this.listLastRatings,
   });
 
   UserModel.fromJson(Map<String, dynamic> json){
@@ -28,6 +31,7 @@ class UserModel {
       this.nbRatings = json['nbRatings'] ?? 0;
       this.nbFollowers = json['nbFollowers'] ?? 0;
       this.listBooksRead = [];
+      this.listLastRatings = [];
   }
 
   Map<String, dynamic> toJson(){

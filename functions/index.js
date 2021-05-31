@@ -247,6 +247,29 @@ app.get('/api/bdd/userListBooks', checkIfAuthenticated, (req, res) => {
   })();
 });
 
+// get list last user ratings
+app.get('/api/bdd/userListRatings', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      let ratings = [];
+      console.log(req.headers.listbooks);
+      let booksId = req.headers.listbooks.split("/");
+      for (let id of booksId) {
+        let query = db.collection('ratings').doc(id).collection("comments").where("user_id", "==", req.headers.uid).limit(1);
+        let res = await query.get();
+        if (res.docs.length == 1) {
+          let map = res.docs[0].data();
+          console.log(map);
+          ratings.push(map);
+        }
+      }
+      return res.status(200).send(ratings);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
 
 // create item
 app.post('/api/create', checkIfAuthenticated, (req, res) => {

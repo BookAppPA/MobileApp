@@ -1,4 +1,3 @@
-import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
@@ -7,18 +6,21 @@ import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
+import 'package:book_app/app/modules/widgets_global/rating_item.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'profil_controller.dart';
-import 'widgets/rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
   final UserModel user;
   ProfilPage({@required this.user}) {
-    Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: user));
+    Get.put(ProfilController(
+        authRepository: AuthRepository(),
+        userRepository: UserRepository(),
+        user: user));
   }
 
   bool isMe = false;
@@ -117,7 +119,9 @@ class ProfilPage extends StatelessWidget {
                               alignment: Alignment.topCenter,
                               child: SizedBox(
                                 child: GestureDetector(
-                                  onTap: () => isMe ? ProfilController.to.changePicture() : null,
+                                  onTap: () => isMe
+                                      ? ProfilController.to.changePicture()
+                                      : null,
                                   child: CircleAvatar(
                                     radius: 42,
                                     backgroundColor: Colors.white,
@@ -139,11 +143,17 @@ class ProfilPage extends StatelessWidget {
                                                   ),
                                                 ),
                                               )
-                                            : _.loadingPicture ? CustomCircularProgress(color: ConstantColor.accent) : Container(),
+                                            : _.loadingPicture
+                                                ? CustomCircularProgress(
+                                                    color: ConstantColor.accent)
+                                                : Container(),
                                         radius: 40,
-                                        backgroundImage: _.user.picture == null || _.user.picture == ""
-                                            ? AssetImage('assets/defaut_user.jpeg')
-                                            : NetworkImage(user.picture),
+                                        backgroundImage:
+                                            _.user.picture == null ||
+                                                    _.user.picture == ""
+                                                ? AssetImage(
+                                                    'assets/defaut_user.jpeg')
+                                                : NetworkImage(user.picture),
                                       ),
                                     ),
                                   ),
@@ -257,27 +267,45 @@ class ProfilPage extends StatelessWidget {
   Widget _buildLastBooks() {
     return user.nbBooks > 0
         ? GetBuilder<UserController>(
-                  builder: (_) => Container(
+            builder: (_) => Container(
               height: 250,
               //color: Colors.blue,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(45, 20, 0, 20),
-                    child: Text(
-                      'Mes Derniers Livres',
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Text',
-                        fontSize: 20,
-                        color: ConstantColor.greyDark,
-                        fontWeight: FontWeight.w700,
+                    padding: EdgeInsets.fromLTRB(30, 20, 45, 20),
+                    child: GestureDetector(
+                      onTap: () => print("click last books"),
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Mes Derniers Livres',
+                              style: TextStyle(
+                                fontFamily: 'SF Pro Text',
+                                fontSize: 20,
+                                color: ConstantColor.greyDark,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Icon(
+                              FontAwesomeIcons.chevronRight,
+                              color: ConstantColor.greyDark,
+                              size: 20,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: _.user.listBooksRead.length <= 5 ? _.user.listBooksRead.length : 5,
+                      itemCount: _.user.listBooksRead.length <= 5
+                          ? _.user.listBooksRead.length
+                          : 5,
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
                       separatorBuilder: (context, index) => SizedBox(width: 15),
@@ -289,43 +317,64 @@ class ProfilPage extends StatelessWidget {
                 ],
               ),
             ),
-        )
+          )
         : Container();
   }
 
   Widget _buildLastRatings() {
     return user.nbRatings > 0
-        ? Container(
-            height: 800,
-            //color: Colors.blue,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(45, 10, 0, 20),
-                  child: Text(
-                    'Mes Derniers Avis',
-                    style: TextStyle(
-                      fontFamily: 'SF Pro Text',
-                      fontSize: 20,
-                      color: ConstantColor.greyDark,
-                      fontWeight: FontWeight.w700,
+        ? GetBuilder<UserController>(
+            builder: (_) => Container(
+              height: 800,
+              //color: Colors.blue,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(30, 10, 45, 20),
+                    child: GestureDetector(
+                      onTap: () => print("click last ratings"),
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Mes Derniers Avis',
+                              style: TextStyle(
+                                fontFamily: 'SF Pro Text',
+                                fontSize: 20,
+                                color: ConstantColor.greyDark,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Icon(
+                              FontAwesomeIcons.chevronRight,
+                              color: ConstantColor.greyDark,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: 5,
-                    padding: EdgeInsets.fromLTRB(40, 0, 40, 30),
-                    separatorBuilder: (context, index) => SizedBox(height: 25),
-                    itemBuilder: (context, index) {
-                      return RatingItem(Rating());
-                    },
+                  Expanded(
+                    child: ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount:  _.user.listLastRatings.length <= 5
+                          ? _.user.listLastRatings.length
+                          : 5,
+                      padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 25),
+                      itemBuilder: (context, index) {
+                        return RatingItem(_.user.listLastRatings[index]);
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           )
         : Container();

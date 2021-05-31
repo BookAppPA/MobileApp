@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:http/http.dart' as http;
 
-String parseDateTime(DateTime date, String regex) {
-  return Jiffy(date).format(regex);
+String parseDateTime(DateTime date) {
+  return Jiffy(date).format("dd/MM/yyyy HH:mm");
 }
 
 String parseTimestamp(Duration duration) {
@@ -93,5 +93,5 @@ Timestamp parseDateTimeToTimestamp(DateTime date) {
 
 String parseTimestampFirebaseToString(Timestamp date) {
   return parseDateTime(
-      Timestamp.fromDate(date.toDate()).toDate(), "dd/MM/yyyy HH:mm");
+      Timestamp.fromDate(date.toDate()).toDate());
 }

@@ -1,3 +1,4 @@
+import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_firestore_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_messaging_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
@@ -35,6 +36,10 @@ class UserRepository {
 
   getUserListBook(String idUser) async {
     return await _databaseAPI.getUserListBook(idUser);
+  }
+
+  getLastRatings(String idUser, List<Book> listBooks) async {
+    return await _databaseAPI.getLastRatings(idUser, listBooks);
   }
 
   configurePushNotification(String idUser) async {
