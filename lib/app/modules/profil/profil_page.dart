@@ -6,13 +6,12 @@ import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
-import 'package:book_app/app/modules/widgets_global/rating_item.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'profil_controller.dart';
+import 'widgets/user_rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
   final UserModel user;
@@ -369,7 +368,7 @@ class ProfilPage extends StatelessWidget {
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 25),
                       itemBuilder: (context, index) {
-                        return RatingItem(_.user.listLastRatings[index]);
+                        return UserRatingItem(_.user.listLastRatings[index]);
                       },
                     ),
                   ),
