@@ -65,10 +65,16 @@ class ProfilController extends GetxController {
   _getData() async {
     if ((user != null && user.id != null) || userId != null) {
       isMe = user.id == UserController.to.user.id;
-      books = await userRepository.getUserListBook(userId ?? user.id);
+      if (!isMe || (isMe && UserController.to.user.listBooksRead.length == 0))
+        books = await userRepository.getUserListBook(userId ?? user.id);
+      else
+        books = UserController.to.user.listBooksRead;
       if (isMe)
         UserController.to.setListBooks(books);
-      ratings = await userRepository.getLastRatings(userId ?? user.id, books);
+      if (!isMe || (isMe && UserController.to.user.listLastRatings.length == 0))
+        ratings = await userRepository.getLastRatings(userId ?? user.id, books);
+      else
+        ratings = UserController.to.user.listLastRatings;
       if (isMe)
         UserController.to.setLastRatings(ratings);
       update();

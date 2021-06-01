@@ -11,7 +11,8 @@ import 'package:get/get.dart';
 
 class UserRatingItem extends StatelessWidget {
   final Rating rating;
-  UserRatingItem(this.rating) : assert(rating != null);
+  final Book book;
+  UserRatingItem(this.rating, this.book) : assert(rating != null), assert(book != null);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,9 @@ class UserRatingItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
-              onTap: () => rating.bookId != null
+              onTap: () => book.id != null
                   ? Get.toNamed(Routes.BOOK_DETAIL,
-                      arguments: Book(id: rating.bookId))
+                      arguments: book)
                   : null,
               child: Container(
                 color: Colors.transparent,

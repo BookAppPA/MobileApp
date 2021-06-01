@@ -392,7 +392,7 @@ class ProfilPage extends StatelessWidget {
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 25),
                       itemBuilder: (context, index) {
-                        return UserRatingItem(_.ratings[index]);
+                        return UserRatingItem(_.ratings[index], _.books[index]);
                       },
                     ),
                   ),
