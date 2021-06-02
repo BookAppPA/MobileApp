@@ -11,7 +11,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-class BookDetailPage extends StatelessWidget {
+class BookDetailPage extends GetWidget<BookDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

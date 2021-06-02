@@ -8,10 +8,11 @@ class BookDetailBinding extends Bindings {
   @override
   void dependencies() {
     final Book book = Get.arguments as Book;
+    Get.delete<BookDetailController>();
     if (book.title != null)
-      Get.put(BookDetailController(repository: BookRepository(), book: book));
+      Get.create(() => BookDetailController(repository: BookRepository(), book: book), permanent: false);
     else if (book.id != null)
-      Get.put(BookDetailController(repository: BookRepository(), bookId: book.id));
+      Get.create(() => BookDetailController(repository: BookRepository(), bookId: book.id), permanent: false);
     else
       Get.put(BookDetailController(repository: BookRepository()));
   }
