@@ -56,15 +56,17 @@ class BookDetailController extends GetxController {
   _getRatings() async {
     if ((book != null && book.id != null) || bookId != null) {
         Map<String, dynamic> map = await repository.getRatingsByBook(bookId ?? book.id);
-        _note = map["note"];
-        _nbRatings = map["nbRatings"];
+        _note = map["note"] ?? 0;
+        _nbRatings = map["nbRatings"] ?? 0;
         if (book != null && book.id != null) {
           book.setNote(_note);
           book.setNbRatings(_nbRatings);
         }
-        List<Rating> ratings = [];
-        map["ratings"].forEach((rating) => ratings.add(Rating.fromJson(rating)));
-        listRatings = ratings;
+        if (_nbRatings > 0) {
+          List<Rating> ratings = [];
+          map["ratings"].forEach((rating) => ratings.add(Rating.fromJson(rating)));
+          listRatings = ratings;
+        }
         update();
     }
   }

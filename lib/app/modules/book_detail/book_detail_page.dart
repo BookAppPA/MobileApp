@@ -125,7 +125,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      _.book.nbRating <= 0 ? "Avis" : "Avis (${_.book.nbRating})",
+                                      _.book.nbRating <= 0 ? "Aucun Avis" : "Avis (${_.book.nbRating})",
                                       style: TextStyle(
                                         fontFamily: 'SF Pro Text',
                                         fontSize: 20,

@@ -10,4 +10,5 @@ abstract class Routes{
   static const BOOK_DETAIL = "book_detail";
   static const PROFIL = "profil";
   static const EDIT_PROFIL = "edit_profil";
+  static const SEARCH = "search";
 }

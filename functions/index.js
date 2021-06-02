@@ -274,15 +274,16 @@ app.get('/api/bdd/ratingByBook', checkIfAuthenticated, (req, res) => {
       let ratings = [];
       let doc = await db.collection('ratings').doc(req.headers.bookid).get();
       let result = doc.data();
-      map["nbRatings"] = result["nbRatings"];
-      map["note"] = result["note"];
-
-      let snap = await db.collection('ratings').doc(req.headers.bookid).collection("comments").orderBy("timestamp", "desc").limit(5).get();
-      let docs = snap.docs;
-      for (let doc of docs) {
-        ratings.push(doc.data());
+      if (result != null && result != undefined) {
+        map["nbRatings"] = result["nbRatings"];
+        map["note"] = result["note"];
+        let snap = await db.collection('ratings').doc(req.headers.bookid).collection("comments").orderBy("timestamp", "desc").limit(5).get();
+        let docs = snap.docs;
+        for (let doc of docs) {
+          ratings.push(doc.data());
+        }
+        map["ratings"] = ratings;
       }
-      map["ratings"] = ratings;
       return res.status(200).send(map);
     } catch (error) {
       console.log(error);
