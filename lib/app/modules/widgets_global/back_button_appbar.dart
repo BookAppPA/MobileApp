@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 
 class BackButtonAppBar extends AppBar {
   final Color iconColor, appBarColor;
+  final String textTitle;
   BackButtonAppBar(
       {this.appBarColor: ConstantColor.background,
-      this.iconColor: ConstantColor.grey})
+      this.iconColor: ConstantColor.grey,
+      this.textTitle: ""})
       : super(
           elevation: 0,
           backgroundColor: appBarColor,
@@ -24,5 +26,6 @@ class BackButtonAppBar extends AppBar {
               },
             ),
           ),
+          title: Text(textTitle),
         );
 }

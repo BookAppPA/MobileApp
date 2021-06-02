@@ -37,6 +37,9 @@ abstract class UrlAPI {
 
   static final String bookDetail =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/bookDetail";
+  
+  static final String searchBook =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/searchBook";
 
   static final String ratingByBook =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/ratingByBook";

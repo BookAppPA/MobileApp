@@ -48,7 +48,7 @@ dependencies:
   flutter_svg:
 
   # Utils
-  connectivity:             # gestion connection inter(net
+  connectivity:             # gestion connection internet
   jiffy:                      # gestion date
   font_awesome_flutter:
   the_validator:               # validator textfield

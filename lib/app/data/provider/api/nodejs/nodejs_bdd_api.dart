@@ -19,7 +19,7 @@ class NodeJSBddAPI {
         Map<String, dynamic> map = json.decode(resp.body);
         return UserModel.fromJson(map);
       } else {
-        print("error get http call --> ${resp.body}");
+        print("error get http getUserById --> ${resp.body}");
         return null;
       }
     } catch (e) {
@@ -37,7 +37,7 @@ class NodeJSBddAPI {
       if (resp.statusCode == 200) {
         return true;
       } else {
-        print("error get http call --> ${resp.body}");
+        print("error get http updateUser --> ${resp.body}");
         return false;
       }
     } catch (e) {
@@ -56,7 +56,7 @@ class NodeJSBddAPI {
         listBooks.forEach((book) => books.add(Book.fromJson(book)));
         return books;
       } else {
-        print("error get http call --> ${resp.body}");
+        print("error get http getPopularBooks --> ${resp.body}");
         return [];
       }
     } catch (e) {
@@ -74,7 +74,7 @@ class NodeJSBddAPI {
         var book = json.decode(resp.body);
         return Book.fromJson(book);
       } else {
-        print("error get http call --> ${resp.body}");
+        print("error get http getBook --> ${resp.body}");
         return null;
       }
     } catch (e) {
@@ -82,6 +82,27 @@ class NodeJSBddAPI {
       return null;
     }
   }
+
+  Future<List<Book>> searchBook(String search) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.searchBook),
+          headers: {"authorization": "Bearer $token", "search": search});
+      if (resp.statusCode == 200) {
+        var listBooks = json.decode(resp.body);
+        List<Book> books = [];
+        listBooks.forEach((book) => books.add(Book.fromJson(book)));
+        return books;
+      } else {
+        print("error get http searchBook --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+  
 
   Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
     try {
@@ -91,7 +112,7 @@ class NodeJSBddAPI {
       if (resp.statusCode == 200) {
         return json.decode(resp.body);
       } else {
-        print("error get http call --> ${resp.body}");
+        print("error get http getRatingsByBook --> ${resp.body}");
         return {};
       }
     } catch (e) {
@@ -111,7 +132,7 @@ class NodeJSBddAPI {
         listBooks.forEach((book) => books.add(Book.fromJson(book)));
         return books;
       } else {
-        print("error get http call --> ${resp.body}");
+        print("error get http getUserListBook --> ${resp.body}");
         return [];
       }
     } catch (e) {
@@ -143,7 +164,7 @@ class NodeJSBddAPI {
         listRatings.forEach((rating) => ratings.add(Rating.fromJson(rating)));
         return ratings;
       } else {
-        print("error get http call --> ${resp.body}");
+        print("error get http getLastRatings --> ${resp.body}");
         return [];
       }
     } catch (e) {

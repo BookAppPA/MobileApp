@@ -16,4 +16,8 @@ class BookRepository {
     return await _databaseAPI.getRatingsByBook(bookID);
   }
 
+  searchBook(String search) async {
+    return await _databaseAPI.searchBook(search);
+  }
+
 }

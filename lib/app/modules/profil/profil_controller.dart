@@ -113,6 +113,6 @@ class ProfilController extends GetxController {
   }
 
   clickFinishBook() {
-    print("click finish book");
+    Get.toNamed(Routes.SEARCH);
   }
 }

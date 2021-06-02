@@ -230,6 +230,28 @@ app.get('/api/bdd/bookDetail', checkIfAuthenticated, (req, res) => {
   })();
 });
 
+// get books by search
+app.get('/api/bdd/searchBook', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      let search = req.headers.search.replace(" ", "+");
+      let url = `${baseUrlGoogleBooksAPI}volumes?q=${search}&filter=partial&maxResults=2`;
+      requestExternalAPI(url, function (error, response, body) {
+        if (error) {
+          console.log('error:', error);
+          return res.status(500).send(error.toJSON());
+        } else {
+          let books = JSON.parse(body);
+          return res.status(200).send(books.items);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error.toJSON());
+    }
+  })();
+});
+
 // get list user books
 app.get('/api/bdd/userListBooks', checkIfAuthenticated, (req, res) => {
   (async () => {
