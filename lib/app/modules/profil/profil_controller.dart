@@ -111,4 +111,8 @@ class ProfilController extends GetxController {
   clickFollow() {
     print("click follow user");
   }
+
+  clickFinishBook() {
+    print("click finish book");
+  }
 }

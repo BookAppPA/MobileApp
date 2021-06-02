@@ -62,17 +62,18 @@ class ProfilPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      back ?
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: Color(0xbf212121),
-                        ),
-                        onPressed: () {
-                          FocusScope.of(Get.context).unfocus();
-                          Get.back();
-                        },
-                      ) : Container(),
+                      back
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: Color(0xbf212121),
+                              ),
+                              onPressed: () {
+                                FocusScope.of(Get.context).unfocus();
+                                Get.back();
+                              },
+                            )
+                          : Container(),
                       IconButton(
                         icon: Icon(
                           FontAwesomeIcons.powerOff,
@@ -182,13 +183,6 @@ class ProfilPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
-                          ButtonGradient(
-                            onTap: () => controller.isMe
-                                ? ProfilController.to.clickEditProfil()
-                                : ProfilController.to.clickFollow(),
-                            text: controller.isMe ? "Modifier" : "Suivre",
-                          ),
                         ],
                       ),
                     )
@@ -196,86 +190,120 @@ class ProfilPage extends StatelessWidget {
                 ),
 
                 //PROFIL
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Column(
+                SizedBox(height: 20),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Row(
                         children: <Widget>[
-                          Text(
-                            "${ProfilController.to.user.nbBooks}",
-                            style: TextStyle(
-                              fontFamily: 'SF Pro Text',
-                              fontSize: 24,
-                              color: ConstantColor.greyDark,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                "${ProfilController.to.user.nbBooks}",
+                                style: TextStyle(
+                                  fontFamily: 'SF Pro Text',
+                                  fontSize: 24,
+                                  color: ConstantColor.greyDark,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Livres',
+                                style: TextStyle(
+                                  fontFamily: 'SF Pro Text',
+                                  fontSize: 13,
+                                  color: ConstantColor.greyDark,
+                                  letterSpacing: 0.16,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 5),
-                          Text(
-                            'Livres',
-                            style: TextStyle(
-                              fontFamily: 'SF Pro Text',
-                              fontSize: 13,
-                              color: ConstantColor.greyDark,
-                              letterSpacing: 0.16,
-                              fontWeight: FontWeight.w300,
-                            ),
+                          SizedBox(width: 40),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                "${ProfilController.to.user.nbRatings}",
+                                style: TextStyle(
+                                  fontFamily: 'SF Pro Text',
+                                  fontSize: 24,
+                                  color: ConstantColor.greyDark,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Avis',
+                                style: TextStyle(
+                                  fontFamily: 'SF Pro Text',
+                                  fontSize: 13,
+                                  color: ConstantColor.greyDark,
+                                  letterSpacing: 0.16,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 40),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                "${ProfilController.to.user.nbFollowers}",
+                                style: TextStyle(
+                                  fontFamily: 'SF Pro Text',
+                                  fontSize: 24,
+                                  color: ConstantColor.greyDark,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Followers',
+                                style: TextStyle(
+                                  fontFamily: 'SF Pro Text',
+                                  fontSize: 13,
+                                  color: ConstantColor.greyDark,
+                                  letterSpacing: 0.16,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      SizedBox(width: 40),
-                      Column(
+                    ),
+
+                    Expanded(
+                      child: Column(
                         children: <Widget>[
-                          Text(
-                            "${ProfilController.to.user.nbRatings}",
-                            style: TextStyle(
-                              fontFamily: 'SF Pro Text',
-                              fontSize: 24,
-                              color: ConstantColor.greyDark,
-                              fontWeight: FontWeight.w700,
-                            ),
+                          ButtonGradient(
+                            width: 175,
+                            onTap: () => controller.isMe
+                                ? ProfilController.to.clickEditProfil()
+                                : ProfilController.to.clickFollow(),
+                            text: controller.isMe ? "Modifier" : "Suivre",
                           ),
-                          SizedBox(height: 5),
-                          Text(
-                            'Avis',
-                            style: TextStyle(
-                              fontFamily: 'SF Pro Text',
-                              fontSize: 13,
-                              color: ConstantColor.greyDark,
-                              letterSpacing: 0.16,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
+                          
+                          SizedBox(height: 20),
+
+                          controller.isMe
+                            ? Column(
+                                children: <Widget>[
+                                  ButtonGradient(
+                                    width: 175,
+                                    onTap: () => ProfilController.to.clickFinishBook(),
+                                    text: "J'ai finis un livre",
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         ],
                       ),
-                      SizedBox(width: 40),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            "${ProfilController.to.user.nbFollowers}",
-                            style: TextStyle(
-                              fontFamily: 'SF Pro Text',
-                              fontSize: 24,
-                              color: ConstantColor.greyDark,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            'Followers',
-                            style: TextStyle(
-                              fontFamily: 'SF Pro Text',
-                              fontSize: 13,
-                              color: ConstantColor.greyDark,
-                              letterSpacing: 0.16,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ],
             ),
@@ -295,9 +323,10 @@ class ProfilPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(30, 20, 45, 20),
+                    padding: EdgeInsets.fromLTRB(30, 10, 45, 20),
                     child: GestureDetector(
-                      onTap: () => _.books.length > 5 ? print("click last books") : null,
+                      onTap: () =>
+                          _.books.length > 5 ? print("click last books") : null,
                       child: Container(
                         color: Colors.transparent,
                         child: Row(
@@ -312,12 +341,13 @@ class ProfilPage extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            _.books.length > 5 ?
-                            Icon(
-                              FontAwesomeIcons.chevronRight,
-                              color: ConstantColor.greyDark,
-                              size: 20,
-                            ) : Container(),
+                            _.books.length > 5
+                                ? Icon(
+                                    FontAwesomeIcons.chevronRight,
+                                    color: ConstantColor.greyDark,
+                                    size: 20,
+                                  )
+                                : Container(),
                           ],
                         ),
                       ),
@@ -325,9 +355,7 @@ class ProfilPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: _.books.length <= 5
-                          ? _.books.length
-                          : 5,
+                      itemCount: _.books.length <= 5 ? _.books.length : 5,
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
                       separatorBuilder: (context, index) => SizedBox(width: 15),
@@ -347,7 +375,9 @@ class ProfilPage extends StatelessWidget {
     return ProfilController.to.ratings.length > 0
         ? GetBuilder<ProfilController>(
             builder: (_) => Container(
-              height: _.ratings.length <= 5 ? (_.ratings.length * 250).toDouble() : 800,
+              height: _.ratings.length <= 5
+                  ? (_.ratings.length * 250).toDouble()
+                  : 800,
               //color: Colors.blue,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -356,7 +386,9 @@ class ProfilPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(30, 10, 45, 20),
                     child: GestureDetector(
-                      onTap: () => _.ratings.length > 5 ? print("click last ratings") : null,
+                      onTap: () => _.ratings.length > 5
+                          ? print("click last ratings")
+                          : null,
                       child: Container(
                         color: Colors.transparent,
                         child: Row(
@@ -371,12 +403,13 @@ class ProfilPage extends StatelessWidget {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            _.ratings.length > 5 ?
-                            Icon(
-                              FontAwesomeIcons.chevronRight,
-                              color: ConstantColor.greyDark,
-                              size: 20,
-                            ) : Container(),
+                            _.ratings.length > 5
+                                ? Icon(
+                                    FontAwesomeIcons.chevronRight,
+                                    color: ConstantColor.greyDark,
+                                    size: 20,
+                                  )
+                                : Container(),
                           ],
                         ),
                       ),
@@ -385,9 +418,7 @@ class ProfilPage extends StatelessWidget {
                   Expanded(
                     child: ListView.separated(
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: _.ratings.length <= 5
-                          ? _.ratings.length
-                          : 5,
+                      itemCount: _.ratings.length <= 5 ? _.ratings.length : 5,
                       padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 25),
