@@ -90,22 +90,4 @@ class NodeJSAuthAPI {
       return null;
     }
   }
-
-  Future<DateTime> server(String email, String password) async {
-    try {
-      http.Response resp = await http.get(Uri.parse(UrlAPI.login));
-      if (resp.statusCode == 200) {
-        print("response: ${resp.body}");
-        Map<String, dynamic> map = json.decode(resp.body);
-        print("time: ${map['timestamp']}");
-        return DateTime.now();
-      } else {
-        print("error get http call");
-        return DateTime.now();
-      }
-    } catch (e) {
-      print(e.toString());
-      return DateTime.now();
-    }
-  }
 }

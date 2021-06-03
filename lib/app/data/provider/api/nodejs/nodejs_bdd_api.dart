@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
-import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
@@ -12,8 +11,8 @@ class NodeJSBddAPI {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.get(
-        Uri.parse(UrlAPI.getUserById),
-        headers: {"authorization": "Bearer $token", "uid": uid},
+        Uri.parse(UrlAPI.getUserById+"/$uid"),
+        headers: {"authorization": "Bearer $token"},
       );
       if (resp.statusCode == 200) {
         Map<String, dynamic> map = json.decode(resp.body);
@@ -31,8 +30,8 @@ class NodeJSBddAPI {
   Future<bool> updateUser(String idUser, Map<String, String> data) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.post(Uri.parse(UrlAPI.updateUser),
-          headers: {"authorization": "Bearer $token", "uid": idUser},
+      http.Response resp = await http.put(Uri.parse(UrlAPI.updateUser+"/$idUser"),
+          headers: {"authorization": "Bearer $token"},
           body: data);
       if (resp.statusCode == 200) {
         return true;
@@ -68,8 +67,8 @@ class NodeJSBddAPI {
   Future<Book> getBook(String bookID) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.bookDetail),
-          headers: {"authorization": "Bearer $token", "bookid": bookID});
+      http.Response resp = await http.get(Uri.parse(UrlAPI.bookDetail+"/$bookID"),
+          headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var book = json.decode(resp.body);
         return Book.fromJson(book);
@@ -105,8 +104,8 @@ class NodeJSBddAPI {
   Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.ratingByBook),
-          headers: {"authorization": "Bearer $token", "bookid": bookID});
+      http.Response resp = await http.get(Uri.parse(UrlAPI.ratingByBook+"/$bookID"),
+          headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         return json.decode(resp.body);
       } else {
@@ -122,8 +121,8 @@ class NodeJSBddAPI {
   Future<List<Book>> getUserListBook(String idUser) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.userListBooks),
-          headers: {"authorization": "Bearer $token", "uid": idUser});
+      http.Response resp = await http.get(Uri.parse(UrlAPI.userListBooks+"/$idUser"),
+          headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];

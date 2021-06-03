@@ -161,10 +161,10 @@ app.post('/api/auth/logout', checkIfAuthenticated, (req, res) => {
 });
 
 // Update user
-app.post('/api/auth/updateUser', checkIfAuthenticated, (req, res) => {
+app.put('/api/auth/updateUser/:user_id', checkIfAuthenticated, (req, res) => {
   (async () => {
     try {
-      await db.collection('users').doc(req.headers.uid)
+      await db.collection('users').doc(req.params.user_id)
         .set(req.body, { merge: true });
       return res.status(200).send();
     } catch (error) {
@@ -176,10 +176,10 @@ app.post('/api/auth/updateUser', checkIfAuthenticated, (req, res) => {
 
 
 // get user by id
-app.get('/api/bdd/getUserById', checkIfAuthenticated, (req, res) => {
+app.get('/api/bdd/getUserById/:user_id', checkIfAuthenticated, (req, res) => {
   (async () => {
     try {
-      const doc = await db.collection('users').doc(req.headers.uid).get();
+      const doc = await db.collection('users').doc(req.params.user_id).get();
       return res.status(200).send(doc.data());
     } catch (error) {
       console.log(error);
@@ -211,10 +211,10 @@ app.get('/api/bdd/popularBooks', (req, res) => {
 });
 
 // get books by id
-app.get('/api/bdd/bookDetail', checkIfAuthenticated, (req, res) => {
+app.get('/api/bdd/bookDetail/:book_id', checkIfAuthenticated, (req, res) => {
   (async () => {
     try {
-      let url = `${baseUrlGoogleBooksAPI}volumes/${req.headers.bookid}`;
+      let url = `${baseUrlGoogleBooksAPI}volumes/${req.params.book_id}`;
       requestExternalAPI(url, function (error, response, body) {
         if (error) {
           console.log('error:', error);
@@ -253,12 +253,12 @@ app.get('/api/bdd/searchBook', checkIfAuthenticated, (req, res) => {
 });
 
 // get list user books
-app.get('/api/bdd/userListBooks', checkIfAuthenticated, (req, res) => {
+app.get('/api/bdd/userListBooks/:user_id', checkIfAuthenticated, (req, res) => {
   (async () => {
     try {
       let url = `${baseUrlGoogleBooksAPI}volumes/`;
       let response = [];
-      let query = db.collection('books_users').where("user_id", "==", req.headers.uid).orderBy("timestamp", "desc").limit(5);
+      let query = db.collection('books_users').where("user_id", "==", req.params.user_id).orderBy("timestamp", "desc").limit(5);
       await query.get().then(querySnapshot => {
         let docs = querySnapshot.docs;
         for (let doc of docs) {
@@ -324,17 +324,17 @@ app.post('/api/bdd/deleteBookFromGallery', checkIfAuthenticated, (req, res) => {
 
 
 // get list ratings by book ID
-app.get('/api/bdd/ratingByBook', checkIfAuthenticated, (req, res) => {
+app.get('/api/bdd/ratingByBook/:book_id', checkIfAuthenticated, (req, res) => {
   (async () => {
     try {
       let map = {};
       let ratings = [];
-      let doc = await db.collection('ratings').doc(req.headers.bookid).get();
+      let doc = await db.collection('ratings').doc(req.params.book_id).get();
       let result = doc.data();
       if (result != null && result != undefined) {
         map["nbRatings"] = result["nbRatings"];
         map["note"] = result["note"];
-        let snap = await db.collection('ratings').doc(req.headers.bookid).collection("comments").orderBy("timestamp", "desc").limit(5).get();
+        let snap = await db.collection('ratings').doc(req.params.book_id).collection("comments").orderBy("timestamp", "desc").limit(5).get();
         let docs = snap.docs;
         for (let doc of docs) {
           ratings.push(doc.data());
@@ -374,19 +374,7 @@ app.get('/api/bdd/userListRatings', checkIfAuthenticated, (req, res) => {
   })();
 });
 
-// create item
-app.post('/api/create', checkIfAuthenticated, (req, res) => {
-  (async () => {
-    try {
-      await db.collection('items').doc('/' + req.body.id + '/')
-        .create({ item: req.body.item });
-      return res.status(200).send();
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-    }
-  })();
-});
+
 
 // read item
 app.get('/api/readBookID/:item_id', checkIfAuthenticated, (req, res) => {
@@ -403,29 +391,7 @@ app.get('/api/readBookID/:item_id', checkIfAuthenticated, (req, res) => {
   })();
 });
 
-// read all
-app.get('/api/read', checkIfAdmin, (req, res) => {
-  (async () => {
-    try {
-      let query = db.collection('items');
-      let response = [];
-      await query.get().then(querySnapshot => {
-        let docs = querySnapshot.docs;
-        for (let doc of docs) {
-          const selectedItem = {
-            id: doc.id,
-            item: doc.data().item
-          };
-          response.push(selectedItem);
-        }
-      });
-      return res.status(200).send(response);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send(error);
-    }
-  })();
-});
+
 
 // update
 app.put('/api/update/:item_id', checkIfAuthenticated, (req, res) => {
