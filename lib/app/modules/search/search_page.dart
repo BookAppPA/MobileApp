@@ -52,15 +52,27 @@ class SearchPage extends GetView<SearchController> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(25),
-                    child: Obx(
-                      () => ListView.separated(
-                        itemCount: controller.books.length,
+                    child: GetBuilder<SearchController>(builder: (_) {
+                      if (_.searching)
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      if (_.books == null)
+                        return Center(
+                          child: Text("Aucun livre trouvé..."),
+                        );
+                      return ListView.separated(
+                        itemCount: _.books.length,
                         itemBuilder: (ctx, index) {
-                          return SearchBookItem(controller.books[index]);
+                          return SearchBookItem(
+                            _.books[index],
+                            onAdd: () => _.addBookToGallery(_.books[index]),
+                            onDelete: () => _.deleteBookFromGallery(_.books[index]),
+                          );
                         },
                         separatorBuilder: (ctx, index) => SizedBox(height: 20),
-                      ),
-                    ),
+                      );
+                    }),
                   ),
                 )
               ],

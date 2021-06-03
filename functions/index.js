@@ -308,6 +308,21 @@ app.post('/api/bdd/addBookToGallery', checkIfAuthenticated, (req, res) => {
 });
 
 
+// Delete Book From Gallery of User
+app.post('/api/bdd/deleteBookFromGallery', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      await db.collection('books_users').doc(`${req.headers.uid}-${req.body['bookid']}`)
+        .delete();
+      return res.status(200).send();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error.toJSON());
+    }
+  })();
+});
+
+
 // get list ratings by book ID
 app.get('/api/bdd/ratingByBook', checkIfAuthenticated, (req, res) => {
   (async () => {

@@ -58,4 +58,21 @@ class UserController extends GetxController {
     return res;
   }
 
+  Future<bool> deleteBookFromGallery(Book book) async {
+    if (user.listBooksRead.firstWhere((item) => item.id == book.id, orElse: () => null) == null)
+      return false;
+    var res = await repository.deleteBookFromGallery(_user.id, book);
+    print("res add book --> $res");
+    if (res) {
+      var index = _user.listBooksRead.indexWhere((item) => item.id == book.id);
+      if (index != -1) {
+        _user.listBooksRead.removeAt(index);
+        update();
+        return true;
+      } return false;
+    }
+    return res;
+  }
+  
+
 }

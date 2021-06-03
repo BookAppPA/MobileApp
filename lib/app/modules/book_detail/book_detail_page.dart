@@ -83,8 +83,8 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                               ButtonGradient(
                                 width: 166,
                                 height: 40,
-                                text: "J'ai finis ce livre".toUpperCase(),
-                                onTap: () => BasicDialog.showConfirmFinishBookDialog(onConfirm: () => _.addBookToGallery()),
+                                text: _.haveAlreadyBook ? "Supprimer ce livre".toUpperCase() : "J'ai finis ce livre".toUpperCase(),
+                                onTap: () => _.handleAddOrDeleteBook(),
                               ),
                             ],
                           ),

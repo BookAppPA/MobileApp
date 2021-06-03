@@ -61,4 +61,25 @@ abstract class BasicDialog {
           : () => null,
     );
   }
+
+  static showConfirmDeleteBookDialog({VoidCallback onConfirm}) {
+    Get.defaultDialog(
+      title: "Supprimer le livre",
+      content: Text(
+          "Veux-tu supprimer définitivement ce livre et ton avis ?"),
+      textCancel: "Non",
+      onCancel: () => null,
+      textConfirm: "Oui",
+      buttonColor: ConstantColor.accent,
+      confirmTextColor: Colors.black,
+      cancelTextColor: Colors.black,
+      onConfirm: onConfirm != null
+          ? () {
+              onConfirm();
+              Get.back();
+            }
+          : () => null,
+    );
+  }
+  
 }
