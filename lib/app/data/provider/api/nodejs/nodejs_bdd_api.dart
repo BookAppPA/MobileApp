@@ -191,7 +191,7 @@ class NodeJSBddAPI {
   Future<bool> deleteBookFromGallery(String idUser, Book book) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.post(Uri.parse(UrlAPI.deleteBookFromGallery),
+      http.Response resp = await http.delete(Uri.parse(UrlAPI.deleteBookFromGallery),
           headers: {"authorization": "Bearer $token", "uid": idUser},
           body: {"bookid": book.id});
       if (resp.statusCode == 200) {
