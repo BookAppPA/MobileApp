@@ -140,7 +140,7 @@ class UserRatingItem extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Text(
-                  parseDateTime(rating.timestamp),
+                  parseDateTime(rating.timestamp, "dd/MM/yyyy HH:mm"),
                   style: TextStyle(
                     fontFamily: 'SF Pro Text',
                     fontSize: 12,

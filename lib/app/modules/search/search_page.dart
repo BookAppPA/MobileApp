@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/modules/search/search_book_item.dart';
 import 'package:book_app/app/modules/search/search_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
@@ -49,15 +50,15 @@ class SearchPage extends GetView<SearchController> {
                   ),
                 ),
                 Expanded(
-                  child: Obx(
-                    () => ListView(
-                      children: List.generate(
-                        controller.books.length,
-                        (index) => ListTile(
-                          title: Text(
-                            controller.books[index].title,
-                          ),
-                        ),
+                  child: Padding(
+                    padding: EdgeInsets.all(25),
+                    child: Obx(
+                      () => ListView.separated(
+                        itemCount: controller.books.length,
+                        itemBuilder: (ctx, index) {
+                          return SearchBookItem(controller.books[index]);
+                        },
+                        separatorBuilder: (ctx, index) => SizedBox(height: 20),
                       ),
                     ),
                   ),
