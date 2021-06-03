@@ -1,6 +1,8 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
+import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -69,5 +71,13 @@ class BookDetailController extends GetxController {
         }
         update();
     }
+  }
+
+  addBookToGallery() async {
+    var res = await UserController.to.addBookToGallery(book);
+    if (res)
+      CustomSnackbar.snackbar("Ce livre à été ajouté a votre bibliothèque");
+    else
+      CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
   }
 }

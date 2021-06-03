@@ -1,5 +1,5 @@
-import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/modules/book_detail/book_detail_controller.dart';
+import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
@@ -69,12 +69,24 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                             ),
                           ),
                           SizedBox(height: 25),
-                          ButtonGradient(
-                            onTap: () => print("clic preview"),
-                            width: 166,
-                            height: 40,
-                            text: "PREVIEW",
-                            fontSize: 15,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              ButtonGradient(
+                                onTap: () => print("clic preview"),
+                                width: 166,
+                                height: 40,
+                                text: "PREVIEW",
+                                fontSize: 15,
+                              ),
+                              SizedBox(width: 25),
+                              ButtonGradient(
+                                width: 166,
+                                height: 40,
+                                text: "J'ai finis ce livre".toUpperCase(),
+                                onTap: () => BasicDialog.showConfirmFinishBookDialog(onConfirm: () => _.addBookToGallery()),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 25),
                           _.book.description != null && _.book.description != ""
@@ -117,7 +129,9 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                             padding:
                                 EdgeInsets.only(left: 25, right: 25, top: 25),
                             child: GestureDetector(
-                              onTap: () => _.book.nbRating > 5 ? print("click list ratings") : null,
+                              onTap: () => _.book.nbRating > 5
+                                  ? print("click list ratings")
+                                  : null,
                               child: Container(
                                 color: Colors.transparent,
                                 child: Row(
@@ -125,7 +139,9 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      _.book.nbRating <= 0 ? "Aucun Avis" : "Avis (${_.book.nbRating})",
+                                      _.book.nbRating <= 0
+                                          ? "Aucun Avis"
+                                          : "Avis (${_.book.nbRating})",
                                       style: TextStyle(
                                         fontFamily: 'SF Pro Text',
                                         fontSize: 20,
@@ -133,12 +149,13 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    _.book.nbRating > 5 ?
-                                    Icon(
-                                      FontAwesomeIcons.chevronRight,
-                                      color: ConstantColor.greyDark,
-                                      size: 20,
-                                    ) : Container(),
+                                    _.book.nbRating > 5
+                                        ? Icon(
+                                            FontAwesomeIcons.chevronRight,
+                                            color: ConstantColor.greyDark,
+                                            size: 20,
+                                          )
+                                        : Container(),
                                   ],
                                 ),
                               ),
@@ -146,7 +163,9 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                           ),
                           SizedBox(height: 15),
                           Container(
-                            height: _.book.nbRating <= 5 ? (_.book.nbRating * 225).toDouble() : 800,
+                            height: _.book.nbRating <= 5
+                                ? (_.book.nbRating * 225).toDouble()
+                                : 800,
                             child: ListView.separated(
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: _.listRatings.length <= 5

@@ -14,8 +14,13 @@ class ProfilController extends GetxController {
 
   final AuthRepository authRepository;
   final UserRepository userRepository;
-  ProfilController({@required this.authRepository, @required this.userRepository, this.user, this.userId})
-      : assert(authRepository != null), assert(userRepository != null);
+  ProfilController(
+      {@required this.authRepository,
+      @required this.userRepository,
+      this.user,
+      this.userId})
+      : assert(authRepository != null),
+        assert(userRepository != null);
 
   UserModel user;
   final String userId;
@@ -28,7 +33,7 @@ class ProfilController extends GetxController {
   List<Rating> ratings = [];
 
   final _picker = ImagePicker();
-  
+
   @override
   void onInit() {
     super.onInit();
@@ -37,8 +42,7 @@ class ProfilController extends GetxController {
     else if (user == null && userId == null) {
       _errorLoad();
       return;
-    }
-    else {
+    } else {
       loadData = false;
       isMe = user.id == UserController.to.user.id;
       update();
@@ -52,8 +56,8 @@ class ProfilController extends GetxController {
     if (user != null) {
       loadData = false;
       isMe = user.id == UserController.to.user.id;
-    }
-    else _errorLoad();
+    } else
+      _errorLoad();
     update();
   }
 
@@ -65,18 +69,10 @@ class ProfilController extends GetxController {
   _getData() async {
     if ((user != null && user.id != null) || userId != null) {
       isMe = user.id == UserController.to.user.id;
-      if (!isMe || (isMe && UserController.to.user.listBooksRead.length == 0))
-        books = await userRepository.getUserListBook(userId ?? user.id);
-      else
-        books = UserController.to.user.listBooksRead;
-      if (isMe)
-        UserController.to.setListBooks(books);
-      if (!isMe || (isMe && UserController.to.user.listLastRatings.length == 0))
-        ratings = await userRepository.getLastRatings(userId ?? user.id, books);
-      else
-        ratings = UserController.to.user.listLastRatings;
-      if (isMe)
-        UserController.to.setLastRatings(ratings);
+      books = await userRepository.getUserListBook(userId ?? user.id);
+      if (isMe) UserController.to.setListBooks(books);
+      ratings = await userRepository.getLastRatings(userId ?? user.id, books);
+      if (isMe) UserController.to.setLastRatings(ratings);
       update();
     }
   }
@@ -94,7 +90,10 @@ class ProfilController extends GetxController {
     final pickedFile = await _picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       UserController.to.isLoadingPicture(true);
-      String urlPic = await userRepository.changeUserPicture(UserController.to.user.id, pickedFile.path, UserController.to.user.picture);
+      String urlPic = await userRepository.changeUserPicture(
+          UserController.to.user.id,
+          pickedFile.path,
+          UserController.to.user.picture);
       UserController.to.updatePicture(urlPic);
       UserController.to.isLoadingPicture(false);
       user.picture = urlPic;

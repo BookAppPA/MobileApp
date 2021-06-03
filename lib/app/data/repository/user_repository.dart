@@ -42,6 +42,10 @@ class UserRepository {
     return await _databaseAPI.getLastRatings(idUser, listBooks);
   }
 
+  addBookToGallery(String idUser, Book book) async {
+    return await _databaseAPI.addBookToGallery(idUser, book);
+  }
+
   configurePushNotification(String idUser) async {
    // final token = await _notificationAPI.getToken();
    // UserController.to.user.pushToken = token;

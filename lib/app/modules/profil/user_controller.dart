@@ -46,31 +46,16 @@ class UserController extends GetxController {
     update();
   }
 
-  /*changeDomain(String domain) {
-    Map<String, dynamic> map = {'domain': domain};
-    if (_user != null) {
-      if (_user.editInfo == null) {
-        _user.editInfo = map;
-      } else {
-        _user.editInfo['domain'] = domain;
-      }
+  Future<bool> addBookToGallery(Book book) async {
+    if (user.listBooksRead.firstWhere((item) => item.id == book.id, orElse: () => null) != null)
+      return false;
+    var res = await repository.addBookToGallery(_user.id, book);
+    print("res add book --> $res");
+    if (res) {
+      _user.listBooksRead.insert(0, book);
+      update();
     }
-    _userData.addAll(map);
-    update();
-  }*/
-
-/*
-  changeBasicInfo(String sex, String name, String birthday, int age) {
-    _userData.addAll({
-      'sex': sex,
-      'name': name,
-      'birthday': birthday,
-      'age': age,
-    });
-    _user.sex = sex;
-    _user.name = name;
-    _user.age = age;
-    update();
-  }*/
+    return res;
+  }
 
 }

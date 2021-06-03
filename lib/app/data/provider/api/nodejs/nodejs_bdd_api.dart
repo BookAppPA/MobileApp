@@ -102,8 +102,6 @@ class NodeJSBddAPI {
       return [];
     }
   }
-  
-
   Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
@@ -170,6 +168,24 @@ class NodeJSBddAPI {
     } catch (e) {
       print(e.toString());
       return [];
+    }
+  }
+
+  Future<bool> addBookToGallery(String idUser, Book book) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.post(Uri.parse(UrlAPI.addBookToGallery),
+          headers: {"authorization": "Bearer $token", "uid": idUser},
+          body: {"bookid": book.id});
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http addBookToGallery --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
     }
   }
 }

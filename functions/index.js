@@ -288,6 +288,26 @@ app.get('/api/bdd/userListBooks', checkIfAuthenticated, (req, res) => {
   })();
 });
 
+// Add Book to Gallery of User
+app.post('/api/bdd/addBookToGallery', checkIfAuthenticated, (req, res) => {
+  (async () => {
+    try {
+      let data = {
+        "book_id": req.body['bookid'],
+        "user_id": req.headers.uid,
+        "timestamp": admin.firestore.FieldValue.serverTimestamp()
+      };
+      await db.collection('books_users').doc(`${req.headers.uid}-${req.body['bookid']}`)
+        .set(data, { merge: true });
+      return res.status(200).send();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error.toJSON());
+    }
+  })();
+});
+
+
 // get list ratings by book ID
 app.get('/api/bdd/ratingByBook', checkIfAuthenticated, (req, res) => {
   (async () => {
