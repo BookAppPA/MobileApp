@@ -3,7 +3,9 @@ import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:book_app/app/modules/home/home_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,13 +41,27 @@ class HomePage extends StatelessWidget {
     return CustomPaint(
       painter: CurvePainter(color: ConstantColor.accent),
       child: Container(
-        height: 300,
+        height: 375,
         // color: ConstantColor.accent,
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 25),
+              child: CupertinoTextField(
+                maxLines: 1,
+                maxLength: 50,
+                placeholder: "Rechercher un livre",
+                readOnly: true,
+                padding: EdgeInsets.all(15),
+                prefix: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () => null,
+                ),
+                onTap: () => Get.toNamed(Routes.SEARCH),
+              ),
+            ),
             Text(
               'Les choix des libraires',
               style: TextStyle(
@@ -101,7 +117,9 @@ class HomePage extends StatelessWidget {
                       3,
                       (index) => Expanded(
                         child: BookItem(
-                          book: _.hasDataPopularBooks ? _.listPopularBooks[index] : Book(),
+                          book: _.hasDataPopularBooks
+                              ? _.listPopularBooks[index]
+                              : Book(),
                         ),
                       ),
                     ),
@@ -112,7 +130,9 @@ class HomePage extends StatelessWidget {
                       3,
                       (index) => Expanded(
                         child: BookItem(
-                          book: _.hasDataPopularBooks ? _.listPopularBooks[index + 3] : Book(),
+                          book: _.hasDataPopularBooks
+                              ? _.listPopularBooks[index + 3]
+                              : Book(),
                         ),
                       ),
                     ),
