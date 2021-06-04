@@ -35,7 +35,7 @@ class Book {
       this.publishedDate = json['volumeInfo']['publishedDate'];
       this.coverImage = json['volumeInfo']['imageLinks']['thumbnail'];
       this.language = json['volumeInfo']['language'];
-      this.previewLink = json['volumeInfo']['previewLink'];
+      this.previewLink = json['volumeInfo']['previewLink'] ?? "";
       this.buyLink = json['saleInfo']['buyLink'];
       this.authors = json['volumeInfo']['authors'];
       this.categories = json['volumeInfo']['categories'];

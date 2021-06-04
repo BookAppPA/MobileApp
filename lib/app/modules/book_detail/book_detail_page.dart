@@ -1,9 +1,9 @@
 import 'package:book_app/app/modules/book_detail/book_detail_controller.dart';
-import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/rating_item.dart';
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -72,13 +72,14 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+                              _.book.previewLink != "" ?
                               ButtonGradient(
-                                onTap: () => print("clic preview"),
+                                onTap: () => Get.toNamed(Routes.BOOK_PREVIEW, arguments: _.book.id),
                                 width: 166,
                                 height: 40,
                                 text: "PREVIEW",
                                 fontSize: 15,
-                              ),
+                              ) : Container(),
                               SizedBox(width: 25),
                               ButtonGradient(
                                 width: 166,
