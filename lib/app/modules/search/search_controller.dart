@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
@@ -20,7 +21,32 @@ class SearchController extends GetxController {
   bool get _checkValid => _searchText.length >= 3 && _searchText.length <= 50;
 
   bool searching = false;
+  int searchMode = 0;
   List<Book> books = [];
+  List<Book> booksByAuthor = [];
+  List<UserModel> users = [];
+
+  String get placeholderSearchBar {
+     if (searchMode == 0) 
+      return "Rechercher un livre";
+    else if (searchMode == 1)
+      return "Rechercher un auteur";
+    return "Rechercher un utilisateur";
+  }
+
+  changeSearchingMode(int index) {
+    searchMode = index;
+    cancelSearch();
+    update();
+  }
+
+  getBookIndex(int index) {
+    if (searchMode == 0)
+      return books[index];
+    else if (searchMode == 1)
+      return booksByAuthor[index];
+    return Book();
+  }
 
   search() async {
     Get.focusScope.unfocus();
@@ -28,7 +54,12 @@ class SearchController extends GetxController {
     if (_checkValid) {
       searching = true;
       update();
-      books = await repository.searchBook(_searchText);
+      if (searchMode == 0)
+        books = await repository.searchBooks(_searchText);
+      else if (searchMode == 1)
+        booksByAuthor = await repository.searchBooksByAuthor(_searchText);
+      else
+        users = await repository.searchUsers(_searchText);
       searching = false;
       update();
     }

@@ -22,81 +22,88 @@ class SearchBookItem extends StatelessWidget {
     var haveAlreadyBook = UserController.to.user.listBooksRead
             .firstWhere((item) => item.id == book.id, orElse: () => null) !=
         null;
+
     return GestureDetector(
       onTap: () => book.id != null
           ? Get.toNamed(Routes.BOOK_DETAIL, arguments: book)
           : null,
       child: Container(
-        color: Colors.transparent,
         width: Get.width,
-        child: Row(
-          children: <Widget>[
-            Container(
-              height: 130,
-              child: Hero(
-                tag: book.id ?? DateTime.now(),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: book.coverImage != null && book.coverImage != ""
-                      ? CachedNetworkImage(
-                          imageUrl: book.coverImage,
-                          fit: BoxFit.cover,
-                          useOldImageOnUrlChange: true,
-                          placeholder: (context, url) =>
-                              CustomCircularProgress(radius: 15),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        )
-                      : Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: ConstantColor.greyWhite,
+            borderRadius: BorderRadius.circular(5)),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: 130,
+                child: Hero(
+                  tag: book.id ?? DateTime.now(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: book.coverImage != null && book.coverImage != ""
+                        ? CachedNetworkImage(
+                            imageUrl: book.coverImage,
+                            fit: BoxFit.cover,
+                            useOldImageOnUrlChange: true,
+                            placeholder: (context, url) =>
+                                CustomCircularProgress(radius: 15),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(5)),
+                          ),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: 25),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        book.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: 'SF Pro Text',
-                          fontSize: 20,
-                          color: ConstantColor.black,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.italic,
-                        ),
+              SizedBox(width: 25),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(
+                      book.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontFamily: 'SF Pro Text',
+                        fontSize: 20,
+                        color: ConstantColor.black,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic,
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        "${book.authors.first}  •  ${stringToDate(book.publishedDate, 'yyyy').year}",
-                        style: TextStyle(
-                          fontFamily: 'SF Pro Text',
-                          fontSize: 14,
-                          color: ConstantColor.greyDark,
-                        ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "${book.authors.first}  •  ${stringToDate(book.publishedDate, 'yyyy').year}",
+                      style: TextStyle(
+                        fontFamily: 'SF Pro Text',
+                        fontSize: 14,
+                        color: ConstantColor.greyDark,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  IconButton(
-                    icon: Icon(haveAlreadyBook
-                        ? FontAwesomeIcons.solidBookmark
-                        : FontAwesomeIcons.bookmark),
-                    onPressed: () => haveAlreadyBook ? onDelete() : onAdd(),
-                  ),
-                ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        GestureDetector(
+                          child: Icon(haveAlreadyBook
+                              ? FontAwesomeIcons.solidBookmark
+                              : FontAwesomeIcons.bookmark),
+                          onTap: () => haveAlreadyBook ? onDelete() : onAdd(),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

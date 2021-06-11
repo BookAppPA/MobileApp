@@ -82,7 +82,7 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<List<Book>> searchBook(String search) async {
+  Future<List<Book>> searchBooks(String search) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBook),
@@ -101,6 +101,47 @@ class NodeJSBddAPI {
       return null;
     }
   }
+
+  Future<List<Book>> searchBooksByAuthor(String search) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByAuthor),
+          headers: {"authorization": "Bearer $token", "search": search});
+      if (resp.statusCode == 200) {
+        var listBooks = json.decode(resp.body);
+        List<Book> books = [];
+        listBooks.forEach((book) => books.add(Book.fromJson(book)));
+        return books;
+      } else {
+        print("error get http searchBooksByAuthor --> ${resp.body}");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future<List<UserModel>> searchUsers(String search) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.searchUsers),
+          headers: {"authorization": "Bearer $token", "search": search});
+      if (resp.statusCode == 200) {
+        var listUsers = json.decode(resp.body);
+        List<UserModel> users = [];
+        listUsers.forEach((user) => users.add(UserModel.fromJson(user)));
+        return users;
+      } else {
+        print("error get http searchUsers --> ${resp.body}");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();

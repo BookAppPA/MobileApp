@@ -11,6 +11,7 @@ import 'package:book_app/app/modules/onboarding/onboarding_page.dart';
 import 'package:book_app/app/modules/profil/edit_profil/edit_profil_page.dart';
 import 'package:book_app/app/modules/profil/profil_page.dart';
 import 'package:book_app/app/modules/search/search_page.dart';
+import 'package:book_app/app/modules/search/search_squeleton_page.dart';
 import 'package:book_app/app/modules/splashscreen/splashscreen_page.dart';
 import 'package:book_app/app/modules/squeleton/squeleton_page.dart';
 import 'package:get/get.dart';

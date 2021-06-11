@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
               child: CupertinoTextField(
                 maxLines: 1,
                 maxLength: 50,
-                placeholder: "Rechercher un livre",
+                placeholder: "Rechercher livre/auteur/utilisateur",
                 readOnly: true,
                 padding: EdgeInsets.all(15),
                 prefix: IconButton(
