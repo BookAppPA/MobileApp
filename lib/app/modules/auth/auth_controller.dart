@@ -2,6 +2,7 @@ import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
+import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,11 @@ class AuthController extends GetxController {
 
   final UserRepository userRepository;
   final AuthRepository authRepository;
-  AuthController({@required this.userRepository, @required this.authRepository})
+  final bool isBlocked;
+  AuthController(
+      {@required this.userRepository,
+      @required this.authRepository,
+      @required this.isBlocked})
       : assert(userRepository != null),
         assert(authRepository != null);
 
@@ -43,6 +48,10 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    if (isBlocked) {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => CustomSnackbar.snackbar("Votre compte à été bloqué"));
+    }
     _pseudoController.addListener(() {
       _isPseudoValid = true;
       update();
@@ -88,10 +97,8 @@ class AuthController extends GetxController {
 
   bool _checkLoginInfo() {
     _isPasswordValid = _password.length >= 6 && _password.length <= 30;
-    if (!_validEmail(_email))
-      return false;
-    if (!_isPasswordValid)
-      return false;
+    if (!_validEmail(_email)) return false;
+    if (!_isPasswordValid) return false;
     return true;
   }
 
@@ -137,5 +144,4 @@ class AuthController extends GetxController {
       Get.offAllNamed(Routes.CHOICE_THEME);
     }
   }
-  
 }

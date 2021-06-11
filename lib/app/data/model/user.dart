@@ -7,6 +7,7 @@ class UserModel {
   int nbBooks, nbRatings, nbFollowers;
   List<Book> listBooksRead;
   List<Rating> listLastRatings;
+  bool isBlocked;
 
   UserModel({
     this.id,
@@ -19,6 +20,7 @@ class UserModel {
     this.nbFollowers,
     this.listBooksRead,
     this.listLastRatings,
+    this.isBlocked,
   });
 
   UserModel.fromJson(Map<String, dynamic> json){
@@ -32,6 +34,7 @@ class UserModel {
       this.nbFollowers = json['nbFollowers'] ?? 0;
       this.listBooksRead = [];
       this.listLastRatings = [];
+      this.isBlocked = json['isBlocked'];
   }
 
   Map<String, dynamic> toJson(){
@@ -44,6 +47,7 @@ class UserModel {
     data['nbBooks'] = this.nbBooks;
     data['nbRatings'] = this.nbRatings;
     data['nbFollowers'] = this.nbFollowers;
+    data['isBlocked'] = this.isBlocked;
     return data;
   }
 

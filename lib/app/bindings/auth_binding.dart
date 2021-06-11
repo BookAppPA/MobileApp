@@ -7,7 +7,8 @@ class AuthBinding extends Bindings {
 
   @override
   void dependencies() {
-    Get.put(AuthController(userRepository: UserRepository(), authRepository: AuthRepository()));
+    bool isBlocked = Get.arguments as bool ?? false;
+    Get.put(AuthController(userRepository: UserRepository(), authRepository: AuthRepository(), isBlocked: isBlocked));
   }
 
 }

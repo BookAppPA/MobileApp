@@ -12,6 +12,11 @@ class NodeJSAuthAPI {
           body: {"email": email, "password": password});
       Map<String, dynamic> map = json.decode(resp.body);
       if (resp.statusCode == 200) {
+        UserModel user = UserModel.fromJson(map);
+        if (user.isBlocked) {
+          CustomSnackbar.snackbar("Votre compte à été bloqué");
+          return null;
+        }
         print("response: ${resp.body}");
         try {
           await FirebaseAuth.instance

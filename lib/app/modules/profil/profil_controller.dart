@@ -54,6 +54,8 @@ class ProfilController extends GetxController {
     print("GET USER");
     user = await userRepository.getUserById(userId);
     if (user != null) {
+      if (user.isBlocked)
+        _errorBlocked();
       loadData = false;
       isMe = user.id == UserController.to.user.id;
     } else
@@ -63,6 +65,11 @@ class ProfilController extends GetxController {
 
   _errorLoad() {
     errorMessage = "Erreur du serveur...";
+    update();
+  }
+
+  _errorBlocked() {
+    errorMessage = "Ce compte à été bloqué";
     update();
   }
 

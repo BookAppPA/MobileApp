@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class SearchUserItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => user.id != null
-          ? Get.toNamed(Routes.PROFIL, arguments: user)
+          ? user.isBlocked ? CustomSnackbar.snackbar("Ce profil à été bloqué") : Get.toNamed(Routes.PROFIL, arguments: user)
           : null,
       child: Container(
         width: Get.width,
