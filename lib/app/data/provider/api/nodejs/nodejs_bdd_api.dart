@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
@@ -244,6 +245,46 @@ class NodeJSBddAPI {
     } catch (e) {
       print(e.toString());
       return false;
+    }
+  }
+
+  Future<List<BookSeller>> getInitListBookSeller() async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.getInitListBookSeller),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        var listBookseller = json.decode(resp.body);
+        List<BookSeller> booksellers = [];
+        listBookseller.forEach((bookseller) => booksellers.add(BookSeller.fromJson(bookseller)));
+        return booksellers;
+      } else {
+        print("error get http getInitListBookSeller --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<BookSeller>> searchBookSeller(String search) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.searchBookSeller),
+          headers: {"authorization": "Bearer $token", "search": search});
+      if (resp.statusCode == 200) {
+        var listBookseller = json.decode(resp.body);
+        List<BookSeller> booksellers = [];
+        listBookseller.forEach((bookseller) => booksellers.add(BookSeller.fromJson(bookseller)));
+        return booksellers;
+      } else {
+        print("error get http searchBookSeller --> ${resp.body}");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 
