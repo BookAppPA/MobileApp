@@ -65,8 +65,7 @@ abstract class BasicDialog {
   static showConfirmDeleteBookDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
       title: "Supprimer le livre",
-      content: Text(
-          "Veux-tu supprimer définitivement ce livre et ton avis ?"),
+      content: Text("Veux-tu supprimer définitivement ce livre et ton avis ?"),
       textCancel: "Non",
       onCancel: () => null,
       textConfirm: "Oui",
@@ -81,5 +80,38 @@ abstract class BasicDialog {
           : () => null,
     );
   }
-  
+
+  static showCompleteText(String text) {
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(20.0),
+          ),
+        ),
+        child: Container(
+          height: 400,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.close), onPressed: () => Get.back())
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                    child: Text(text),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

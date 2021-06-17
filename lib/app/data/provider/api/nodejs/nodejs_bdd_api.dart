@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
@@ -287,5 +288,26 @@ class NodeJSBddAPI {
       return null;
     }
   }
+
+  Future<List<BookWeek>> getListBooksWeek(String idBookSeller) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(Uri.parse(UrlAPI.getListBooksWeek+"/$idBookSeller"),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        var listBooksWeek = json.decode(resp.body);
+        List<BookWeek> booksWeek = [];
+        listBooksWeek.forEach((book) => booksWeek.add(BookWeek.fromJson(book)));
+        return booksWeek;
+      } else {
+        print("error get http getListBooksWeek --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
 
 }

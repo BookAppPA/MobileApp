@@ -12,4 +12,8 @@ class BookSellerRepository {
     return await _databaseAPI.searchBookSeller(search);
   }
 
+  getListBooksWeek(String idBookSeller) async {
+    return await _databaseAPI.getListBooksWeek(idBookSeller);
+  }
+
 }

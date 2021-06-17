@@ -58,6 +58,9 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   http:
   webview_flutter: ^2.0.8
+  url_launcher:
+  carousel_slider: ^3.0.0
+  dots_indicator: ^2.0.0
 
 
 dev_dependencies:

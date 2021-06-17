@@ -43,5 +43,9 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Modifier la photo de profil</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  		<string>Numéro Téléphone Librairie</string>
+	</array>
 </dict>
 </plist>

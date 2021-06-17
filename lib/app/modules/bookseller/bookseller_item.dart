@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,14 +24,10 @@ class SearchBookSellerItem extends StatelessWidget {
     address[1] = address[1].substring(1);
 
     return GestureDetector(
-      onTap: () =>
-          /* book.id != null
-          ? Get.toNamed(Routes.BOOK_DETAIL, arguments: book)
-          : */
-          null,
+      onTap: () => Get.toNamed(Routes.BOOKSELLER_DETAIL, arguments: bookSeller),
       child: Container(
         width: Get.width,
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
             color: ConstantColor.greyWhite,
             borderRadius: BorderRadius.circular(5)),
@@ -43,17 +40,28 @@ class SearchBookSellerItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text(
-                      bookSeller.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Text',
-                        fontSize: 20,
-                        color: ConstantColor.black,
-                        fontWeight: FontWeight.w600,
-                        fontStyle: FontStyle.italic,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            bookSeller.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 20,
+                              color: ConstantColor.black,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          child: Icon(FontAwesomeIcons.bookmark, size: 20),
+                          onTap: () => onFollow(),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -64,15 +72,6 @@ class SearchBookSellerItem extends StatelessWidget {
                         color: ConstantColor.greyDark,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        GestureDetector(
-                          child: Icon(FontAwesomeIcons.bookmark, size: 20),
-                          onTap: () => onFollow(),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),

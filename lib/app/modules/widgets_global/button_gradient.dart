@@ -49,7 +49,7 @@ class ButtonGradient extends StatelessWidget {
             text,
             style: TextStyle(
               fontFamily: 'SF Pro Text',
-              fontSize: 13,
+              fontSize: fontSize,
               color: textColor,
               letterSpacing: 0.2,
             ),
