@@ -2,7 +2,6 @@ import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
-import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'profil_controller.dart';
+import 'widgets/profil_app_bar.dart';
 import 'widgets/user_rating_item.dart';
 
 class ProfilPage extends StatelessWidget {
@@ -57,38 +57,12 @@ class ProfilPage extends StatelessWidget {
     return GetBuilder<ProfilController>(
       builder: (controller) => Column(
         children: [
-          controller.isMe
-              ? Container(
-                  padding: EdgeInsets.only(top: 25, right: 15, left: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      back
-                          ? IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: Color(0xbf212121),
-                              ),
-                              onPressed: () {
-                                FocusScope.of(Get.context).unfocus();
-                                Get.back();
-                              },
-                            )
-                          : Container(),
-                      IconButton(
-                        icon: Icon(
-                          FontAwesomeIcons.powerOff,
-                          color: Color(0xbf212121),
-                        ),
-                        onPressed: () => BasicDialog.showLogoutDialog(
-                            onConfirm: () => ProfilController.to.clickLogout()),
-                      ),
-                    ],
-                  ),
-                )
-              : Container(),
+          ProfilAppBar(
+            isMe: controller.isMe,
+            back: back,
+          ),
           Container(
-            padding: EdgeInsets.fromLTRB(20, controller.isMe ? 10 : 50, 20, 20),
+            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Column(
               children: <Widget>[
                 //INFOS
@@ -276,7 +250,6 @@ class ProfilPage extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     Expanded(
                       child: Column(
                         children: <Widget>[
@@ -287,20 +260,19 @@ class ProfilPage extends StatelessWidget {
                                 : ProfilController.to.clickFollow(),
                             text: controller.isMe ? "Modifier" : "Suivre",
                           ),
-                          
                           SizedBox(height: 20),
-
                           controller.isMe
-                            ? Column(
-                                children: <Widget>[
-                                  ButtonGradient(
-                                    width: 175,
-                                    onTap: () => ProfilController.to.clickFinishBook(),
-                                    text: "J'ai finis un livre",
-                                  ),
-                                ],
-                              )
-                            : Container(),
+                              ? Column(
+                                  children: <Widget>[
+                                    ButtonGradient(
+                                      width: 175,
+                                      onTap: () =>
+                                          ProfilController.to.clickFinishBook(),
+                                      text: "J'ai finis un livre",
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                         ],
                       ),
                     )
@@ -424,7 +396,9 @@ class ProfilPage extends StatelessWidget {
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 25),
                       itemBuilder: (context, index) {
-                        var book = _.books.firstWhere((book) => _.ratings[index].bookId == book.id, orElse: () => Book(id: _.ratings[index].bookId));
+                        var book = _.books.firstWhere(
+                            (book) => _.ratings[index].bookId == book.id,
+                            orElse: () => Book(id: _.ratings[index].bookId));
                         return UserRatingItem(_.ratings[index], book);
                       },
                     ),
