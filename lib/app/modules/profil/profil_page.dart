@@ -1,3 +1,4 @@
+import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
@@ -423,7 +424,8 @@ class ProfilPage extends StatelessWidget {
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 25),
                       itemBuilder: (context, index) {
-                        return UserRatingItem(_.ratings[index], _.books[index]);
+                        var book = _.books.firstWhere((book) => _.ratings[index].bookId == book.id, orElse: () => Book(id: _.ratings[index].bookId));
+                        return UserRatingItem(_.ratings[index], book);
                       },
                     ),
                   ),
