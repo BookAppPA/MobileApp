@@ -13,6 +13,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BookSellerDetailPage extends GetView<BookSellerDetailController> {
   @override
@@ -26,8 +27,9 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              _buildInfoBookSeller(),
+              _buildBasicInfo(),
               _buildLastBooksWeek(),
+              _buildInfoBookSeller(),
               _buildContactInfo(),
             ],
           ),
@@ -36,7 +38,7 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
     );
   }
 
-  _buildInfoBookSeller() {
+  _buildBasicInfo() {
     return Padding(
       padding: EdgeInsets.all(20),
       child: Column(
@@ -71,6 +73,17 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
                   onTap: () => print("click")),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  _buildInfoBookSeller() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
           Container(
             padding: EdgeInsets.symmetric(vertical: 20),
             child: Column(
@@ -271,7 +284,37 @@ ${controller.bookSeller.openHour["sunday"]}""";
   _buildContactInfo() {
     return Container(
       //  color: Colors.yellow,
-      height: 200,
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
+      height: 250,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Adresse: ",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 17,
+            ),
+          ),
+          SizedBox(height: 10),
+          Expanded(
+            child: GetBuilder<BookSellerDetailController>(
+              builder: (_) => GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(_.location.latitude, _.location.longitude),
+                  zoom: 12,
+                ),
+                markers: {
+                  Marker(
+                      markerId: MarkerId(_.bookSeller.id),
+                      position:
+                          LatLng(_.location.latitude, _.location.longitude))
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
