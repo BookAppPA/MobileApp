@@ -5,8 +5,10 @@ class DescriptionTextWidget extends StatefulWidget {
   final String text;
   final bool showInPopup;
   final TextStyle style;
+  final int maxLength;
 
-  DescriptionTextWidget({@required this.text, this.showInPopup: false, this.style});
+  DescriptionTextWidget(
+      {@required this.text, this.showInPopup: false, this.style, this.maxLength: 150});
 
   @override
   _DescriptionTextWidgetState createState() => _DescriptionTextWidgetState();
@@ -22,9 +24,9 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
   void initState() {
     super.initState();
 
-    if (widget.text.length > 150) {
-      firstHalf = widget.text.substring(0, 150);
-      secondHalf = widget.text.substring(150, widget.text.length);
+    if (widget.text.length > widget.maxLength) {
+      firstHalf = widget.text.substring(0, widget.maxLength);
+      secondHalf = widget.text.substring(widget.maxLength, widget.text.length);
     } else {
       firstHalf = widget.text;
       secondHalf = "";
@@ -35,12 +37,11 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: secondHalf.isEmpty
-          ? Text(firstHalf)
+          ? Text(firstHalf, style: widget.style != null ? widget.style : null)
           : Column(
               children: <Widget>[
                 Text(flag ? (firstHalf + "...") : (firstHalf + secondHalf),
-                style: widget.style != null ? widget.style : null
-                ),
+                    style: widget.style != null ? widget.style : null),
                 InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
