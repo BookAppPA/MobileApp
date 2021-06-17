@@ -299,18 +299,22 @@ ${controller.bookSeller.openHour["sunday"]}""";
           SizedBox(height: 10),
           Expanded(
             child: GetBuilder<BookSellerDetailController>(
-              builder: (_) => GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(_.location.latitude, _.location.longitude),
-                  zoom: 12,
-                ),
-                markers: {
-                  Marker(
+              builder: (_) {
+                if (_.location == null) return Container();
+                return GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(_.location.latitude, _.location.longitude),
+                    zoom: 12,
+                  ),
+                  markers: {
+                    Marker(
                       markerId: MarkerId(_.bookSeller.id),
                       position:
-                          LatLng(_.location.latitude, _.location.longitude))
-                },
-              ),
+                          LatLng(_.location.latitude, _.location.longitude),
+                    )
+                  },
+                );
+              },
             ),
           ),
         ],
