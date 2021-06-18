@@ -59,6 +59,11 @@ String capitalizeFirstLetter(String str) {
   return "${str[0].toUpperCase()}${str.substring(1)}";
 }
 
+bool isOnlyNumeric(String str) {
+  RegExp reg = RegExp(r"^[0-9]+$");
+  return reg.hasMatch(str);
+}
+
 Future<DateTime> getDateServer() async {
   try {
     http.Response resp = await http.get(

@@ -34,7 +34,7 @@ class UserModel {
       this.nbFollowers = json['nbFollowers'] ?? 0;
       this.listBooksRead = [];
       this.listLastRatings = [];
-      this.isBlocked = json['isBlocked'];
+      this.isBlocked = json['isBlocked'] ?? false;
   }
 
   Map<String, dynamic> toJson(){

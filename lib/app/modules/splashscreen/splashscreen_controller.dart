@@ -38,12 +38,15 @@ class SplashScreenController extends GetxController {
   _checkAuth() async {
     var userAuth = await userRepository.getCurrentUser();
     if (userAuth != null) {
-      UserModel user = await userRepository.getUserById(userAuth.uid);
+      var user = await userRepository.getUserById(userAuth.uid);
       if (user != null) {
-        if (user.isBlocked) {
+        if (user is UserModel && user.isBlocked) {
           Get.offAllNamed(Routes.AUTH, arguments: true);
         } else {
-          UserController.to.user = user;
+          if (user is UserModel)
+            UserController.to.user = user;
+          else
+            UserController.to.bookseller = user;
           Get.offAllNamed(Routes.SQUELETON);
         }
       } else

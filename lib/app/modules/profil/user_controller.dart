@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
@@ -14,6 +15,10 @@ class UserController extends GetxController {
   UserModel _user;
   UserModel get user => this._user;
   set user(value) => this._user = value;
+
+  BookSeller _bookseller;
+  BookSeller get bookseller => this._bookseller;
+  set bookseller(value) => this._bookseller = value;
 
   Map<String, dynamic> _userData = {};
   Map<String, dynamic> get userData => this._userData;

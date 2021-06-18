@@ -1,0 +1,99 @@
+Vous n'avez pas la permission
+Votre compte à été bloqué
+Cet email n'existe pas
+Mot de passe erroné
+L'adresse email est déjà utilisée par un autre compte
+Hey, \nheureux de vous revoir !
+Hey, vous êtes nouveau ?
+Saisissez votre pseudo
+Saisissez une adresse email
+Saisissez un mot de passe
+En créant un compte, vous acceptez les 
+conditions générales d\'utilisation
+ de BookApp.
+Se connecter
+S'inscrire
+Nouveau ? 
+Déjà inscrit ? 
+Aperçu du livre
+Pas d'aperçu disponible pour ce livre
+Erreur du serveur...
+Ce livre à été ajouté a votre bibliothèque
+Vous avez déjà ajouté ce livre
+Ce livre à été supprimé de votre bibliothèque
+Vous avez déjà supprimé ce livre
+APERCU
+Supprimer ce livre
+J'ai finis ce livre
+Note Moyenne
+Aucun Avis
+Avis (X)
+CONTACTER
+SUIVRE
+Horraires: 
+Lundi:\nMardi:\nMercredi:\nJeudi:\nVendredi:\nSamedi:\nDimanche:
+Description: 
+Derniers Livres de la Semaine
+Adresse: 
+Rechercher une librairie
+Aucune librairies trouvées...
+Bienvenue,\nPour commencer, quels sont vos genres favoris ?
+Terminer
+Quitter
+Voulez-vous quitter l'application ?
+Oui
+Non
+Déconnexion
+Voulez-vous vous déconnecter\nde votre compte ?
+Livre fini
+Voulez-vous ajouter ce livre à votre bibliothèque et y laisser un avis ?
+Supprimer le livre
+Voulez-vous supprimer définitivement ce livre et votre avis ?
+Rechercher livre/auteur/utilisateur
+Les choix des libraires
+Les Plus Populaires
+Risque De Vous Plaire
+COMPRIS
+Dénichez de nouvelles pépites 
+Découvrez de nouveaux livres à travers de nombreux avis 
+Partagez votre avis
+Donnez votre avis sur votre bibliothèque personnelle 
+Erreur de synchronisation...
+Modifier votre profil
+A PROPOS DE MOI
+Ajouter une bio
+Aucune bio
+Livres
+Abonnés
+Modifier
+Suivre
+J'ai finis un livre
+Mes Derniers Livres
+Ses Derniers Livres
+Mes Derniers Avis
+Ses Derniers Avis
+Rechercher un livre
+Rechercher un auteur
+Rechercher un utilisateur
+Aucun livres trouvés...
+Aucun auteurs trouvés...
+Aucun utilisateurs trouvés...
+X Livres  •  X Avis
+Paramètres
+Langue
+Français
+Anglais
+Espagnol
+Contact
+Version
+Internet Indisponible
+Erreur
+Accueil
+Libraire
+Profil
+plus
+moins
+Saisissez le nom de votre librairie
+Vous êtes un libraire ? 
+Créer un compte pro
+Saisissez votre n° SIREN ou SIRET

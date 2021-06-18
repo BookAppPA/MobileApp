@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class NodeJSBddAPI {
-  Future<UserModel> getUserById(String uid) async {
+  Future<dynamic> getUserById(String uid) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.get(
@@ -18,7 +18,9 @@ class NodeJSBddAPI {
       );
       if (resp.statusCode == 200) {
         Map<String, dynamic> map = json.decode(resp.body);
-        return UserModel.fromJson(map);
+        if (map["type"] == "user")
+          return UserModel.fromJson(map["data"]);
+        return BookSeller.fromJson(map["data"]);
       } else {
         print("error get http getUserById --> ${resp.body}");
         return null;
