@@ -1,6 +1,8 @@
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -20,8 +22,7 @@ class SearchBookSellerItem extends StatelessWidget {
             .firstWhere((item) => item.id == book.id, orElse: () => null) !=
         null;*/
 
-    var address = bookSeller.address.split(",");
-    address[1] = address[1].substring(1);
+    var address = splitAddress(bookSeller.address);
 
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.BOOKSELLER_DETAIL, arguments: bookSeller),
@@ -57,15 +58,18 @@ class SearchBookSellerItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          child: Icon(FontAwesomeIcons.bookmark, size: 20),
-                          onTap: () => onFollow(),
-                        ),
+                        UserController.to.isBookSeller
+                            ? Container()
+                            : GestureDetector(
+                                child:
+                                    Icon(FontAwesomeIcons.bookmark, size: 20),
+                                onTap: () => onFollow(),
+                              ),
                       ],
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "${address.first}\n${address[1]}",
+                      "$address",
                       style: TextStyle(
                         fontFamily: 'SF Pro Text',
                         fontSize: 14,

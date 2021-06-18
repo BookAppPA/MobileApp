@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
@@ -85,6 +86,7 @@ class SearchUserItem extends StatelessWidget {
                         color: ConstantColor.greyDark,
                       ),
                     ),
+                    UserController.to.isBookSeller ? Container() :
                       GestureDetector(
                         child: Icon(FontAwesomeIcons.userPlus, size: 20),
                         onTap: () => onFollow(),

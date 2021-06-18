@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
@@ -54,7 +55,11 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
           ),
           SizedBox(height: 25),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: controller.bookSeller.phone != ""
+                ? UserController.to.isBookSeller
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.spaceEvenly
+                : MainAxisAlignment.center,
             children: <Widget>[
               controller.bookSeller.phone != ""
                   ? ButtonGradient(
@@ -65,12 +70,14 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
                       onTap: () => controller.callBookSeller(),
                     )
                   : Container(),
-              ButtonGradient(
-                  text: "SUIVRE",
-                  width: 120,
-                  height: 35,
-                  fontSize: 16,
-                  onTap: () => print("click")),
+              UserController.to.isBookSeller
+                  ? Container()
+                  : ButtonGradient(
+                      text: "SUIVRE",
+                      width: 120,
+                      height: 35,
+                      fontSize: 16,
+                      onTap: () => print("click")),
             ],
           ),
         ],
@@ -97,14 +104,26 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
                   ),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  children: <Widget>[
-                    Text(
-                        "Lundi:\nMardi:\nMercredi:\nJeudi:\nVendredi:\nSamedi:\nDimanche:"),
-                    SizedBox(width: 20),
-                    Text(_getHorraires()),
-                  ],
-                ),
+                controller.bookSeller.openHour.isEmpty
+                    ? Row(
+                        children: <Widget>[
+                          Text(
+                            "Aucun horraire spécifiés",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: ConstantColor.greyDark,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        children: <Widget>[
+                          Text(
+                              "Lundi:\nMardi:\nMercredi:\nJeudi:\nVendredi:\nSamedi:\nDimanche:"),
+                          SizedBox(width: 20),
+                          Text(_getHorraires()),
+                        ],
+                      ),
               ],
             ),
           ),
@@ -122,7 +141,9 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
                 ),
                 SizedBox(height: 10),
                 DescriptionTextWidget(
-                  text: controller.bookSeller.bio,
+                  text: controller.bookSeller.bio == ""
+                      ? "Aucune description"
+                      : controller.bookSeller.bio,
                   style: TextStyle(
                     fontSize: 14,
                     color: ConstantColor.greyDark,
@@ -300,17 +321,16 @@ ${controller.bookSeller.openHour["sunday"]}""";
           Expanded(
             child: GetBuilder<BookSellerDetailController>(
               builder: (_) {
-                if (_.location == null) return Container();
+                if (_.bookSeller.coord == null) return Container();
                 return GoogleMap(
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(_.location.latitude, _.location.longitude),
+                    target: _.bookSeller.coord,
                     zoom: 12,
                   ),
                   markers: {
                     Marker(
                       markerId: MarkerId(_.bookSeller.id),
-                      position:
-                          LatLng(_.location.latitude, _.location.longitude),
+                      position: _.bookSeller.coord,
                     )
                   },
                 );

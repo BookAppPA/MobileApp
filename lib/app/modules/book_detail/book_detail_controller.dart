@@ -46,9 +46,14 @@ class BookDetailController extends GetxController {
       loadData = false;
       book.setNote(_note);
       book.setNbRatings(_nbRatings);
-      haveAlreadyBook = UserController.to.user.listBooksRead
-              .firstWhere((item) => item.id == book.id, orElse: () => null) !=
-          null;
+      if (UserController.to.isBookSeller)
+        haveAlreadyBook = UserController.to.bookseller.listBooksWeek
+                .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+            null;
+      else
+        haveAlreadyBook = UserController.to.user.listBooksRead
+                .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+            null;
     } else
       _errorLoad();
     update();
@@ -61,9 +66,14 @@ class BookDetailController extends GetxController {
 
   _getRatings() async {
     if ((book != null && book.id != null) || bookId != null) {
-      haveAlreadyBook = UserController.to.user.listBooksRead
-              .firstWhere((item) => item.id == book.id, orElse: () => null) !=
-          null;
+      if (UserController.to.isBookSeller)
+        haveAlreadyBook = UserController.to.bookseller.listBooksWeek
+                .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+            null;
+      else
+        haveAlreadyBook = UserController.to.user.listBooksRead
+                .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+            null;
       Map<String, dynamic> map =
           await repository.getRatingsByBook(bookId ?? book.id);
       _note = map["note"] ?? 0;
@@ -83,12 +93,19 @@ class BookDetailController extends GetxController {
   }
 
   handleAddOrDeleteBook() {
-    if (haveAlreadyBook)
-      BasicDialog.showConfirmDeleteBookDialog(
-          onConfirm: () => _deleteBookFromGallery());
-    else
-      BasicDialog.showConfirmFinishBookDialog(
-          onConfirm: () => _addBookToGallery());
+    if (haveAlreadyBook) {
+      if (UserController.to.isBookSeller)
+        print("delete book week");
+      else
+        BasicDialog.showConfirmDeleteBookDialog(
+            onConfirm: () => _deleteBookFromGallery());
+    } else {
+      if (UserController.to.isBookSeller)
+        print("add book week");
+      else
+        BasicDialog.showConfirmFinishBookDialog(
+            onConfirm: () => _addBookToGallery());
+    }
   }
 
   _addBookToGallery() async {

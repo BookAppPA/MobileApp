@@ -14,11 +14,19 @@ class UserController extends GetxController {
 
   UserModel _user;
   UserModel get user => this._user;
-  set user(value) => this._user = value;
+  set user(value) {
+    this._user = value;
+    isBookSeller = false;
+  }
 
   BookSeller _bookseller;
   BookSeller get bookseller => this._bookseller;
-  set bookseller(value) => this._bookseller = value;
+  set bookseller(value) {
+    this._bookseller = value;
+    isBookSeller = true;
+  }
+
+  bool isBookSeller = false;
 
   Map<String, dynamic> _userData = {};
   Map<String, dynamic> get userData => this._userData;

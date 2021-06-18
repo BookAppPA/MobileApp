@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:book_app/app/modules/home/home_controller.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
 import 'package:book_app/app/routes/app_pages.dart';
@@ -147,6 +148,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildBooksWant() {
+    if (UserController.to.isBookSeller) return Container();
     return Container(
       height: 325,
       // color: Colors.red,

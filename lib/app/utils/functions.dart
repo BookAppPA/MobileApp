@@ -64,12 +64,31 @@ bool isOnlyNumeric(String str) {
   return reg.hasMatch(str);
 }
 
+String splitAddress(String address) {
+  var list = address.split(" ");
+  int index = list.indexWhere((item) {
+    var n = int.tryParse(item);
+    return n != null && n > 1000;
+  });
+  if (index != -1) {
+    String res = "";
+    for (int i = 0; i < index; i++) {
+      res += list[i] + " ";
+    }
+    res += "\n";
+    for (int i = index; i < list.length; i++) {
+      res += list[i] + " ";
+    }
+    return res;
+  } else
+    return address;
+}
+
 Future<DateTime> getDateServer() async {
   try {
-    http.Response resp = await http.get(
-      Uri()
-     // Constant.urlDateServerFunction,
-    );
+    http.Response resp = await http.get(Uri()
+        // Constant.urlDateServerFunction,
+        );
     if (resp.statusCode == 200) {
       print("response: ${resp.body}");
       Map<String, dynamic> map = json.decode(resp.body);

@@ -27,10 +27,9 @@ class SearchController extends GetxController {
   List<UserModel> users = [];
 
   String get placeholderSearchBar {
-     if (searchMode == 0) 
+    if (searchMode == 0)
       return "Rechercher un livre";
-    else if (searchMode == 1)
-      return "Rechercher un auteur";
+    else if (searchMode == 1) return "Rechercher un auteur";
     return "Rechercher un utilisateur";
   }
 
@@ -43,8 +42,7 @@ class SearchController extends GetxController {
   getBookIndex(int index) {
     if (searchMode == 0)
       return books[index];
-    else if (searchMode == 1)
-      return booksByAuthor[index];
+    else if (searchMode == 1) return booksByAuthor[index];
     return Book();
   }
 
@@ -71,7 +69,10 @@ class SearchController extends GetxController {
   }
 
   addBookToGallery(Book book) {
-    BasicDialog.showConfirmFinishBookDialog(onConfirm: () => _addBook(book));
+    if (UserController.to.isBookSeller)
+      print("add book week");
+    else
+      BasicDialog.showConfirmFinishBookDialog(onConfirm: () => _addBook(book));
   }
 
   _addBook(Book book) async {
@@ -84,7 +85,10 @@ class SearchController extends GetxController {
   }
 
   deleteBookFromGallery(Book book) {
-    BasicDialog.showConfirmDeleteBookDialog(onConfirm: () => _deleteBook(book));
+    if (UserController.to.isBookSeller)
+      print("delete book week");
+    else
+      BasicDialog.showConfirmDeleteBookDialog(onConfirm: () => _deleteBook(book));
   }
 
   _deleteBook(Book book) async {

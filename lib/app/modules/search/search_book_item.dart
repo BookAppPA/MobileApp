@@ -19,9 +19,15 @@ class SearchBookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var haveAlreadyBook = UserController.to.user.listBooksRead
-            .firstWhere((item) => item.id == book.id, orElse: () => null) !=
-        null;
+    var haveAlreadyBook = false;
+    if (UserController.to.isBookSeller)
+      haveAlreadyBook = UserController.to.bookseller.listBooksWeek
+              .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+          null;
+    else
+      haveAlreadyBook = UserController.to.user.listBooksRead
+              .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+          null;
 
     return GestureDetector(
       onTap: () => book.id != null

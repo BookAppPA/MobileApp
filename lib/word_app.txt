@@ -97,3 +97,6 @@ Saisissez le nom de votre librairie
 Vous êtes un libraire ? 
 Créer un compte pro
 Saisissez votre n° SIREN ou SIRET
+Ajouter ce livre
+Aucun horraire spécifiés
+Aucune description
