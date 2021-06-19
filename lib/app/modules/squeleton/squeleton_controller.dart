@@ -1,3 +1,4 @@
+import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_page.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_main_page.dart';
 import 'package:book_app/app/modules/home/home_page.dart';
 import 'package:book_app/app/modules/profil/profil_page.dart';
@@ -17,6 +18,9 @@ class SqueletonController extends GetxController {
       case 1:
         return BookSellerMainPage();
       case 2:
+        if (UserController.to.isBookSeller) {
+          return BookSellerDetailPage(bookSeller: UserController.to.bookseller, back: false);
+        }
         return HomePage();
       case 3:
         return ProfilPage(user: UserController.to.user);

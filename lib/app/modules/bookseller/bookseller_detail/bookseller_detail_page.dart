@@ -1,8 +1,10 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
+import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
-import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
+import 'package:book_app/app/modules/profil/widgets/profil_app_bar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/description_text.dart';
@@ -17,10 +19,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BookSellerDetailPage extends GetView<BookSellerDetailController> {
+
+  final bool back;
+  final BookSeller bookSeller;
+  BookSellerDetailPage({this.bookSeller, this.back: true}) {
+    if (bookSeller != null && bookSeller.name != null) {
+      Get.put(BookSellerDetailController(repository: BookSellerRepository(), bookSeller: bookSeller));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BackButtonAppBar(textTitle: controller.bookSeller.name),
       body: Container(
         width: Get.width,
         height: Get.height,
@@ -28,6 +38,12 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              ProfilAppBar(
+                isBookSeller: controller.isMe,
+                isMe: controller.isMe,
+                back: back,
+                title: controller.bookSeller.name,
+              ),
               _buildBasicInfo(),
               _buildLastBooksWeek(),
               _buildInfoBookSeller(),
@@ -78,6 +94,14 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
                       height: 35,
                       fontSize: 16,
                       onTap: () => print("click")),
+              controller.isMe
+                  ? ButtonGradient(
+                      text: "MODIFIER",
+                      width: 120,
+                      height: 35,
+                      fontSize: 16,
+                      onTap: () => print("click"))
+                  : Container()
             ],
           ),
         ],
@@ -184,7 +208,7 @@ ${controller.bookSeller.openHour["sunday"]}""";
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: Text(
                       "Derniers Livres de la Semaine",
                       style: TextStyle(
@@ -293,6 +317,47 @@ ${controller.bookSeller.openHour["sunday"]}""";
                 builder: (_) => DotsIndicator(
                   dotsCount: length,
                   position: _.bookPosition.toDouble(),
+                ),
+              ),
+            ],
+          ),
+        );
+      if (controller.isMe)
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    child: Text(
+                      "Derniers Livres de la Semaine",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              GestureDetector(
+                onTap: () => Get.toNamed(Routes.SEARCH),
+                child: Container(
+                  height: 130,
+                  width: 100,
+                  margin: EdgeInsets.only(left: 20),
+                  decoration: BoxDecoration(
+                    color: ConstantColor.grey.withOpacity(.3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      color: ConstantColor.grey,
+                      size: 50,
+                    ),
+                  ),
                 ),
               ),
             ],

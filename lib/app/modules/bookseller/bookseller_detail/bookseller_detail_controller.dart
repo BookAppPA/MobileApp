@@ -1,5 +1,6 @@
 import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,10 +14,12 @@ class BookSellerDetailController extends GetxController {
   final BookSellerRepository repository;
   final BookSeller bookSeller;
   int bookPosition = 0;
+  bool isMe;
 
   @override
   void onInit() {
     super.onInit();
+    isMe = UserController.to.bookseller.id == bookSeller.id;
     _getListBooksWeek();
   }
 

@@ -8,7 +8,8 @@ class BookSellerDetailBinding extends Bindings {
   @override
   void dependencies() {
     final BookSeller bookSeller = Get.arguments as BookSeller;
-    Get.put(BookSellerDetailController(repository: BookSellerRepository(), bookSeller: bookSeller));
+    Get.delete<BookSellerDetailController>();
+    Get.create(() => BookSellerDetailController(repository: BookSellerRepository(), bookSeller: bookSeller), permanent: false);
   }
 
 }

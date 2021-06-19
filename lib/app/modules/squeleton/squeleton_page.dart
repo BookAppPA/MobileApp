@@ -1,4 +1,5 @@
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/squeleton/squeleton_controller.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
@@ -24,33 +25,38 @@ class SqueletonPage extends StatelessWidget {
               currentIndex: controller.currentIndex,
               onTap: (index) => controller.changePage(index),
               type: BottomNavigationBarType.fixed,
-              
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: "Accueil",
-                  tooltip: "",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.book, size: 20),
-                  label: "Libraire",
-                  tooltip: "",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: "Feed",
-                  tooltip: "",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.userAlt, size: 20),
-                  label: "Profil",
-                  tooltip: "",
-                ),
-              ],
+              items: _createListNavigation(),
             ),
           );
         },
       ),
     );
+  }
+
+  _createListNavigation() {
+    var list = [
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: "Accueil",
+        tooltip: "",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(FontAwesomeIcons.book, size: 20),
+        label: "Libraire",
+        tooltip: "",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.search),
+        label: "Feed",
+        tooltip: "",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(FontAwesomeIcons.userAlt, size: 20),
+        label: "Profil",
+        tooltip: "",
+      ),
+    ];
+    if (UserController.to.isBookSeller) list.removeAt(2);
+    return list;
   }
 }

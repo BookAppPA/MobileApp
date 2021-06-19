@@ -6,8 +6,13 @@ import 'package:get/get.dart';
 import '../profil_controller.dart';
 
 class ProfilAppBar extends StatelessWidget {
-  final bool isMe, back;
-  ProfilAppBar({this.isMe: false, this.back: true});
+  final bool isMe, back, isBookSeller;
+  final String title;
+  ProfilAppBar(
+      {this.isMe: false,
+      this.title: "",
+      this.back: true,
+      this.isBookSeller: false});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,14 @@ class ProfilAppBar extends StatelessWidget {
                           Get.toNamed(Routes.SETTINGS);
                         },
                       ),
+                Expanded(
+                  child: Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
                 back
                     ? Row(
                         children: <Widget>[
@@ -83,22 +96,35 @@ class ProfilAppBar extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios,
-                    color: Color(0xbf212121),
+                    color: back ? Color(0xbf212121) : Colors.transparent,
                   ),
                   onPressed: () {
-                    FocusScope.of(Get.context).unfocus();
-                    Get.back();
+                    if (back) {
+                      FocusScope.of(Get.context).unfocus();
+                      Get.back();
+                    }
                   },
+                ),
+                Expanded(
+                  child: Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
                 IconButton(
                   icon: Icon(
                     Icons.settings,
                     size: 30,
-                    color: Color(0xbf212121),
+                    color:
+                        isBookSeller ? Colors.transparent : Color(0xbf212121),
                   ),
                   onPressed: () {
-                    FocusScope.of(Get.context).unfocus();
-                    Get.toNamed(Routes.SETTINGS);
+                    if (!isBookSeller) {
+                      FocusScope.of(Get.context).unfocus();
+                      Get.toNamed(Routes.SETTINGS);
+                    }
                   },
                 ),
               ],
