@@ -26,12 +26,12 @@ class UserRepository {
   changeUserPicture(String uid, String path, String urlToDelete) async {
     String url = await _firebaseStorageAPI.uploadPicture(uid, path, urlToDelete);
     if (url != null)
-      await _databaseAPI.updateUser(uid, {"picture": url});
+      await _databaseAPI.updateUser(uid, {"picture": url}, false);
     return url;
   }
 
-  updateUser(String idUser, Map<String, String> data) {
-    return _databaseAPI.updateUser(idUser, data);
+  updateUser(String idUser, Map<String, String> data, {bool isBookSeller: false}) async {
+    return await _databaseAPI.updateUser(idUser, data, isBookSeller);
   }
 
   getUserListBook(String idUser) async {

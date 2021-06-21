@@ -64,6 +64,11 @@ bool isOnlyNumeric(String str) {
   return reg.hasMatch(str);
 }
 
+bool isPhoneNumber(String str) {
+  RegExp reg = RegExp(r"^[0-9\-]+$");
+  return reg.hasMatch(str);
+}
+
 String splitAddress(String address) {
   var list = address.split(" ");
   int index = list.indexWhere((item) {

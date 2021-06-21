@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ButtonArround extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
-  final double height, borderRadius;
+  final double width, height, borderRadius;
   final Color colorBackground, colorText;
   final bool isLoading;
   TextStyle textStyle;
@@ -12,8 +12,9 @@ class ButtonArround extends StatelessWidget {
   ButtonArround({
     @required this.onTap,
     this.text: "",
-    this.height: 65,
-    this.borderRadius: 10,
+    this.height: 50,
+    this.width: 125,
+    this.borderRadius: 30,
     this.colorBackground: ConstantColor.accent,
     this.colorText: ConstantColor.white,
     this.isLoading: false,
@@ -25,6 +26,7 @@ class ButtonArround extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height,
+        width: width,
         decoration: BoxDecoration(
           color: colorBackground,
           borderRadius: BorderRadius.circular(borderRadius),

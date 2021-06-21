@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BookSellerDetailController extends GetxController {
-
   static BookSellerDetailController get to => Get.find();
 
-  BookSellerDetailController({@required this.repository, @required this.bookSeller}) : assert(repository != null), assert(bookSeller != null);
+  BookSellerDetailController(
+      {@required this.repository, @required this.bookSeller})
+      : assert(repository != null),
+        assert(bookSeller != null);
 
   final BookSellerRepository repository;
   final BookSeller bookSeller;
@@ -29,7 +31,7 @@ class BookSellerDetailController extends GetxController {
   }
 
   callBookSeller() async {
-    var url = "tel:+33${bookSeller.phone}";
+    var url = "tel:${bookSeller.phone}";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -42,4 +44,18 @@ class BookSellerDetailController extends GetxController {
     update();
   }
 
+  updateBio(String bio) {
+    bookSeller.bio = bio;
+    update();
+  }
+
+  updatePhone(String phone) {
+    bookSeller.phone = phone;
+    update();
+  }
+
+  updateOpenHours(Map hours) {
+    bookSeller.openHour = hours;
+    update();
+  }
 }

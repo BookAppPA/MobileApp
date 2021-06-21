@@ -30,7 +30,7 @@ Aucun Avis
 Avis (X)
 CONTACTER
 SUIVRE
-Horraires: 
+Horaires: 
 Lundi:\nMardi:\nMercredi:\nJeudi:\nVendredi:\nSamedi:\nDimanche:
 Description: 
 Derniers Livres de la Semaine
@@ -98,5 +98,17 @@ Vous êtes un libraire ?
 Créer un compte pro
 Saisissez votre n° SIREN ou SIRET
 Ajouter ce livre
-Aucun horraire spécifiés
+Pas d'horaires spécifiés
 Aucune description
+Ajouter une description
+N° TELEPHONE
+Ajouter un numéro de téléphone
+HORAIRES
+Horaires d'ouverture de X
+Fermé
+Annuler
+Confirmer
+Ouvert toute la journée ?
+Matin
+Après-midi
+Soir

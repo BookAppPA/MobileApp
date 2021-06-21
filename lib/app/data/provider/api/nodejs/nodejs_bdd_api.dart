@@ -31,11 +31,11 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<bool> updateUser(String idUser, Map<String, String> data) async {
+  Future<bool> updateUser(String idUser, Map<String, String> data, bool isBookSeller) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.put(Uri.parse(UrlAPI.updateUser+"/$idUser"),
-          headers: {"authorization": "Bearer $token"},
+          headers: {"authorization": "Bearer $token", "isbookseller": isBookSeller.toString()},
           body: data);
       if (resp.statusCode == 200) {
         return true;

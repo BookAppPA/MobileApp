@@ -19,12 +19,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BookSellerDetailPage extends GetView<BookSellerDetailController> {
-
   final bool back;
   final BookSeller bookSeller;
   BookSellerDetailPage({this.bookSeller, this.back: true}) {
     if (bookSeller != null && bookSeller.name != null) {
-      Get.put(BookSellerDetailController(repository: BookSellerRepository(), bookSeller: bookSeller));
+      Get.put(BookSellerDetailController(
+          repository: BookSellerRepository(), bookSeller: bookSeller));
     }
   }
 
@@ -70,39 +70,41 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
             ),
           ),
           SizedBox(height: 25),
-          Row(
-            mainAxisAlignment: controller.bookSeller.phone != ""
-                ? UserController.to.isBookSeller
-                    ? MainAxisAlignment.center
-                    : MainAxisAlignment.spaceEvenly
-                : MainAxisAlignment.center,
-            children: <Widget>[
-              controller.bookSeller.phone != ""
-                  ? ButtonGradient(
-                      text: "CONTACTER",
-                      width: 120,
-                      height: 35,
-                      fontSize: 16,
-                      onTap: () => controller.callBookSeller(),
-                    )
-                  : Container(),
-              UserController.to.isBookSeller
-                  ? Container()
-                  : ButtonGradient(
-                      text: "SUIVRE",
-                      width: 120,
-                      height: 35,
-                      fontSize: 16,
-                      onTap: () => print("click")),
-              controller.isMe
-                  ? ButtonGradient(
-                      text: "MODIFIER",
-                      width: 120,
-                      height: 35,
-                      fontSize: 16,
-                      onTap: () => print("click"))
-                  : Container()
-            ],
+          GetBuilder<BookSellerDetailController>(
+            builder: (_) => Row(
+              mainAxisAlignment: _.bookSeller.phone != ""
+                  ? UserController.to.isBookSeller && !_.isMe
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.spaceEvenly
+                  : MainAxisAlignment.center,
+              children: <Widget>[
+                _.bookSeller.phone != ""
+                    ? ButtonGradient(
+                        text: "CONTACTER",
+                        width: 120,
+                        height: 35,
+                        fontSize: 16,
+                        onTap: () => controller.callBookSeller(),
+                      )
+                    : Container(),
+                UserController.to.isBookSeller
+                    ? Container()
+                    : ButtonGradient(
+                        text: "SUIVRE",
+                        width: 120,
+                        height: 35,
+                        fontSize: 16,
+                        onTap: () => print("click")),
+                _.isMe
+                    ? ButtonGradient(
+                        text: "MODIFIER",
+                        width: 120,
+                        height: 35,
+                        fontSize: 16,
+                        onTap: () => Get.toNamed(Routes.EDIT_PROFIL))
+                    : Container()
+              ],
+            ),
           ),
         ],
       ),
@@ -121,33 +123,37 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Horraires: ",
+                  "Horaires: ",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 17,
                   ),
                 ),
                 SizedBox(height: 10),
-                controller.bookSeller.openHour.isEmpty
-                    ? Row(
+                GetBuilder<BookSellerDetailController>(
+                  builder: (_) {
+                    if (_.bookSeller.openHour.isEmpty)
+                      return Row(
                         children: <Widget>[
                           Text(
-                            "Aucun horraire spécifiés",
+                            "Pas d'horaires spécifiés",
                             style: TextStyle(
                               fontSize: 14,
                               color: ConstantColor.greyDark,
                             ),
                           ),
                         ],
-                      )
-                    : Row(
-                        children: <Widget>[
-                          Text(
-                              "Lundi:\nMardi:\nMercredi:\nJeudi:\nVendredi:\nSamedi:\nDimanche:"),
-                          SizedBox(width: 20),
-                          Text(_getHorraires()),
-                        ],
-                      ),
+                      );
+                    return Row(
+                      children: <Widget>[
+                        Text(
+                            "Lundi:\nMardi:\nMercredi:\nJeudi:\nVendredi:\nSamedi:\nDimanche:"),
+                        SizedBox(width: 20),
+                        Text(_getHorraires()),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -164,13 +170,15 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
                   ),
                 ),
                 SizedBox(height: 10),
-                DescriptionTextWidget(
-                  text: controller.bookSeller.bio == ""
-                      ? "Aucune description"
-                      : controller.bookSeller.bio,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: ConstantColor.greyDark,
+                GetBuilder<BookSellerDetailController>(
+                  builder: (_) => DescriptionTextWidget(
+                    text: _.bookSeller.bio == ""
+                        ? "Aucune description"
+                        : _.bookSeller.bio,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: ConstantColor.greyDark,
+                    ),
                   ),
                 ),
               ],
@@ -185,13 +193,13 @@ class BookSellerDetailPage extends GetView<BookSellerDetailController> {
     String res = "";
     if (controller.bookSeller.openHour != null) {
       res += """
-${controller.bookSeller.openHour["monday"]}
-${controller.bookSeller.openHour["tuesday"]}
-${controller.bookSeller.openHour["wednesday"]}
-${controller.bookSeller.openHour["thursday"]}
-${controller.bookSeller.openHour["friday"]}
-${controller.bookSeller.openHour["saturday"]}
-${controller.bookSeller.openHour["sunday"]}""";
+${controller.bookSeller.openHour["monday"] ?? "Pas d'horaires spécifiés"}
+${controller.bookSeller.openHour["tuesday"] ?? "Pas d'horaires spécifiés"}
+${controller.bookSeller.openHour["wednesday"] ?? "Pas d'horaires spécifiés"}
+${controller.bookSeller.openHour["thursday"] ?? "Pas d'horaires spécifiés"}
+${controller.bookSeller.openHour["friday"] ?? "Pas d'horaires spécifiés"}
+${controller.bookSeller.openHour["saturday"] ?? "Pas d'horaires spécifiés"}
+${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
     }
     return res;
   }

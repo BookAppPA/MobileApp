@@ -34,8 +34,21 @@ class UserController extends GetxController {
   bool _loadingPicture = false;
   bool get loadingPicture => this._loadingPicture;
 
-  updateBio(String bio) {
-    _user.bio = bio;
+  updateBio(String bio, bool isBookSeller) {
+    if (isBookSeller)
+      _bookseller.bio = bio;
+    else
+      _user.bio = bio;
+    update();
+  }
+
+  updatePhone(String phone) {
+    _bookseller.phone = phone;
+    update();
+  }
+
+  updateOpenHours(Map hours) {
+    _bookseller.openHour = hours;
     update();
   }
 
