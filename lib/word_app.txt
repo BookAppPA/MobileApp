@@ -112,3 +112,10 @@ Ouvert toute la journée ?
 Matin
 Après-midi
 Soir
+Lundi
+Mardi
+Mercredi
+Jeudi
+Vendredi
+Samedi
+Dimanche
