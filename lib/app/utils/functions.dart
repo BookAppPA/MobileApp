@@ -3,6 +3,7 @@ import 'package:book_app/app/utils/constant/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:http/http.dart' as http;
+import 'constant/url_api.dart';
 
 String parseDateTime(DateTime date, String regex) {
   return Jiffy(date).format(regex);
@@ -91,9 +92,7 @@ String splitAddress(String address) {
 
 Future<DateTime> getDateServer() async {
   try {
-    http.Response resp = await http.get(Uri()
-        // Constant.urlDateServerFunction,
-        );
+    http.Response resp = await http.get(Uri.parse(UrlAPI.dateServer));
     if (resp.statusCode == 200) {
       print("response: ${resp.body}");
       Map<String, dynamic> map = json.decode(resp.body);
@@ -107,13 +106,22 @@ Future<DateTime> getDateServer() async {
         print(
             "diff to today: ${diffDateToToday(timestampToDate(map['timestamp']), Units.HOUR)}");*/
     } else {
-      print("error get http call");
+      print("error get http getDateServer --> ${resp.body}");
       return DateTime.now();
     }
   } catch (e) {
     print(e.toString());
     return DateTime.now();
   }
+}
+
+int diffDateToDateServer(DateTime dateServer, DateTime date, Units units) {
+  var now = Jiffy(dateServer);
+  return now.diff(
+      Jiffy(
+        date,
+      ),
+      units);
 }
 
 Timestamp parseDateTimeToTimestamp(DateTime date) {

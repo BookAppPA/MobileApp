@@ -68,12 +68,14 @@ class BookDetailController extends GetxController {
   _getRatings() async {
     if ((book != null && book.id != null) || bookId != null) {
       if (UserController.to.isBookSeller)
-        haveAlreadyBook = UserController.to.bookseller.listBooksWeek
-                .firstWhere((item) => item.id == (book != null ? book.id : bookId), orElse: () => null) !=
+        haveAlreadyBook = UserController.to.bookseller.listBooksWeek.firstWhere(
+                (item) => item.id == (book != null ? book.id : bookId),
+                orElse: () => null) !=
             null;
       else
-        haveAlreadyBook = UserController.to.user.listBooksRead
-                .firstWhere((item) => item.id == (book != null ? book.id : bookId), orElse: () => null) !=
+        haveAlreadyBook = UserController.to.user.listBooksRead.firstWhere(
+                (item) => item.id == (book != null ? book.id : bookId),
+                orElse: () => null) !=
             null;
       Map<String, dynamic> map =
           await repository.getRatingsByBook(bookId ?? book.id);
@@ -103,22 +105,32 @@ class BookDetailController extends GetxController {
     } else {
       if (UserController.to.isBookSeller) {
         print("add book week");
-        Get.bottomSheet(AddBookWeekBottomSheet(onConfirm: (desc) => _addBookWeek(desc)));
-      }
-      else
+        Get.bottomSheet(
+            AddBookWeekBottomSheet(onConfirm: (desc) => _addBookWeek(desc)));
+      } else
         BasicDialog.showConfirmFinishBookDialog(
             onConfirm: () => _addBookToGallery());
     }
   }
 
   _addBookWeek(String desc) async {
-    var res = await UserController.to.addBookWeek(book, desc);
-    if (res)
-      CustomSnackbar.snackbar("Ce livre à été ajouté au Livre de la Semaine");
-    else
-      CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
-    haveAlreadyBook = true;
-    update();
+    if (UserController.to.canAddBookWeek) {
+      var res = await UserController.to.addBookWeek(book, desc);
+      if (res) {
+        UserController.to.isAddBookWeek(false);
+        CustomSnackbar.snackbar("Ce livre à été ajouté au Livre de la Semaine");
+      } else
+        CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
+      haveAlreadyBook = true;
+      update();
+    } else {
+      Future.delayed(
+        Duration(milliseconds: 500),
+        () => CustomSnackbar.snackbar(
+            "Vous devez attendre la semaine prochaine pour ajouter un nouveau Livre de la Semaine",
+            shortDuration: false),
+      );
+    }
   }
 
   _addBookToGallery() async {

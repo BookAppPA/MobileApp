@@ -1,30 +1,32 @@
-import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
-import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/profil/widgets/profil_app_bar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
-import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/description_text.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
-import 'package:book_app/app/utils/functions.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'book_week_item.dart';
 
-class BookSellerDetailPage extends GetView<BookSellerDetailController> {
+class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
   final bool back;
   final BookSeller bookSeller;
-  BookSellerDetailPage({this.bookSeller, this.back: true}) {
+  final BookSellerDetailController controller;
+  BookSellerDetailPage(
+      {this.bookSeller,
+      this.back: true,
+      this.controller}) {
     if (bookSeller != null && bookSeller.name != null) {
-      Get.put(BookSellerDetailController(
-          repository: BookSellerRepository(), bookSeller: bookSeller));
+      /*Get.put(
+          BookSellerDetailController(
+              repository: BookSellerRepository(), bookSeller: bookSeller),
+          tag: tagController);*/
     }
   }
 
@@ -205,132 +207,52 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
   }
 
   _buildLastBooksWeek() {
-    return GetBuilder<UserController>(builder: (_) {
-      var length = _.bookseller.listBooksWeek.length;
-      if (length > 0)
-        return Container(
-          //height: 100,
-          // color: Colors.blue,
-          child: Column(
-            children: [
-              Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child: Text(
-                      "Derniers Livres de la Semaine",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+    if (controller.isMe)
+      return GetBuilder<UserController>(builder: (_) {
+        var length = _.bookseller.listBooksWeek.length;
+        if (length > 0)
+          return Container(
+            //height: 100,
+            // color: Colors.blue,
+            child: Column(
+              children: [
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      child: Text(
+                        "Derniers Livres de la Semaine",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                CarouselSlider.builder(
+                  itemCount: length,
+                  options: CarouselOptions(
+                    viewportFraction: 1,
+                    onPageChanged: (index, reason) =>
+                        controller.changePositionBook(index),
                   ),
-                ],
-              ),
-              CarouselSlider.builder(
-                itemCount: length,
-                options: CarouselOptions(
-                  viewportFraction: 1,
-                  onPageChanged: (index, reason) => BookSellerDetailController.to.changePositionBook(index),
+                  itemBuilder: (ctx, index, realIndex) {
+                    BookWeek bookWeek = _.bookseller.listBooksWeek[index];
+                    return BookWeekItem(bookWeek);
+                  },
                 ),
-                itemBuilder: (ctx, index, realIndex) {
-                  BookWeek bookWeek = _.bookseller.listBooksWeek[index];
-                  return GestureDetector(
-                    onTap: () => Get.toNamed(Routes.BOOK_DETAIL,
-                        arguments: Book(id: bookWeek.id)),
-                    child: Container(
-                      //color: index % 2 == 0 ? Colors.green : Colors.purple,
-                      margin: EdgeInsets.symmetric(horizontal: 25),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            height: 150,
-                            child: Hero(
-                              tag: bookWeek.id,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: bookWeek.picture != null &&
-                                        bookWeek.picture != ""
-                                    ? CachedNetworkImage(
-                                        imageUrl: bookWeek.picture,
-                                        fit: BoxFit.cover,
-                                        useOldImageOnUrlChange: true,
-                                        placeholder: (context, url) =>
-                                            CustomCircularProgress(radius: 15),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      )
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                      ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 25),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        bookWeek.title,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontFamily: 'SF Pro Text',
-                                          fontSize: 20,
-                                          color: ConstantColor.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontStyle: FontStyle.italic,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        "${bookWeek.author}  •  ${stringToDate(bookWeek.datePublished, 'yyyy').year}",
-                                        style: TextStyle(
-                                          fontFamily: 'SF Pro Text',
-                                          fontSize: 14,
-                                          color: ConstantColor.greyDark,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: DescriptionTextWidget(
-                                    text: bookWeek.bio,
-                                    showInPopup: true,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-              GetBuilder<BookSellerDetailController>(
-                builder: (_) => DotsIndicator(
-                  dotsCount: length,
-                  position: _.bookPosition.toDouble(),
+                GetBuilder<BookSellerDetailController>(
+                  builder: (_) => DotsIndicator(
+                    dotsCount: length,
+                    position: _.bookPosition.toDouble(),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      if (controller.isMe)
+              ],
+            ),
+          );
+
         return Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -371,8 +293,56 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
             ],
           ),
         );
-      return Container();
-    });
+      });
+
+    return GetBuilder<BookSellerDetailController>(
+      builder: (__) {
+        var length = __.bookSeller.listBooksWeek.length;
+        if (length > 0)
+          return Container(
+            //height: 100,
+            // color: Colors.blue,
+            child: Column(
+              children: [
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      child: Text(
+                        "Derniers Livres de la Semaine",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                CarouselSlider.builder(
+                  itemCount: length,
+                  options: CarouselOptions(
+                    viewportFraction: 1,
+                    onPageChanged: (index, reason) =>
+                        __.changePositionBook(index),
+                  ),
+                  itemBuilder: (ctx, index, realIndex) {
+                    BookWeek bookWeek = __.bookSeller.listBooksWeek[index];
+                    return BookWeekItem(bookWeek);
+                  },
+                ),
+                GetBuilder<BookSellerDetailController>(
+                  builder: (___) => DotsIndicator(
+                    dotsCount: length,
+                    position: ___.bookPosition.toDouble(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        return Container();
+      },
+    );
   }
 
   _buildContactInfo() {

@@ -5,8 +5,10 @@ import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/my_check_internet.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jiffy/jiffy.dart';
 
 class SplashScreenController extends GetxController {
   final UserRepository userRepository;
@@ -45,8 +47,23 @@ class SplashScreenController extends GetxController {
         } else {
           if (user is UserModel)
             UserController.to.user = user;
-          else
+          else {
             UserController.to.bookseller = user;
+            if (UserController.to.bookseller.dateNextAddBookWeek != null) {
+              var dateServer = await getDateServer();
+              int diff = diffDateToDateServer(
+                  dateServer,
+                  UserController.to.bookseller.dateNextAddBookWeek,
+                  Units.MINUTE);
+              print("diff date -> $diff");
+              if (diff > 0) {
+                // > 24H
+                UserController.to.isAddBookWeek(true);
+              }
+            } else {
+              UserController.to.isAddBookWeek(true);
+            }
+          }
           Get.offAllNamed(Routes.SQUELETON);
         }
       } else

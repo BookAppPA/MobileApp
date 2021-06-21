@@ -4,6 +4,7 @@ import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
+import 'package:book_app/app/utils/functions.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 
@@ -35,6 +36,8 @@ class UserController extends GetxController {
   bool _loadingPicture = false;
   bool get loadingPicture => this._loadingPicture;
 
+  bool canAddBookWeek = false;
+
   updateBio(String bio, bool isBookSeller) {
     if (isBookSeller)
       _bookseller.bio = bio;
@@ -53,6 +56,11 @@ class UserController extends GetxController {
     update();
   }
 
+  isAddBookWeek(bool value) {
+    canAddBookWeek = value;
+    update();
+  }
+
   isLoadingPicture(bool value) {
     _loadingPicture = value;
     update();
@@ -65,6 +73,11 @@ class UserController extends GetxController {
 
   setListBooks(List<Book> list) {
     _user.listBooksRead = list;
+    update();
+  }
+
+  setListBooksWeek(List<BookWeek> list) {
+    _bookseller.listBooksWeek = list;
     update();
   }
 
@@ -89,6 +102,14 @@ class UserController extends GetxController {
     print("res add book week --> $res");
     if (res) {
       _bookseller.listBooksWeek.insert(0, bookWeek);
+      var date = _bookseller.dateNextAddBookWeek == null
+          ? await getDateServer()
+          : _bookseller.dateNextAddBookWeek;
+      var newDate = date.add(Duration(days: 7));
+      await repository.updateUser(
+          _bookseller.id, {"dateNextAddBookWeek": newDate.toIso8601String()},
+          isBookSeller: true);
+      _bookseller.dateNextAddBookWeek = newDate;
       update();
     }
     return res;

@@ -72,18 +72,29 @@ class SearchController extends GetxController {
   addBookToGallery(Book book) {
     if (UserController.to.isBookSeller) {
       print("add book week");
-      Get.bottomSheet(AddBookWeekBottomSheet(onConfirm: (desc) => _addBookWeek(book, desc)));
+      Get.bottomSheet(AddBookWeekBottomSheet(
+          onConfirm: (desc) => _addBookWeek(book, desc)));
     } else
       BasicDialog.showConfirmFinishBookDialog(onConfirm: () => _addBook(book));
   }
 
   _addBookWeek(Book book, String desc) async {
-    var res = await UserController.to.addBookWeek(book, desc);
-    if (res)
-      CustomSnackbar.snackbar("Ce livre à été ajouté au Livre de la Semaine");
-    else
-      CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
-    update();
+    if (UserController.to.canAddBookWeek) {
+      var res = await UserController.to.addBookWeek(book, desc);
+      if (res) {
+        UserController.to.isAddBookWeek(false);
+        CustomSnackbar.snackbar("Ce livre à été ajouté au Livre de la Semaine");
+      } else
+        CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
+      update();
+    } else {
+      Future.delayed(
+        Duration(milliseconds: 500),
+        () => CustomSnackbar.snackbar(
+            "Vous devez attendre la semaine prochaine pour ajouter un nouveau Livre de la Semaine",
+            shortDuration: false),
+      );
+    }
   }
 
   _addBook(Book book) async {

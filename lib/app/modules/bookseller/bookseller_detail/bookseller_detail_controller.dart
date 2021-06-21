@@ -21,12 +21,19 @@ class BookSellerDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isMe = UserController.to.bookseller.id == bookSeller.id;
+    if (UserController.to.isBookSeller)
+      isMe = UserController.to.bookseller.id == bookSeller.id;
+    else
+      isMe = false;
     _getListBooksWeek();
   }
 
   _getListBooksWeek() async {
-    bookSeller.listBooksWeek = await repository.getListBooksWeek(bookSeller.id);
+    var list = await repository.getListBooksWeek(bookSeller.id);
+    if (isMe) {
+      UserController.to.setListBooksWeek(list);
+    } else
+      bookSeller.listBooksWeek = list;
     update();
   }
 

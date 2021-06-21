@@ -13,6 +13,10 @@ abstract class UrlAPI {
     </dict>
   */
   // Dans Info.plist
+
+  static const String dateServer =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/dateServer";
+
   static final String login =
       // 'https://europe-west3-bombr-9f62f.cloudfunctions.net/dateServer';
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/auth/login";

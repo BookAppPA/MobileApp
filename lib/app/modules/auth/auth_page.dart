@@ -199,6 +199,8 @@ class AuthPage extends StatelessWidget {
                           SizedBox(height: 10),
                           ButtonArround(
                             onTap: () => controller.submitAuth(),
+                            width: Get.width,
+                            borderRadius: 10,
                             isLoading: controller.isLoading,
                             text: controller.authView == AuthView.LOGIN
                                 ? "Se connecter"

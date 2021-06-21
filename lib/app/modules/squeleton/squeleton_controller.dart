@@ -1,3 +1,5 @@
+import 'package:book_app/app/data/repository/bookseller_repository.dart';
+import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_page.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_main_page.dart';
 import 'package:book_app/app/modules/home/home_page.dart';
@@ -19,7 +21,8 @@ class SqueletonController extends GetxController {
         return BookSellerMainPage();
       case 2:
         if (UserController.to.isBookSeller) {
-          return BookSellerDetailPage(bookSeller: UserController.to.bookseller, back: false);
+          var controller = Get.put(BookSellerDetailController(repository: BookSellerRepository(), bookSeller: UserController.to.bookseller));
+          return BookSellerDetailPage(bookSeller: UserController.to.bookseller, back: false, controller: controller);
         }
         return HomePage();
       case 3:
