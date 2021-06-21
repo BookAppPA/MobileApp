@@ -232,7 +232,25 @@ class NodeJSBddAPI {
       return false;
     }
   }
-
+  
+Future<bool> addBookWeek(String idUser, BookWeek book) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.post(Uri.parse(UrlAPI.addBookWeek),
+          headers: {"authorization": "Bearer $token", "uid": idUser},
+          body: book.toJson());
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http addBookWeek --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+  
   Future<bool> deleteBookFromGallery(String idUser, Book book) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();

@@ -26,6 +26,10 @@ class BookWeek {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['bio'] = this.bio;
+    data['picture'] = this.picture;
+    data['title'] = this.title;
+    data['datePublished'] = this.datePublished;
+    data['author'] = this.author;
     return data;
   }
 

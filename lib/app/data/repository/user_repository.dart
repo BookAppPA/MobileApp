@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_firestore_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_messaging_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
@@ -44,6 +45,10 @@ class UserRepository {
 
   addBookToGallery(String idUser, Book book) async {
     return await _databaseAPI.addBookToGallery(idUser, book);
+  }
+
+  addBookWeek(String idUser, BookWeek bookWeek) async {
+    return await _databaseAPI.addBookWeek(idUser, bookWeek);
   }
 
   deleteBookFromGallery(String idUser, Book book) async {

@@ -41,7 +41,7 @@ class _BottomSheetModifyHoursState extends State<BottomSheetModifyHours> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: 255,
       decoration: BoxDecoration(
         color: ConstantColor.greyWhite,
         borderRadius: BorderRadius.only(
@@ -50,8 +50,10 @@ class _BottomSheetModifyHoursState extends State<BottomSheetModifyHours> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(8),
-            child: Text("Horaires d'ouverture de ${widget.day}"),
+            padding: EdgeInsets.only(top: 10),
+            child: Text("Horaires d'ouverture de ${widget.day}", style: TextStyle(
+              fontSize: 17
+            ),),
           ),
           isClosed ? Container() :
           Row(

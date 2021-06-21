@@ -73,20 +73,32 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              _.book.previewLink != "" ?
-                              ButtonGradient(
-                                onTap: () => Get.toNamed(Routes.BOOK_PREVIEW, arguments: _.book.id),
-                                width: 166,
-                                height: 40,
-                                text: "PREVIEW",
-                                fontSize: 15,
-                              ) : Container(),
+                              _.book.previewLink != ""
+                                  ? ButtonGradient(
+                                      onTap: () => Get.toNamed(
+                                          Routes.BOOK_PREVIEW,
+                                          arguments: _.book.id),
+                                      width: 166,
+                                      height: 40,
+                                      text: "PREVIEW",
+                                      fontSize: 15,
+                                    )
+                                  : Container(),
                               SizedBox(width: 25),
-                              ButtonGradient(
-                                width: 166,
-                                height: 40,
-                                text: _.haveAlreadyBook ? "Supprimer ce livre".toUpperCase() : UserController.to.isBookSeller ? "Ajouter ce livre".toUpperCase() : "J'ai finis ce livre".toUpperCase(),
-                                onTap: () => _.handleAddOrDeleteBook(),
+                              GetBuilder<UserController>(
+                                builder: (controller) {
+                                  return ButtonGradient(
+                                    width: 166,
+                                    height: 40,
+                                    text: _.haveAlreadyBook
+                                        ? "Supprimer ce livre".toUpperCase()
+                                        : UserController.to.isBookSeller
+                                            ? "Ajouter ce livre".toUpperCase()
+                                            : "J'ai finis ce livre"
+                                                .toUpperCase(),
+                                    onTap: () => _.handleAddOrDeleteBook(),
+                                  );
+                                },
                               ),
                             ],
                           ),

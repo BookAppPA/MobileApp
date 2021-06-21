@@ -205,8 +205,8 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
   }
 
   _buildLastBooksWeek() {
-    return GetBuilder<BookSellerDetailController>(builder: (_) {
-      var length = _.bookSeller.listBooksWeek.length;
+    return GetBuilder<UserController>(builder: (_) {
+      var length = _.bookseller.listBooksWeek.length;
       if (length > 0)
         return Container(
           //height: 100,
@@ -231,10 +231,10 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
                 itemCount: length,
                 options: CarouselOptions(
                   viewportFraction: 1,
-                  onPageChanged: (index, reason) => _.changePositionBook(index),
+                  onPageChanged: (index, reason) => BookSellerDetailController.to.changePositionBook(index),
                 ),
                 itemBuilder: (ctx, index, realIndex) {
-                  BookWeek bookWeek = _.bookSeller.listBooksWeek[index];
+                  BookWeek bookWeek = _.bookseller.listBooksWeek[index];
                   return GestureDetector(
                     onTap: () => Get.toNamed(Routes.BOOK_DETAIL,
                         arguments: Book(id: bookWeek.id)),

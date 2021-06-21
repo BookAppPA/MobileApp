@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
+import 'package:book_app/app/modules/dialog/add_book_week_bottomsheet.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
@@ -69,10 +70,20 @@ class SearchController extends GetxController {
   }
 
   addBookToGallery(Book book) {
-    if (UserController.to.isBookSeller)
+    if (UserController.to.isBookSeller) {
       print("add book week");
-    else
+      Get.bottomSheet(AddBookWeekBottomSheet(onConfirm: (desc) => _addBookWeek(book, desc)));
+    } else
       BasicDialog.showConfirmFinishBookDialog(onConfirm: () => _addBook(book));
+  }
+
+  _addBookWeek(Book book, String desc) async {
+    var res = await UserController.to.addBookWeek(book, desc);
+    if (res)
+      CustomSnackbar.snackbar("Ce livre à été ajouté au Livre de la Semaine");
+    else
+      CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
+    update();
   }
 
   _addBook(Book book) async {
@@ -88,7 +99,8 @@ class SearchController extends GetxController {
     if (UserController.to.isBookSeller)
       print("delete book week");
     else
-      BasicDialog.showConfirmDeleteBookDialog(onConfirm: () => _deleteBook(book));
+      BasicDialog.showConfirmDeleteBookDialog(
+          onConfirm: () => _deleteBook(book));
   }
 
   _deleteBook(Book book) async {

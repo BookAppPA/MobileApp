@@ -1,5 +1,6 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
@@ -72,9 +73,31 @@ class UserController extends GetxController {
     update();
   }
 
+  Future<bool> addBookWeek(Book book, String desc) async {
+    if (_bookseller.listBooksWeek
+            .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+        null) return false;
+    BookWeek bookWeek = BookWeek(
+      id: book.id,
+      author: book.authors.first,
+      bio: desc,
+      datePublished: book.publishedDate,
+      title: book.title,
+      picture: book.coverImage,
+    );
+    var res = await repository.addBookWeek(_bookseller.id, bookWeek);
+    print("res add book week --> $res");
+    if (res) {
+      _bookseller.listBooksWeek.insert(0, bookWeek);
+      update();
+    }
+    return res;
+  }
+
   Future<bool> addBookToGallery(Book book) async {
-    if (user.listBooksRead.firstWhere((item) => item.id == book.id, orElse: () => null) != null)
-      return false;
+    if (user.listBooksRead
+            .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+        null) return false;
     var res = await repository.addBookToGallery(_user.id, book);
     print("res add book --> $res");
     if (res) {
@@ -85,8 +108,9 @@ class UserController extends GetxController {
   }
 
   Future<bool> deleteBookFromGallery(Book book) async {
-    if (user.listBooksRead.firstWhere((item) => item.id == book.id, orElse: () => null) == null)
-      return false;
+    if (user.listBooksRead
+            .firstWhere((item) => item.id == book.id, orElse: () => null) ==
+        null) return false;
     var res = await repository.deleteBookFromGallery(_user.id, book);
     print("res add book --> $res");
     if (res) {
@@ -95,10 +119,9 @@ class UserController extends GetxController {
         _user.listBooksRead.removeAt(index);
         update();
         return true;
-      } return false;
+      }
+      return false;
     }
     return res;
   }
-  
-
 }

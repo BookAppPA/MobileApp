@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
+import 'package:book_app/app/modules/dialog/add_book_week_bottomsheet.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
@@ -68,11 +69,11 @@ class BookDetailController extends GetxController {
     if ((book != null && book.id != null) || bookId != null) {
       if (UserController.to.isBookSeller)
         haveAlreadyBook = UserController.to.bookseller.listBooksWeek
-                .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+                .firstWhere((item) => item.id == (book != null ? book.id : bookId), orElse: () => null) !=
             null;
       else
         haveAlreadyBook = UserController.to.user.listBooksRead
-                .firstWhere((item) => item.id == book.id, orElse: () => null) !=
+                .firstWhere((item) => item.id == (book != null ? book.id : bookId), orElse: () => null) !=
             null;
       Map<String, dynamic> map =
           await repository.getRatingsByBook(bookId ?? book.id);
@@ -100,12 +101,24 @@ class BookDetailController extends GetxController {
         BasicDialog.showConfirmDeleteBookDialog(
             onConfirm: () => _deleteBookFromGallery());
     } else {
-      if (UserController.to.isBookSeller)
+      if (UserController.to.isBookSeller) {
         print("add book week");
+        Get.bottomSheet(AddBookWeekBottomSheet(onConfirm: (desc) => _addBookWeek(desc)));
+      }
       else
         BasicDialog.showConfirmFinishBookDialog(
             onConfirm: () => _addBookToGallery());
     }
+  }
+
+  _addBookWeek(String desc) async {
+    var res = await UserController.to.addBookWeek(book, desc);
+    if (res)
+      CustomSnackbar.snackbar("Ce livre à été ajouté au Livre de la Semaine");
+    else
+      CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
+    haveAlreadyBook = true;
+    update();
   }
 
   _addBookToGallery() async {

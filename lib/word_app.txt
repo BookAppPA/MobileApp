@@ -119,3 +119,5 @@ Jeudi
 Vendredi
 Samedi
 Dimanche
+Ajouter ce Livre de la Semaine
+Ce livre à été ajouté au Livre de la Semaine

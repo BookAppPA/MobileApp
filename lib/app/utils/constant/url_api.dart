@@ -47,12 +47,15 @@ abstract class UrlAPI {
   static final String addBookToGallery =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/addBookToGallery";
 
+  static final String addBookWeek =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/addBookWeek";
+
   static final String deleteBookFromGallery =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/deleteBookFromGallery";
-  
+
   static final String bookDetail =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/bookDetail";
-  
+
   static final String searchBook =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/searchBook";
 
@@ -76,5 +79,4 @@ abstract class UrlAPI {
 
   static final String getListBooksWeek =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/getListBooksWeek";
-
 }

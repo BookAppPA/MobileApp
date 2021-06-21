@@ -19,16 +19,6 @@ class SearchBookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var haveAlreadyBook = false;
-    if (UserController.to.isBookSeller)
-      haveAlreadyBook = UserController.to.bookseller.listBooksWeek
-              .firstWhere((item) => item.id == book.id, orElse: () => null) !=
-          null;
-    else
-      haveAlreadyBook = UserController.to.user.listBooksRead
-              .firstWhere((item) => item.id == book.id, orElse: () => null) !=
-          null;
-
     return GestureDetector(
       onTap: () => book.id != null
           ? Get.toNamed(Routes.BOOK_DETAIL, arguments: book)
@@ -97,11 +87,27 @@ class SearchBookItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        GestureDetector(
-                          child: Icon(haveAlreadyBook
-                              ? FontAwesomeIcons.solidBookmark
-                              : FontAwesomeIcons.bookmark),
-                          onTap: () => haveAlreadyBook ? onDelete() : onAdd(),
+                        GetBuilder<UserController>(
+                          builder: (_) {
+                            var haveAlreadyBook = false;
+                            if (_.isBookSeller)
+                              haveAlreadyBook = _.bookseller.listBooksWeek
+                                      .firstWhere((item) => item.id == book.id,
+                                          orElse: () => null) !=
+                                  null;
+                            else
+                              haveAlreadyBook = _.user.listBooksRead
+                                      .firstWhere((item) => item.id == book.id,
+                                          orElse: () => null) !=
+                                  null;
+                            return GestureDetector(
+                              child: Icon(haveAlreadyBook
+                                  ? FontAwesomeIcons.solidBookmark
+                                  : FontAwesomeIcons.bookmark),
+                              onTap: () =>
+                                  haveAlreadyBook ? onDelete() : onAdd(),
+                            );
+                          },
                         ),
                       ],
                     )
