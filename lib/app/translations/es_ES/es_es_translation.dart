@@ -1,6 +1,6 @@
 import '../app_translations.dart';
 
-final Map<String, String> enUS = {
+final Map<String, String> esES = {
   AppTranslation.locationCheckTitle : "Location Check",
 
 

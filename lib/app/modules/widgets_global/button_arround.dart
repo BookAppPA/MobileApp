@@ -7,7 +7,7 @@ class ButtonArround extends StatelessWidget {
   final double width, height, borderRadius;
   final Color colorBackground, colorText;
   final bool isLoading;
-  TextStyle textStyle;
+  final TextStyle textStyle;
 
   ButtonArround({
     @required this.onTap,
@@ -18,6 +18,7 @@ class ButtonArround extends StatelessWidget {
     this.colorBackground: ConstantColor.accent,
     this.colorText: ConstantColor.white,
     this.isLoading: false,
+    this.textStyle
   }) : assert(onTap != null);
 
   @override

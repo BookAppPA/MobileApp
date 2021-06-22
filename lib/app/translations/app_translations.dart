@@ -1,17 +1,20 @@
-import 'package:book_app/app/translations/en_US/en_us_translation.dart';
-import 'package:book_app/app/translations/fr_FR/fr_fr_translation.dart';
 import 'package:flutter/material.dart';
+import 'en_US/en_us_translation.dart';
+import 'es_ES/es_es_translation.dart';
+import 'fr_FR/fr_fr_translation.dart';
 
 abstract class AppTranslation {
 
   static final List<Locale> languages = [
     Locale("fr", "FR"),
     Locale("en", "US"),
+    Locale("es", "ES"),
   ];
 
   static Map<String, Map<String, String>> translations = {
     'fr_FR': frFR,
-    'en_US': enUs
+    'en_US': enUS,
+    'es_ES': esES,
   };
 
   static const String locationCheckTitle = "location_check";

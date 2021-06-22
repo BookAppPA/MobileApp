@@ -1,4 +1,4 @@
-import 'package:book_app/app/translations/app_translations.dart';
+import '../app_translations.dart';
 
 final Map<String, String> frFR = {
   AppTranslation.locationCheckTitle : "Localisation vérifiée",

@@ -8,7 +8,6 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(SplashScreenController(userRepository: UserRepository()));
-   // Get.put(UserController(repository: UserRepository()));
     MyCheckInternet.instance.initialise();
   }
 }

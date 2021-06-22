@@ -4,7 +4,6 @@ import 'package:book_app/app/modules/book_detail/book_detail_controller.dart';
 import 'package:get/get.dart';
 
 class BookDetailBinding extends Bindings {
-
   @override
   void dependencies() {
     final Book book = Get.arguments as Book;

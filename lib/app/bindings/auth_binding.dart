@@ -4,7 +4,6 @@ import 'package:book_app/app/modules/auth/auth_controller.dart';
 import 'package:get/get.dart';
 
 class AuthBinding extends Bindings {
-
   @override
   void dependencies() {
     bool isBlocked = Get.arguments as bool ?? false;

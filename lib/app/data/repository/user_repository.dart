@@ -1,7 +1,6 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/user.dart';
-import 'package:book_app/app/data/provider/api/firebase/firebase_messaging_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_auth_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_bdd_api.dart';
@@ -11,9 +10,6 @@ class UserRepository {
   final NodeJSAuthAPI _authAPI = NodeJSAuthAPI();
   final NodeJSBddAPI _databaseAPI = NodeJSBddAPI();
   final FirebaseStorageAPI _firebaseStorageAPI = FirebaseStorageAPI();
-  final FirebaseMessagingAPI _notificationAPI = FirebaseMessagingAPI();
-
-  //Stream<User> get onAuthStateChanged => this._authAPI.onAuthStateChanged;
 
   getCurrentUser() {
     return _authAPI.getCurrentUser();
@@ -68,16 +64,6 @@ class UserRepository {
 
   isFollow(String idUser, String idUserToFollow) async {
     return await _databaseAPI.isFollow(idUser, idUserToFollow);
-  }
-
-  configurePushNotification(String idUser) async {
-   // final token = await _notificationAPI.getToken();
-   // UserController.to.user.pushToken = token;
-   // _databaseAPI.setTokenNotifUser(idUser, token);
-  }
-
-  listenCallbackNotification() {
-    //_notificationAPI.configureCallback();
   }
 
 }

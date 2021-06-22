@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as i;
 
 class FirebaseStorageAPI {
-  Future<String> uploadPicture(String idUser, String path, String urlToDelete) async {
-    return await _uploadFile(idUser, await _compressimage(File(path)), urlToDelete);
+  Future<String> uploadPicture(
+      String idUser, String path, String urlToDelete) async {
+    return await _uploadFile(
+        idUser, await _compressimage(File(path)), urlToDelete);
   }
 
   Future _compressimage(File image) async {
@@ -19,8 +20,8 @@ class FirebaseStorageAPI {
     return compressedImagefile;
   }
 
-  Future<String> _uploadFile(String idUser, File image, String urlToDelete) async {
-
+  Future<String> _uploadFile(
+      String idUser, File image, String urlToDelete) async {
     await deletePicture(idUser, [urlToDelete]);
 
     Reference storageReference;
@@ -36,16 +37,11 @@ class FirebaseStorageAPI {
       print(
           'Progress: ${(snapshot.bytesTransferred / snapshot.totalBytes) * 100} %');
     }, onError: (e) {
-      // The final snapshot is also available on the task via `.snapshot`,
-      // this can include 2 additional states, `TaskState.error` & `TaskState.canceled`
       print(uploadTask.snapshot);
-
       if (e.code == 'permission-denied') {
         print('User does not have permission to upload to this reference.');
       }
     });
-
-    // We can still optionally use the Future alongside the stream.
     try {
       await uploadTask;
       print('Upload complete.');
@@ -58,7 +54,6 @@ class FirebaseStorageAPI {
       print(e);
       return null;
     }
-    //CustomSnackbar.snackbar(Localization.errorAPInoUploadPicture.tr);
   }
 
   deletePicture(String idUser, List<String> pictures) async {
@@ -73,8 +68,7 @@ class FirebaseStorageAPI {
     String start = "pic_";
     String end = ".jpg";
     for (int i = 0; i < pictures.length; i++) {
-      if (pictures[i] == null || pictures[i] == "")
-        return;
+      if (pictures[i] == null || pictures[i] == "") return;
       int startIndex = pictures[i].indexOf(start);
       int endIndex = pictures[i].indexOf(end, startIndex + start.length);
 
@@ -87,24 +81,6 @@ class FirebaseStorageAPI {
       } catch (error) {
         print("API Firebase Storage: deletePicture: $error");
       }
-    }
-  }
-
-  deletePictureChat(String idChat, String url) async {
-    String start = "img_";
-    String end = ".jpg";
-
-    int startIndex = url.indexOf(start);
-    int endIndex = url.indexOf(end, startIndex + start.length);
-
-    String name = url.substring(startIndex, endIndex + end.length);
-
-    Reference storageReference =
-        FirebaseStorage.instance.ref().child('chats/$idChat/$name');
-    try {
-      await storageReference.delete();
-    } catch (error) {
-      print("API Firebase Storage: deletePicture: $error");
     }
   }
 }

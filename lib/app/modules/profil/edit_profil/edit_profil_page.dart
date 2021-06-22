@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class EditProfilPage extends StatelessWidget {
-  List<Widget> listEdit = [
+  final List<Widget> listEdit = [
     Padding(
       padding: EdgeInsets.only(top: 8, bottom: 4),
       child: ListTile(

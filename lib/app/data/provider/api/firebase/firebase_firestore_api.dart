@@ -4,12 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class FirebaseFirestoreAPI {
-  static final CollectionReference _collectionAdmin =
-      FirebaseFirestore.instance.collection("Admin");
   static final CollectionReference _collectionUser =
-      FirebaseFirestore.instance.collection("Users");
-  static final CollectionReference _collectionChat =
-      FirebaseFirestore.instance.collection("chats");
+      FirebaseFirestore.instance.collection("users");
       
 
   Future<User> getUser(String uid) async {

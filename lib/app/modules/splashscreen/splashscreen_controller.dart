@@ -1,5 +1,5 @@
 import 'package:book_app/app/data/model/user.dart';
-import 'package:book_app/app/data/provider/database/sharepreferences/sharepreference_helper.dart';
+import 'package:book_app/app/data/provider/sharepreferences/sharepreference_helper.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/my_check_internet.dart';
