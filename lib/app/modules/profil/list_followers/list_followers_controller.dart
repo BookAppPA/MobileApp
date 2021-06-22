@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListFollowersController extends GetxController {
-
   static ListFollowersController get to => Get.find();
 
   final UserRepository repository;
   final String userId;
-  ListFollowersController({@required this.repository, this.userId})
+  final bool isFollowing;
+  ListFollowersController(
+      {@required this.repository, this.userId, this.isFollowing: false})
       : assert(repository != null),
         assert(userId != null && userId != "");
 
@@ -23,9 +24,15 @@ class ListFollowersController extends GetxController {
   }
 
   _getListFollowers() async {
-    var list = await repository.getListFollowers(userId);
-    afterLoading = true;
-    UserController.to.setListFollowers(list);
+    if (isFollowing) {
+      var list = await repository.getListFollowing(userId);
+      afterLoading = true;
+      UserController.to.setListFollowing(list);
+    } else {
+      var list = await repository.getListFollowers(userId);
+      afterLoading = true;
+      UserController.to.setListFollowers(list);
+    }
   }
 
   followUser(int index, UserModel user) async {
@@ -35,6 +42,4 @@ class ListFollowersController extends GetxController {
       update();
     }
   }
-
-
 }

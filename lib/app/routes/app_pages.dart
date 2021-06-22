@@ -101,5 +101,9 @@ class AppPages {
         name: Routes.LIST_FOLLOWERS,
         page: () => ListFollowersPage(),
         binding: ListFollowersBinding()),
+    GetPage(
+        name: Routes.LIST_FOLLOWING,
+        page: () => ListFollowersPage(isFollowing: true),
+        binding: ListFollowersBinding(isFollowing: true)),
   ];
 }

@@ -3,9 +3,13 @@ import 'package:book_app/app/modules/profil/list_followers/list_followers_contro
 import 'package:get/get.dart';
 
 class ListFollowersBinding extends Bindings {
+
+  final bool isFollowing;
+  ListFollowersBinding({this.isFollowing: false});
+
   @override
   void dependencies() {
     String userId = Get.arguments as String;
-    Get.put(ListFollowersController(repository: UserRepository(), userId: userId));
+    Get.put(ListFollowersController(repository: UserRepository(), userId: userId, isFollowing: isFollowing));
   }
 }

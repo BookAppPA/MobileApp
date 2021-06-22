@@ -92,6 +92,11 @@ class UserController extends GetxController {
     update();
   }
 
+  setListFollowing(List<UserModel> list) {
+    _user.listFollowing = list;
+    update();
+  }
+
   modifyNbFollowersOfUser(int index, int nb) {
     _user.listFollowers[index].nbFollowers = nb;
     update();
@@ -171,6 +176,7 @@ class UserController extends GetxController {
     var res = await repository.followUser(_user, userToFollow);
     if (res) {
       _user.listFollowing.add(userToFollow);
+      _user.nbFollowing++;
       update();
       return true;
     } else {
@@ -183,6 +189,7 @@ class UserController extends GetxController {
     var res = await repository.unFollowUser(_user, userToFollow);
     if (res) {
       _user.listFollowing.removeWhere((item) => item.id == userToFollow.id);
+      _user.nbFollowing--;
       update();
       return true;
     } else {

@@ -122,5 +122,10 @@ Dimanche
 Ajouter ce Livre de la Semaine
 Ce livre à été ajouté au Livre de la Semaine
 Vous devez attendre la semaine prochaine pour ajouter un nouveau Livre de la Semaine
-Liste d'abonnés
+Liste de vos abonnés
+Liste de vos abonnements
 Ne plus suivre
+Modifier le profil
+Abonnements
+Aucun abonnements
+Aucun abonnés

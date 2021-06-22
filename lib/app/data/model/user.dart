@@ -4,7 +4,7 @@ import 'package:book_app/app/data/model/rating.dart';
 class UserModel {
 
   String id, pseudo, email, picture, bio;
-  int nbBooks, nbRatings, nbFollowers;
+  int nbBooks, nbRatings, nbFollowers, nbFollowing;
   List<Book> listBooksRead;
   List<Rating> listLastRatings;
   List<UserModel> listFollowers, listFollowing;
@@ -19,6 +19,7 @@ class UserModel {
     this.nbBooks,
     this.nbRatings,
     this.nbFollowers,
+    this.nbFollowing,
     this.listBooksRead,
     this.listLastRatings,
     this.isBlocked,
@@ -33,6 +34,7 @@ class UserModel {
       this.nbBooks = json['nbBooks'] ?? 0;
       this.nbRatings = json['nbRatings'] ?? 0;
       this.nbFollowers = json['nbFollowers'] ?? 0;
+      this.nbFollowing = json['nbFollowing'] ?? 0;
       this.listBooksRead = [];
       this.listLastRatings = [];
       this.isBlocked = json['isBlocked'] ?? false;
@@ -50,6 +52,7 @@ class UserModel {
     data['nbBooks'] = this.nbBooks;
     data['nbRatings'] = this.nbRatings;
     data['nbFollowers'] = this.nbFollowers;
+    data['nbFollowing'] = this.nbFollowing;
     data['isBlocked'] = this.isBlocked;
     return data;
   }

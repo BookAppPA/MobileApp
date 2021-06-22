@@ -8,11 +8,15 @@ import 'package:get/get.dart';
 import 'list_followers_controller.dart';
 
 class ListFollowersPage extends StatelessWidget {
+
+  final bool isFollowing;
+  ListFollowersPage({this.isFollowing: false});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BackButtonAppBar(
-        textTitle: "Liste d'abonnés",
+        textTitle: isFollowing ? "Liste de vos abonnements" : "Liste de vos abonnés",
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -20,21 +24,21 @@ class ListFollowersPage extends StatelessWidget {
             height: Get.height,
             child: GetBuilder<UserController>(
               builder: (_) {
-                var length = _.user.listFollowers.length;
+                var length = isFollowing ? _.user.listFollowing.length : _.user.listFollowers.length;
                 if (length == 0 && !ListFollowersController.to.afterLoading)
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 if (length == 0 && ListFollowersController.to.afterLoading)
                   return Center(
-                    child: Text("Erreur de synchronisation..."),
+                    child: Text(isFollowing ? "Aucun abonnements" : "Aucun abonnés"),
                   );
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: ListView.builder(
                     itemCount: length,
                     itemBuilder: (ctx, index) {
-                      UserModel user = _.user.listFollowers[index];
+                      UserModel user = isFollowing ? _.user.listFollowing[index] : _.user.listFollowers[index];
                       return SearchUserItem(
                         user,
                         showInfos: false,

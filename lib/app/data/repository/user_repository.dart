@@ -58,6 +58,10 @@ class UserRepository {
     return await _databaseAPI.getListFollowers(userId);
   }
 
+  getListFollowing(String userId) async {
+    return await _databaseAPI.getListFollowing(userId);
+  }
+
   unFollowUser(UserModel user, UserModel userToFollow) async {
     return await _databaseAPI.unFollowUser(user, userToFollow);
   }

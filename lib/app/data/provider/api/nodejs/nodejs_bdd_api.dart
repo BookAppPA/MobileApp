@@ -359,7 +359,8 @@ class NodeJSBddAPI {
           "pseudo": userToFollow.pseudo,
           "picture": userToFollow.picture,
         }),
-        "nbFollowers": (userToFollow.nbFollowers + 1).toString()
+        "nbFollowers": (userToFollow.nbFollowers + 1).toString(),
+        "nbFollowing": (user.nbFollowing + 1).toString()
       });
       if (resp.statusCode == 200) {
         return true;
@@ -395,13 +396,36 @@ class NodeJSBddAPI {
     }
   }
 
+  Future<List<UserModel>> getListFollowing(String userId) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getListFollowing + "/$userId"),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        var listFollowing = json.decode(resp.body);
+        List<UserModel> following = [];
+        listFollowing
+            .forEach((user) => following.add(UserModel.fromJson(user)));
+        return following;
+      } else {
+        print("error get http getListFollowing --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
   Future<bool> unFollowUser(UserModel user, UserModel userToUnFollow) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.delete(
           Uri.parse(UrlAPI.unFollowUser + "/${userToUnFollow.id}"),
           headers: {"authorization": "Bearer $token", "uid": user.id}, body: {
-            "nbFollowers": (user.nbFollowers - 1).toString()
+            "nbFollowers": (userToUnFollow.nbFollowers - 1).toString(),
+            "nbFollowing": (user.nbFollowing - 1).toString()
           });
       if (resp.statusCode == 200) {
         return true;

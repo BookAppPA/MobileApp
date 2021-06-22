@@ -15,4 +15,6 @@ abstract class Routes{
   static const BOOKSELLER_DETAIL = "bookseller_detail";
   static const SETTINGS = "settings";
   static const LIST_FOLLOWERS = "list_followers";
+  static const LIST_FOLLOWING = "list_following";
+  
 }

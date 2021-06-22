@@ -180,145 +180,197 @@ class ProfilPage extends GetWidget<ProfilController> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: Row(
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          "${controller.user.nbBooks}",
+                          style: TextStyle(
+                            fontFamily: 'SF Pro Text',
+                            fontSize: 24,
+                            color: ConstantColor.greyDark,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Livres',
+                          style: TextStyle(
+                            fontFamily: 'SF Pro Text',
+                            fontSize: 13,
+                            color: ConstantColor.greyDark,
+                            letterSpacing: 0.16,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 40),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          "${controller.user.nbRatings}",
+                          style: TextStyle(
+                            fontFamily: 'SF Pro Text',
+                            fontSize: 24,
+                            color: ConstantColor.greyDark,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Avis',
+                          style: TextStyle(
+                            fontFamily: 'SF Pro Text',
+                            fontSize: 13,
+                            color: ConstantColor.greyDark,
+                            letterSpacing: 0.16,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 40),
+                    GestureDetector(
+                      onTap: () {
+                        if (controller.user.nbFollowers > 0)
+                          Get.toNamed(Routes.LIST_FOLLOWERS,
+                              arguments: controller.user.id);
+                      },
+                      child: Column(
                         children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                "${controller.user.nbBooks}",
-                                style: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: 24,
-                                  color: ConstantColor.greyDark,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Livres',
-                                style: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: 13,
-                                  color: ConstantColor.greyDark,
-                                  letterSpacing: 0.16,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                            ],
+                          Text(
+                            "${controller.user.nbFollowers}",
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 24,
+                              color: ConstantColor.greyDark,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                          SizedBox(width: 40),
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                "${controller.user.nbRatings}",
-                                style: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: 24,
-                                  color: ConstantColor.greyDark,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Avis',
-                                style: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: 13,
-                                  color: ConstantColor.greyDark,
-                                  letterSpacing: 0.16,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                            ],
+                          SizedBox(height: 5),
+                          Text(
+                            'Abonnés',
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Text',
+                              fontSize: 13,
+                              color: ConstantColor.greyDark,
+                              letterSpacing: 0.16,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                          SizedBox(width: 40),
-                          GetBuilder<UserController>(builder: (_) {
-                            var nbFollowers = _.isBookSeller
-                                ? controller.user.nbFollowers
-                                : _.user.nbFollowers;
-                            return GestureDetector(
-                              onTap: () {
-                                if (nbFollowers > 0)
-                                  Get.toNamed(Routes.LIST_FOLLOWERS,
-                                      arguments: controller.user.id);
-                              },
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    "$nbFollowers",
-                                    style: TextStyle(
-                                      fontFamily: 'SF Pro Text',
-                                      fontSize: 24,
-                                      color: ConstantColor.greyDark,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    'Abonnés',
-                                    style: TextStyle(
-                                      fontFamily: 'SF Pro Text',
-                                      fontSize: 13,
-                                      color: ConstantColor.greyDark,
-                                      letterSpacing: 0.16,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
                         ],
                       ),
                     ),
-                    UserController.to.isBookSeller
-                        ? Container()
+                    controller.isMe
+                        ? Row(
+                            children: <Widget>[
+                              SizedBox(width: 30),
+                              GetBuilder<UserController>(
+                                builder: (_) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      if (_.user.nbFollowing > 0)
+                                        Get.toNamed(Routes.LIST_FOLLOWING,
+                                            arguments: _.user.id);
+                                    },
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          "${_.user.nbFollowing}",
+                                          style: TextStyle(
+                                            fontFamily: 'SF Pro Text',
+                                            fontSize: 24,
+                                            color: ConstantColor.greyDark,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          'Abonnements',
+                                          style: TextStyle(
+                                            fontFamily: 'SF Pro Text',
+                                            fontSize: 13,
+                                            color: ConstantColor.greyDark,
+                                            letterSpacing: 0.16,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          )
                         : Expanded(
-                            child: Column(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 GetBuilder<UserController>(builder: (_) {
-                                  var isFollow = !controller.isMe &&
-                                      _.user.listFollowing.firstWhere(
+                                  var isFollow = _.user.listFollowing
+                                          .firstWhere(
                                               (item) =>
                                                   item.id == controller.user.id,
                                               orElse: () => null) !=
-                                          null;
+                                      null;
                                   return ButtonGradient(
-                                    width: 175,
-                                    onTap: () => controller.isMe
-                                        ? controller.clickEditProfil()
-                                        : isFollow
-                                            ? controller
-                                                .unFollowUser(controller.user)
-                                            : controller
-                                                .followUser(controller.user),
-                                    text: controller.isMe
-                                        ? "Modifier"
-                                        : isFollow
-                                            ? "Ne plus suivre"
-                                            : "Suivre",
+                                    width: 130,
+                                    onTap: () => isFollow
+                                        ? controller
+                                            .unFollowUser(controller.user)
+                                        : controller
+                                            .followUser(controller.user),
+                                    text:
+                                        isFollow ? "Ne plus suivre" : "Suivre",
                                   );
                                 }),
-                                SizedBox(height: 20),
-                                controller.isMe
-                                    ? Column(
-                                        children: <Widget>[
-                                          ButtonGradient(
-                                            width: 175,
-                                            onTap: () =>
-                                                controller.clickFinishBook(),
-                                            text: "J'ai finis un livre",
-                                          ),
-                                        ],
-                                      )
-                                    : Container(),
                               ],
                             ),
-                          )
+                          ),
                   ],
                 ),
+                UserController.to.isBookSeller || !controller.isMe
+                    ? Container()
+                    : Padding(
+                        padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                        child: Column(
+                          children: <Widget>[
+                            GetBuilder<UserController>(builder: (_) {
+                              var isFollow = !controller.isMe &&
+                                  _.user.listFollowing.firstWhere(
+                                          (item) =>
+                                              item.id == controller.user.id,
+                                          orElse: () => null) !=
+                                      null;
+                              return ButtonGradient(
+                                width: Get.width,
+                                height: 40,
+                                onTap: () => controller.isMe
+                                    ? controller.clickEditProfil()
+                                    : isFollow
+                                        ? controller
+                                            .unFollowUser(controller.user)
+                                        : controller
+                                            .followUser(controller.user),
+                                text: controller.isMe
+                                    ? "Modifier le profil"
+                                    : isFollow
+                                        ? "Ne plus suivre"
+                                        : "Suivre",
+                              );
+                            }),
+                            SizedBox(height: 20),
+                            controller.isMe
+                                ? ButtonGradient(
+                                    width: Get.width,
+                                    height: 40,
+                                    onTap: () => controller.clickFinishBook(),
+                                    text: "J'ai finis un livre",
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      ),
               ],
             ),
           ),

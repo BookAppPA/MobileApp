@@ -90,6 +90,9 @@ abstract class UrlAPI {
   static final String getListFollowers =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/getListFollowers";
 
+  static final String getListFollowing =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/getListFollowing";
+
   static final String unFollowUser =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/unFollowUser";
 
