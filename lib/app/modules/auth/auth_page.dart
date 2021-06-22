@@ -1,6 +1,7 @@
 import 'package:book_app/app/modules/auth/auth_controller.dart';
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
 import 'package:book_app/app/modules/widgets_global/mytextfield.dart';
+import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,14 @@ class AuthPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: 10),
-                        FlutterLogo(size: 100),
+                        Container(
+                          width: 100,
+                          height: 100,
+                          child: Image.asset(
+                            ConstantImage.logo,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                         SizedBox(height: 20),
                         Text(
                           controller.authView == AuthView.LOGIN
@@ -75,8 +83,7 @@ class AuthPage extends StatelessWidget {
                                   controller.authView == AuthView.SIGNUP
                                       ? "Saisissez votre pseudo"
                                       : "Saisissez le nom de votre librairie",
-                              prefixIcon:
-                                  Icon(FontAwesomeIcons.user, size: 20),
+                              prefixIcon: Icon(FontAwesomeIcons.user, size: 20),
                               prefixIconColor: controller.isPseudoValid
                                   ? Color(0x993C3C43)
                                   : Colors.redAccent,
