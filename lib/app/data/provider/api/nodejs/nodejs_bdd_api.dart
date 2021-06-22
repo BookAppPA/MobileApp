@@ -13,13 +13,12 @@ class NodeJSBddAPI {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.get(
-        Uri.parse(UrlAPI.getUserById+"/$uid"),
+        Uri.parse(UrlAPI.getUserById + "/$uid"),
         headers: {"authorization": "Bearer $token"},
       );
       if (resp.statusCode == 200) {
         Map<String, dynamic> map = json.decode(resp.body);
-        if (map["type"] == "user")
-          return UserModel.fromJson(map["data"]);
+        if (map["type"] == "user") return UserModel.fromJson(map["data"]);
         return BookSeller.fromJson(map["data"]);
       } else {
         print("error get http getUserById --> ${resp.body}");
@@ -31,11 +30,16 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<bool> updateUser(String idUser, Map<String, String> data, bool isBookSeller) async {
+  Future<bool> updateUser(
+      String idUser, Map<String, String> data, bool isBookSeller) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.put(Uri.parse(UrlAPI.updateUser+"/$idUser"),
-          headers: {"authorization": "Bearer $token", "isbookseller": isBookSeller.toString()},
+      http.Response resp = await http.put(
+          Uri.parse(UrlAPI.updateUser + "/$idUser"),
+          headers: {
+            "authorization": "Bearer $token",
+            "isbookseller": isBookSeller.toString()
+          },
           body: data);
       if (resp.statusCode == 200) {
         return true;
@@ -71,7 +75,8 @@ class NodeJSBddAPI {
   Future<Book> getBook(String bookID) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.bookDetail+"/$bookID"),
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.bookDetail + "/$bookID"),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var book = json.decode(resp.body);
@@ -149,7 +154,8 @@ class NodeJSBddAPI {
   Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.ratingByBook+"/$bookID"),
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.ratingByBook + "/$bookID"),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         return json.decode(resp.body);
@@ -166,7 +172,8 @@ class NodeJSBddAPI {
   Future<List<Book>> getUserListBook(String idUser) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.userListBooks+"/$idUser"),
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.userListBooks + "/$idUser"),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
@@ -232,8 +239,8 @@ class NodeJSBddAPI {
       return false;
     }
   }
-  
-Future<bool> addBookWeek(String idUser, BookWeek book) async {
+
+  Future<bool> addBookWeek(String idUser, BookWeek book) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
       http.Response resp = await http.post(Uri.parse(UrlAPI.addBookWeek),
@@ -250,11 +257,12 @@ Future<bool> addBookWeek(String idUser, BookWeek book) async {
       return false;
     }
   }
-  
+
   Future<bool> deleteBookFromGallery(String idUser, Book book) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.delete(Uri.parse(UrlAPI.deleteBookFromGallery),
+      http.Response resp = await http.delete(
+          Uri.parse(UrlAPI.deleteBookFromGallery),
           headers: {"authorization": "Bearer $token", "uid": idUser},
           body: {"bookid": book.id});
       if (resp.statusCode == 200) {
@@ -272,12 +280,14 @@ Future<bool> addBookWeek(String idUser, BookWeek book) async {
   Future<List<BookSeller>> getInitListBookSeller() async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.getInitListBookSeller),
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getInitListBookSeller),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var listBookseller = json.decode(resp.body);
         List<BookSeller> booksellers = [];
-        listBookseller.forEach((bookseller) => booksellers.add(BookSeller.fromJson(bookseller)));
+        listBookseller.forEach(
+            (bookseller) => booksellers.add(BookSeller.fromJson(bookseller)));
         return booksellers;
       } else {
         print("error get http getInitListBookSeller --> ${resp.body}");
@@ -297,7 +307,8 @@ Future<bool> addBookWeek(String idUser, BookWeek book) async {
       if (resp.statusCode == 200) {
         var listBookseller = json.decode(resp.body);
         List<BookSeller> booksellers = [];
-        listBookseller.forEach((bookseller) => booksellers.add(BookSeller.fromJson(bookseller)));
+        listBookseller.forEach(
+            (bookseller) => booksellers.add(BookSeller.fromJson(bookseller)));
         return booksellers;
       } else {
         print("error get http searchBookSeller --> ${resp.body}");
@@ -312,7 +323,8 @@ Future<bool> addBookWeek(String idUser, BookWeek book) async {
   Future<List<BookWeek>> getListBooksWeek(String idBookSeller) async {
     try {
       var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.get(Uri.parse(UrlAPI.getListBooksWeek+"/$idBookSeller"),
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getListBooksWeek + "/$idBookSeller"),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var listBooksWeek = json.decode(resp.body);
@@ -329,5 +341,96 @@ Future<bool> addBookWeek(String idUser, BookWeek book) async {
     }
   }
 
+  Future<bool> followUser(UserModel user, UserModel userToFollow) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http
+          .post(Uri.parse(UrlAPI.followUser + "/${userToFollow.id}"), headers: {
+        "authorization": "Bearer $token",
+        "uid": user.id
+      }, body: {
+        "userSrc": json.encode({
+          "uid": user.id,
+          "pseudo": user.pseudo,
+          "picture": user.picture,
+        }),
+        "userDest": json.encode({
+          "uid": userToFollow.id,
+          "pseudo": userToFollow.pseudo,
+          "picture": userToFollow.picture,
+        }),
+        "nbFollowers": (userToFollow.nbFollowers + 1).toString()
+      });
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http followUser --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 
+  Future<List<UserModel>> getListFollowers(String userId) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getListFollowers + "/$userId"),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        var listFollowers = json.decode(resp.body);
+        List<UserModel> followers = [];
+        listFollowers
+            .forEach((user) => followers.add(UserModel.fromJson(user)));
+        return followers;
+      } else {
+        print("error get http getListFollowers --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<bool> unFollowUser(UserModel user, UserModel userToUnFollow) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.delete(
+          Uri.parse(UrlAPI.unFollowUser + "/${userToUnFollow.id}"),
+          headers: {"authorization": "Bearer $token", "uid": user.id}, body: {
+            "nbFollowers": (user.nbFollowers - 1).toString()
+          });
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http unFollowUser --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> isFollow(String user, String userToFollow) async {
+    try {
+      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.isFollow + "/$userToFollow"),
+          headers: {"authorization": "Bearer $token", "uid": user});
+      if (resp.statusCode == 200) {
+        Map map = json.decode(resp.body);
+        return map["status"];
+      } else {
+        print("error get http isFollow --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }

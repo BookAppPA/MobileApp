@@ -1,8 +1,11 @@
+import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
+import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_page.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_main_page.dart';
 import 'package:book_app/app/modules/home/home_page.dart';
+import 'package:book_app/app/modules/profil/profil_controller.dart';
 import 'package:book_app/app/modules/profil/profil_page.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:get/get.dart';
@@ -26,7 +29,8 @@ class SqueletonController extends GetxController {
         }
         return HomePage();
       case 3:
-        return ProfilPage(user: UserController.to.user);
+        var controller = Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: UserController.to.user));
+        return ProfilPage(user: UserController.to.user, controller: controller);
       default:
         return Center(child: Text("Erreur"));
     }

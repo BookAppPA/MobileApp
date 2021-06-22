@@ -3,6 +3,7 @@ import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
+import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,10 @@ class ProfilController extends GetxController {
       return;
     } else {
       loadData = false;
-      isMe = user.id == UserController.to.user.id;
+      if (!UserController.to.isBookSeller)
+        isMe = user.id == UserController.to.user.id;
+      else
+        isMe = false;
       update();
     }
     _getData();
@@ -54,10 +58,12 @@ class ProfilController extends GetxController {
     print("GET USER");
     user = await userRepository.getUserById(userId);
     if (user != null) {
-      if (user.isBlocked)
-        _errorBlocked();
+      if (user.isBlocked) _errorBlocked();
       loadData = false;
-      isMe = user.id == UserController.to.user.id;
+      if (!UserController.to.isBookSeller)
+        isMe = user.id == UserController.to.user.id;
+      else
+        isMe = false;
     } else
       _errorLoad();
     update();
@@ -75,7 +81,14 @@ class ProfilController extends GetxController {
 
   _getData() async {
     if ((user != null && user.id != null) || userId != null) {
-      isMe = user.id == UserController.to.user.id;
+      if (!UserController.to.isBookSeller) {
+        isMe = user.id == UserController.to.user.id;
+        var isFollow = await userRepository.isFollow(UserController.to.user.id, userId ?? user.id);
+        if (!UserController.to.isBookSeller && isFollow)
+          UserController.to.addFollowingUser(user);
+        update();
+      } else
+        isMe = false;
       books = await userRepository.getUserListBook(userId ?? user.id);
       if (isMe) UserController.to.setListBooks(books);
       ratings = await userRepository.getLastRatings(userId ?? user.id, books);
@@ -87,9 +100,12 @@ class ProfilController extends GetxController {
   clickLogout() async {
     print("logout");
     var result = await authRepository.logout();
-    if (result)
+    if (result) {
+      Get.delete<ProfilController>();
+      Get.delete<BookSellerDetailController>();
+      Get.delete<UserController>();
       Get.offAllNamed(Routes.AUTH);
-    else
+    } else
       print("LOGOUT ERREUR....");
   }
 
@@ -114,11 +130,23 @@ class ProfilController extends GetxController {
     Get.toNamed(Routes.EDIT_PROFIL);
   }
 
-  clickFollow() {
-    print("click follow user");
-  }
-
   clickFinishBook() {
     Get.toNamed(Routes.SEARCH);
+  }
+
+  followUser(UserModel user) async {
+    var res = await UserController.to.followUser(user);
+    if (res) {
+      user.nbFollowers++;
+      update();
+    }
+  }
+
+  unFollowUser(UserModel user) async {
+    var res = await UserController.to.unFollowUser(user);
+    if (res) {
+      user.nbFollowers--;
+      update();
+    }
   }
 }

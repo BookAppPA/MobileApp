@@ -1,4 +1,4 @@
-import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/search/search_book_item.dart';
 import 'package:book_app/app/modules/search/search_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
@@ -98,8 +98,9 @@ class SearchPage extends GetView<SearchController> {
                           itemBuilder: (ctx, index) {
                             return SearchUserItem(
                               _.users[index],
-                              onFollow: () => print("follow user"),
-                              onUnFollow: () => print("unfollow user"),
+                              isBookSeller: UserController.to.isBookSeller,
+                              onFollow: () => _.followUser(index, _.users[index]),
+                              onUnFollow: () => _.unFollowUser(index, _.users[index]),
                             );
                           },
                           separatorBuilder: (ctx, index) => SizedBox(height: 10),

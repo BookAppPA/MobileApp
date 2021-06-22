@@ -28,16 +28,18 @@ class BookSeller {
     this.phone = json['phone'] ?? "";
     this.address = json['address'];
     this.bio = json['bio'] ?? "";
-    this.timestamp = json["timestamp"]["_seconds"] != null
+    print(json["timestamp"]);
+    this.timestamp = (json["timestamp"]["_seconds"] ?? json["timestamp"]["seconds"]) != null
         ? DateTime.fromMillisecondsSinceEpoch(
-            json["timestamp"]["_seconds"] * 1000)
+            (json["timestamp"]["_seconds"] ?? json["timestamp"]["seconds"]) * 1000)
         : DateTime.now();
     this.openHour = json["open_hour"] ?? {};
     this.listBooksWeek = [];
     this.coord = LatLng(json["coord"]["lat"], json["coord"]["lon"]);
     this.siret = json["siret"];
+    print(json["dateNextAddBookWeek"]);
     this.dateNextAddBookWeek = json["dateNextAddBookWeek"] != null ? DateTime.fromMillisecondsSinceEpoch(
-        json["dateNextAddBookWeek"]["_seconds"] * 1000) : null;
+        (json["dateNextAddBookWeek"]["_seconds"] ?? json["dateNextAddBookWeek"]["seconds"]) * 1000) : null;
   }
 
   Map<String, dynamic> toJson() {

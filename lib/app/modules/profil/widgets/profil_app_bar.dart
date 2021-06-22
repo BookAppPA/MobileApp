@@ -1,4 +1,6 @@
+import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -72,8 +74,10 @@ class ProfilAppBar extends StatelessWidget {
                               color: Color(0xbf212121),
                             ),
                             onPressed: () => BasicDialog.showLogoutDialog(
-                                onConfirm: () =>
-                                    ProfilController.to.clickLogout()),
+                                onConfirm: () => UserController.to.isBookSeller
+                                    ? BookSellerDetailController.to
+                                        .clickLogout()
+                                    : ProfilController.to.clickLogout()),
                           ),
                         ],
                       )
@@ -83,7 +87,9 @@ class ProfilAppBar extends StatelessWidget {
                           color: Color(0xbf212121),
                         ),
                         onPressed: () => BasicDialog.showLogoutDialog(
-                            onConfirm: () => ProfilController.to.clickLogout()),
+                            onConfirm: () => UserController.to.isBookSeller
+                                ? BookSellerDetailController.to.clickLogout()
+                                : ProfilController.to.clickLogout()),
                       ),
               ],
             ),

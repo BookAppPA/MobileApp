@@ -60,6 +60,7 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    Get.put(UserController(repository: userRepository));
     if (isBlocked) {
       WidgetsBinding.instance.addPostFrameCallback(
           (_) => CustomSnackbar.snackbar("Votre compte à été bloqué"));

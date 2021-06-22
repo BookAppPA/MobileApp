@@ -1,10 +1,13 @@
 import 'package:book_app/app/bindings/auth_binding.dart';
 import 'package:book_app/app/bindings/book_detail_binding.dart';
 import 'package:book_app/app/bindings/edit_profil_binding.dart';
-import 'package:book_app/app/bindings/profil_binding.dart';
+import 'package:book_app/app/bindings/list_followers_binding.dart';
 import 'package:book_app/app/bindings/search_binding.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
+import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/auth/auth_page.dart';
 import 'package:book_app/app/modules/book_detail/book_detail_page.dart';
 import 'package:book_app/app/modules/book_detail/book_preview/book_preview_page.dart';
@@ -13,6 +16,8 @@ import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_det
 import 'package:book_app/app/modules/choice_theme/choice_theme_page.dart';
 import 'package:book_app/app/modules/onboarding/onboarding_page.dart';
 import 'package:book_app/app/modules/profil/edit_profil/edit_profil_page.dart';
+import 'package:book_app/app/modules/profil/list_followers/list_followers_page.dart';
+import 'package:book_app/app/modules/profil/profil_controller.dart';
 import 'package:book_app/app/modules/profil/profil_page.dart';
 import 'package:book_app/app/modules/search/search_page.dart';
 import 'package:book_app/app/modules/settings/settings_page.dart';
@@ -41,8 +46,35 @@ class AppPages {
     GetPage(name: Routes.BOOK_PREVIEW, page: () => BookPreviewPage()),
     GetPage(
         name: Routes.PROFIL,
-        page: () => ProfilPage(back: true),
-        binding: ProfilBinding()),
+        page: () {
+          final UserModel user = Get.arguments as UserModel;
+          Get.delete<ProfilController>();
+          var controller;
+          if (user.pseudo != null) {
+            print("AAAA");
+            controller = ProfilController(
+                authRepository: AuthRepository(),
+                userRepository: UserRepository(),
+                user: user);
+          } else if (user.id != null) {
+            print("BBBB");
+            controller = ProfilController(
+                authRepository: AuthRepository(),
+                userRepository: UserRepository(),
+                userId: user.id);
+          } else {
+            print("CCCC");
+            controller = ProfilController(
+                authRepository: AuthRepository(),
+                userRepository: UserRepository());
+          }
+          Get.create<ProfilController>(() => controller, permanent: false);
+          return ProfilPage(
+            back: true,
+            controller: controller,
+            user: user,
+          );
+        },),
     GetPage(
         name: Routes.EDIT_PROFIL,
         page: () => EditProfilPage(),
@@ -59,11 +91,15 @@ class AppPages {
         Get.delete<BookSellerDetailController>();
         var controller = BookSellerDetailController(
             repository: BookSellerRepository(), bookSeller: bookSeller);
-        Get.create(() => controller, permanent: false);
+        Get.create<BookSellerDetailController>(() => controller, permanent: false);
         return BookSellerDetailPage(
             bookSeller: bookSeller, back: true, controller: controller);
       },
     ),
     GetPage(name: Routes.SETTINGS, page: () => SettingsPage()),
+    GetPage(
+        name: Routes.LIST_FOLLOWERS,
+        page: () => ListFollowersPage(),
+        binding: ListFollowersBinding()),
   ];
 }

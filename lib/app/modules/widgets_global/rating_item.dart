@@ -29,7 +29,7 @@ class RatingItem extends StatelessWidget {
             GestureDetector(
               onTap: () => rating.userId != null
                   ? Get.toNamed(Routes.PROFIL,
-                      arguments: rating.userId == UserController.to.user.id
+                      arguments: UserController.to.isBookSeller ? UserModel(id: rating.userId) : rating.userId == UserController.to.user.id
                           ? UserController.to.user
                           : UserModel(id: rating.userId))
                   : null,

@@ -1,11 +1,10 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
-import 'package:book_app/app/data/provider/api/firebase/firebase_firestore_api.dart';
+import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_messaging_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_auth_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_bdd_api.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class UserRepository {
  
@@ -53,6 +52,22 @@ class UserRepository {
 
   deleteBookFromGallery(String idUser, Book book) async {
     return await _databaseAPI.deleteBookFromGallery(idUser, book);
+  }
+
+  followUser(UserModel user, UserModel userToFollow) async {
+    return await _databaseAPI.followUser(user, userToFollow);
+  }
+
+  getListFollowers(String userId) async {
+    return await _databaseAPI.getListFollowers(userId);
+  }
+
+  unFollowUser(UserModel user, UserModel userToFollow) async {
+    return await _databaseAPI.unFollowUser(user, userToFollow);
+  }
+
+  isFollow(String idUser, String idUserToFollow) async {
+    return await _databaseAPI.isFollow(idUser, idUserToFollow);
   }
 
   configurePushNotification(String idUser) async {

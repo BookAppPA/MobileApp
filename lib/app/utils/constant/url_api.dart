@@ -83,4 +83,17 @@ abstract class UrlAPI {
 
   static final String getListBooksWeek =
       "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/getListBooksWeek";
+
+  static final String followUser =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/followUser";
+
+  static final String getListFollowers =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/getListFollowers";
+
+  static final String unFollowUser =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/unFollowUser";
+
+  static final String isFollow =
+      "http://10.0.2.2:5001/book-app-7f51e/us-central1/app/api/bdd/isFollow";
+      
 }

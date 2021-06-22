@@ -10,8 +10,12 @@ import 'package:get/get.dart';
 class SearchUserItem extends StatelessWidget {
   final UserModel user;
   final VoidCallback onFollow, onUnFollow;
+  final bool showInfos, isBookSeller;
   SearchUserItem(this.user,
-      {@required this.onFollow, @required this.onUnFollow})
+      {@required this.onFollow,
+      @required this.onUnFollow,
+      this.showInfos: true,
+      this.isBookSeller: false})
       : assert(user != null),
         assert(onFollow != null),
         assert(onUnFollow != null);
@@ -20,15 +24,17 @@ class SearchUserItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => user.id != null
-          ? user.isBlocked ? CustomSnackbar.snackbar("Ce profil à été bloqué") : Get.toNamed(Routes.PROFIL, arguments: user)
+          ? user.isBlocked
+              ? CustomSnackbar.snackbar("Ce profil à été bloqué")
+              : Get.toNamed(Routes.PROFIL,
+                  arguments: isBookSeller ? UserModel(id: user.id) : user)
           : null,
       child: Container(
         width: Get.width,
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: ConstantColor.greyWhite,
-          borderRadius: BorderRadius.circular(5)
-        ),
+            color: ConstantColor.greyWhite,
+            borderRadius: BorderRadius.circular(5)),
         child: Row(
           children: <Widget>[
             CircleAvatar(
@@ -78,19 +84,38 @@ class SearchUserItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                      "${user.nbBooks} Livres  •  ${user.nbRatings} Avis",
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Text',
-                        fontSize: 14,
-                        color: ConstantColor.greyDark,
-                      ),
-                    ),
-                    UserController.to.isBookSeller ? Container() :
-                      GestureDetector(
-                        child: Icon(FontAwesomeIcons.userPlus, size: 20),
-                        onTap: () => onFollow(),
-                      ),
+                      showInfos
+                          ? Text(
+                              "${user.nbBooks} Livres  •  ${user.nbRatings} Avis",
+                              style: TextStyle(
+                                fontFamily: 'SF Pro Text',
+                                fontSize: 14,
+                                color: ConstantColor.greyDark,
+                              ),
+                            )
+                          : Container(),
+                      UserController.to.isBookSeller
+                          ? Container()
+                          : UserController.to.user.id == user.id
+                              ? Container()
+                              : GetBuilder<UserController>(
+                                  builder: (_) {
+                                    bool isFollow = _.user.listFollowing
+                                            .firstWhere(
+                                                (item) => item.id == user.id,
+                                                orElse: () => null) !=
+                                        null;
+                                    return GestureDetector(
+                                      child: Icon(
+                                          isFollow
+                                              ? FontAwesomeIcons.usersSlash
+                                              : FontAwesomeIcons.userPlus,
+                                          size: 20),
+                                      onTap: () =>
+                                          isFollow ? onUnFollow() : onFollow(),
+                                    );
+                                  },
+                                ),
                     ],
                   )
                 ],

@@ -1,11 +1,10 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/user.dart';
-import 'package:book_app/app/data/repository/auth_repository.dart';
-import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,15 +13,16 @@ import 'profil_controller.dart';
 import 'widgets/profil_app_bar.dart';
 import 'widgets/user_rating_item.dart';
 
-class ProfilPage extends StatelessWidget {
+class ProfilPage extends GetWidget<ProfilController> {
   final UserModel user;
   final bool back;
-  ProfilPage({this.user, this.back: false}) {
+  final ProfilController controller;
+  ProfilPage({this.user, this.back: false, this.controller}) {
     if (user != null && user.pseudo != null) {
-      Get.put(ProfilController(
+      /*Get.put(ProfilController(
           authRepository: AuthRepository(),
           userRepository: UserRepository(),
-          user: user));
+          user: user));*/
     }
   }
 
@@ -58,7 +58,7 @@ class ProfilPage extends StatelessWidget {
       builder: (controller) => Column(
         children: [
           ProfilAppBar(
-            isMe: controller.isMe,
+            isMe: ProfilController.to.isMe,
             back: back,
           ),
           Container(
@@ -74,7 +74,7 @@ class ProfilPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            ProfilController.to.user.pseudo,
+                            controller.user.pseudo,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -87,7 +87,9 @@ class ProfilPage extends StatelessWidget {
                           SizedBox(height: 20),
                           GetBuilder<UserController>(
                             builder: (_) => Text(
-                              _.user.bio ?? "Aucune bio",
+                              _.isBookSeller
+                                  ? controller.user.bio ?? "Aucune bio"
+                                  : _.user.bio ?? "Aucune bio",
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -120,36 +122,45 @@ class ProfilPage extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                       child: GetBuilder<UserController>(
                                         builder: (_) => CircleAvatar(
-                                          child: controller.isMe &&
-                                                  (_.user.picture == null ||
-                                                      _.user.picture == "")
-                                              ? Align(
-                                                  alignment:
-                                                      Alignment.bottomRight,
-                                                  child: CircleAvatar(
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    radius: 12,
-                                                    child: Icon(
-                                                      Icons.camera_alt,
-                                                      size: 15,
-                                                      color: Color(0xFF404040),
-                                                    ),
-                                                  ),
-                                                )
-                                              : _.loadingPicture
-                                                  ? CustomCircularProgress(
-                                                      color:
-                                                          ConstantColor.accent)
-                                                  : Container(),
+                                          child: _.isBookSeller
+                                              ? Container()
+                                              : controller.isMe &&
+                                                      (_.user.picture == null ||
+                                                          _.user.picture == "")
+                                                  ? Align(
+                                                      alignment:
+                                                          Alignment.bottomRight,
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        radius: 12,
+                                                        child: Icon(
+                                                          Icons.camera_alt,
+                                                          size: 15,
+                                                          color:
+                                                              Color(0xFF404040),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : _.loadingPicture
+                                                      ? CustomCircularProgress(
+                                                          color: ConstantColor
+                                                              .accent)
+                                                      : Container(),
                                           radius: 40,
-                                          backgroundImage: _.user.picture ==
-                                                      null ||
-                                                  _.user.picture == ""
-                                              ? AssetImage(
-                                                  'assets/defaut_user.jpeg')
-                                              : NetworkImage(ProfilController
-                                                  .to.user.picture),
+                                          backgroundImage: _.isBookSeller
+                                              ? controller.user.picture != ""
+                                                  ? NetworkImage(
+                                                      ProfilController
+                                                          .to.user.picture)
+                                                  : AssetImage(
+                                                      'assets/defaut_user.jpeg')
+                                              : _.user.picture == null ||
+                                                      _.user.picture == ""
+                                                  ? AssetImage(
+                                                      'assets/defaut_user.jpeg')
+                                                  : NetworkImage(
+                                                      _.user.picture),
                                         ),
                                       ),
                                     ),
@@ -176,7 +187,7 @@ class ProfilPage extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Text(
-                                "${ProfilController.to.user.nbBooks}",
+                                "${controller.user.nbBooks}",
                                 style: TextStyle(
                                   fontFamily: 'SF Pro Text',
                                   fontSize: 24,
@@ -201,7 +212,7 @@ class ProfilPage extends StatelessWidget {
                           Column(
                             children: <Widget>[
                               Text(
-                                "${ProfilController.to.user.nbRatings}",
+                                "${controller.user.nbRatings}",
                                 style: TextStyle(
                                   fontFamily: 'SF Pro Text',
                                   fontSize: 24,
@@ -223,59 +234,89 @@ class ProfilPage extends StatelessWidget {
                             ],
                           ),
                           SizedBox(width: 40),
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                "${ProfilController.to.user.nbFollowers}",
-                                style: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: 24,
-                                  color: ConstantColor.greyDark,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                          GetBuilder<UserController>(builder: (_) {
+                            var nbFollowers = _.isBookSeller
+                                ? controller.user.nbFollowers
+                                : _.user.nbFollowers;
+                            return GestureDetector(
+                              onTap: () {
+                                if (nbFollowers > 0)
+                                  Get.toNamed(Routes.LIST_FOLLOWERS,
+                                      arguments: controller.user.id);
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "$nbFollowers",
+                                    style: TextStyle(
+                                      fontFamily: 'SF Pro Text',
+                                      fontSize: 24,
+                                      color: ConstantColor.greyDark,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    'Abonnés',
+                                    style: TextStyle(
+                                      fontFamily: 'SF Pro Text',
+                                      fontSize: 13,
+                                      color: ConstantColor.greyDark,
+                                      letterSpacing: 0.16,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Followers',
-                                style: TextStyle(
-                                  fontFamily: 'SF Pro Text',
-                                  fontSize: 13,
-                                  color: ConstantColor.greyDark,
-                                  letterSpacing: 0.16,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                            ],
-                          ),
+                            );
+                          }),
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          ButtonGradient(
-                            width: 175,
-                            onTap: () => controller.isMe
-                                ? ProfilController.to.clickEditProfil()
-                                : ProfilController.to.clickFollow(),
-                            text: controller.isMe ? "Modifier" : "Suivre",
-                          ),
-                          SizedBox(height: 20),
-                          controller.isMe
-                              ? Column(
-                                  children: <Widget>[
-                                    ButtonGradient(
-                                      width: 175,
-                                      onTap: () =>
-                                          ProfilController.to.clickFinishBook(),
-                                      text: "J'ai finis un livre",
-                                    ),
-                                  ],
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    )
+                    UserController.to.isBookSeller
+                        ? Container()
+                        : Expanded(
+                            child: Column(
+                              children: <Widget>[
+                                GetBuilder<UserController>(builder: (_) {
+                                  var isFollow = !controller.isMe &&
+                                      _.user.listFollowing.firstWhere(
+                                              (item) =>
+                                                  item.id == controller.user.id,
+                                              orElse: () => null) !=
+                                          null;
+                                  return ButtonGradient(
+                                    width: 175,
+                                    onTap: () => controller.isMe
+                                        ? controller.clickEditProfil()
+                                        : isFollow
+                                            ? controller
+                                                .unFollowUser(controller.user)
+                                            : controller
+                                                .followUser(controller.user),
+                                    text: controller.isMe
+                                        ? "Modifier"
+                                        : isFollow
+                                            ? "Ne plus suivre"
+                                            : "Suivre",
+                                  );
+                                }),
+                                SizedBox(height: 20),
+                                controller.isMe
+                                    ? Column(
+                                        children: <Widget>[
+                                          ButtonGradient(
+                                            width: 175,
+                                            onTap: () =>
+                                                controller.clickFinishBook(),
+                                            text: "J'ai finis un livre",
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                              ],
+                            ),
+                          )
                   ],
                 ),
               ],
@@ -287,7 +328,7 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _buildLastBooks() {
-    return ProfilController.to.books.length > 0
+    return controller.books.length > 0
         ? GetBuilder<ProfilController>(
             builder: (_) => Container(
               height: 250,
@@ -345,7 +386,7 @@ class ProfilPage extends StatelessWidget {
   }
 
   Widget _buildLastRatings() {
-    return ProfilController.to.ratings.length > 0
+    return controller.ratings.length > 0
         ? GetBuilder<ProfilController>(
             builder: (_) => Container(
               height: _.ratings.length <= 5

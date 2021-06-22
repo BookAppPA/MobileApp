@@ -4,6 +4,7 @@ import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
+import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
@@ -86,6 +87,26 @@ class UserController extends GetxController {
     update();
   }
 
+  setListFollowers(List<UserModel> list) {
+    _user.listFollowers = list;
+    update();
+  }
+
+  modifyNbFollowersOfUser(int index, int nb) {
+    _user.listFollowers[index].nbFollowers = nb;
+    update();
+  }
+
+  addFollowingUser(UserModel user) {
+    _user.listFollowing.add(user);
+    update();
+  }
+
+  deleteFollowingUser(UserModel user) {
+    _user.listFollowing.removeWhere((item) => item.id == user.id);
+    update();
+  }
+
   Future<bool> addBookWeek(Book book, String desc) async {
     if (_bookseller.listBooksWeek
             .firstWhere((item) => item.id == book.id, orElse: () => null) !=
@@ -144,5 +165,29 @@ class UserController extends GetxController {
       return false;
     }
     return res;
+  }
+
+  followUser(UserModel userToFollow) async {
+    var res = await repository.followUser(_user, userToFollow);
+    if (res) {
+      _user.listFollowing.add(userToFollow);
+      update();
+      return true;
+    } else {
+      CustomSnackbar.snackbar("Erreur de synchronisation...");
+      return false;
+    }
+  }
+
+  unFollowUser(UserModel userToFollow) async {
+    var res = await repository.unFollowUser(_user, userToFollow);
+    if (res) {
+      _user.listFollowing.removeWhere((item) => item.id == userToFollow.id);
+      update();
+      return true;
+    } else {
+      CustomSnackbar.snackbar("Erreur de synchronisation...");
+      return false;
+    }
   }
 }

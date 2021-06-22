@@ -122,4 +122,20 @@ class SearchController extends GetxController {
       CustomSnackbar.snackbar("Vous avez déjà supprimé ce livre");
     update();
   }
+
+  followUser(int index, UserModel user) async {
+    var res = await UserController.to.followUser(user);
+    if (res) {
+      users[index].nbFollowers++;
+      update();
+    }
+  }
+
+  unFollowUser(int index, UserModel user) async {
+    var res = await UserController.to.unFollowUser(user);
+    if (res) {
+      users[index].nbFollowers--;
+      update();
+    }
+  }
 }

@@ -1,6 +1,9 @@
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
+import 'package:book_app/app/modules/profil/profil_controller.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -64,5 +67,18 @@ class BookSellerDetailController extends GetxController {
   updateOpenHours(Map hours) {
     bookSeller.openHour = hours;
     update();
+  }
+
+  clickLogout() async {
+    print("logout");
+    var result = await AuthRepository().logout();
+    if (result) {
+      Get.delete<ProfilController>();
+      Get.delete<BookSellerDetailController>();
+      Get.delete<UserController>();
+      Get.offAllNamed(Routes.AUTH);
+    }
+    else
+      print("LOGOUT ERREUR....");
   }
 }
