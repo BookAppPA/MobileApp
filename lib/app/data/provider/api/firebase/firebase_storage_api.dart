@@ -24,36 +24,21 @@ class FirebaseStorageAPI {
       String idUser, File image, String urlToDelete) async {
     await deletePicture(idUser, [urlToDelete]);
 
-    Reference storageReference;
+    StorageReference storageReference;
 
     storageReference = FirebaseStorage.instance
         .ref()
         .child('users/$idUser/pic_${image.hashCode}.jpg');
 
-    UploadTask uploadTask = storageReference.putFile(image);
+    StorageUploadTask uploadTask = storageReference.putFile(image);
 
-    uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-      print('Task state: ${snapshot.state}');
-      print(
-          'Progress: ${(snapshot.bytesTransferred / snapshot.totalBytes) * 100} %');
-    }, onError: (e) {
-      print(uploadTask.snapshot);
-      if (e.code == 'permission-denied') {
-        print('User does not have permission to upload to this reference.');
-      }
-    });
-    try {
-      await uploadTask;
-      print('Upload complete.');
+    if (uploadTask.isInProgress == true) {}
+    if (await uploadTask.onComplete != null) {
       return await storageReference.getDownloadURL();
-    } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('User does not have permission to upload to this reference.');
-        CustomSnackbar.snackbar("Vous n'avez pas la permission");
-      }
-      print(e);
-      return null;
     }
+    print("uploadfile: return null");
+    //CustomSnackbar.snackbar(Localization.errorAPInoUploadPicture.tr);
+    return null;
   }
 
   deletePicture(String idUser, List<String> pictures) async {
@@ -74,7 +59,7 @@ class FirebaseStorageAPI {
 
       String url = pictures[i].substring(startIndex, endIndex + end.length);
 
-      Reference storageReference =
+      StorageReference storageReference =
           FirebaseStorage.instance.ref().child('users/$idUser/$url');
       try {
         await storageReference.delete();

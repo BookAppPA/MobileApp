@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseFirestoreAPI {
   static final CollectionReference _collectionUser =
-      FirebaseFirestore.instance.collection("users");
+      Firestore.instance.collection("users");
       
 
-  Future<User> getUser(String uid) async {
+  Future<FirebaseUser> getUser(String uid) async {
     try {
-      var doc = await _collectionUser.doc(uid).get();
+      var doc = await _collectionUser.document(uid).get();
       if (doc.data != null) {
        // return User.fromDocument(doc);
       }
@@ -28,7 +28,7 @@ class FirebaseFirestoreAPI {
       'email': email,
       'createAt': FieldValue.serverTimestamp()
     };
-    await _collectionUser.doc(idUser).set(data, SetOptions(merge: true));
+    await _collectionUser.document(idUser).setData(data, merge: true);
     data.remove("createAt");
     data.addAll({
       "Pictures": {"pictures": []},
@@ -41,19 +41,19 @@ class FirebaseFirestoreAPI {
     var snap = await _collectionUser
         .where("email", isEqualTo: email)
         .limit(1)
-        .get();
-    return snap.docs.length != 0;
+        .getDocuments();
+    return snap.documents.length != 0;
   }
 
   updateUser(String idUser, Map<String, dynamic> data) async {
-    await _collectionUser.doc(idUser).set(data, SetOptions(merge: true)); 
+    await _collectionUser.document(idUser).setData(data, merge: true); 
   }
 
   setTokenNotifUser(String idUser, String token) async {
     var data = {
       'pushToken': token
     };
-    await _collectionUser.doc(idUser).update(data);
+    await _collectionUser.document(idUser).updateData(data);
   }
 
 }

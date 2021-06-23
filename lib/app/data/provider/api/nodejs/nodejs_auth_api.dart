@@ -26,7 +26,7 @@ class NodeJSAuthAPI {
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password);
           return map["type"] == "user" ? UserModel.fromJson(map["data"]) : BookSeller.fromJson(map["data"]);
-        } on FirebaseAuthException catch (e) {
+        } on AuthException catch (e) {
           if (e.code == 'user-not-found') {
             CustomSnackbar.snackbar("Cet email n'existe pas");
           } else if (e.code == 'wrong-password') {
@@ -60,7 +60,7 @@ class NodeJSAuthAPI {
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password);
           return UserModel.fromJson(map);
-        } on FirebaseAuthException catch (e) {
+        } on AuthException catch (e) {
           if (e.code == 'user-not-found') {
             CustomSnackbar.snackbar("Cet email n'existe pas");
           } else if (e.code == 'wrong-password') {
@@ -96,7 +96,7 @@ class NodeJSAuthAPI {
           await FirebaseAuth.instance.signInWithEmailAndPassword(
               email: bookSeller.email, password: password);
           return BookSeller.fromJson(map);
-        } on FirebaseAuthException catch (e) {
+        } on AuthException catch (e) {
           if (e.code == 'user-not-found') {
             CustomSnackbar.snackbar("Cet email n'existe pas");
           } else if (e.code == 'wrong-password') {
@@ -122,7 +122,8 @@ class NodeJSAuthAPI {
 
   Future<bool> logout() async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.post(Uri.parse(UrlAPI.logout),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
@@ -176,9 +177,9 @@ class NodeJSAuthAPI {
     }
   }
 
-  User getCurrentUser() {
+  Future<FirebaseUser> getCurrentUser() async {
     try {
-      return FirebaseAuth.instance.currentUser;
+      return await FirebaseAuth.instance.currentUser();
     } catch (_) {
       print("ERROR: Firebase Auth API: GetCurrentUser()");
       return null;

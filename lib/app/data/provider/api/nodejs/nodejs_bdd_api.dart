@@ -11,7 +11,8 @@ import 'package:http/http.dart' as http;
 class NodeJSBddAPI {
   Future<dynamic> getUserById(String uid) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
         Uri.parse(UrlAPI.getUserById + "/$uid"),
         headers: {"authorization": "Bearer $token"},
@@ -33,7 +34,8 @@ class NodeJSBddAPI {
   Future<bool> updateUser(
       String idUser, Map<String, String> data, bool isBookSeller) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.put(
           Uri.parse(UrlAPI.updateUser + "/$idUser"),
           headers: {
@@ -55,7 +57,8 @@ class NodeJSBddAPI {
 
   Future<List<Book>> getPopularBooks() async {
     try {
-      // var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.popularBooks));
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
@@ -74,7 +77,8 @@ class NodeJSBddAPI {
 
   Future<Book> getBook(String bookID) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.bookDetail + "/$bookID"),
           headers: {"authorization": "Bearer $token"});
@@ -93,7 +97,8 @@ class NodeJSBddAPI {
 
   Future<List<Book>> searchBooks(String search) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBook),
           headers: {"authorization": "Bearer $token", "search": search});
       if (resp.statusCode == 200) {
@@ -113,7 +118,8 @@ class NodeJSBddAPI {
 
   Future<List<Book>> searchBooksByAuthor(String search) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByAuthor),
           headers: {"authorization": "Bearer $token", "search": search});
       if (resp.statusCode == 200) {
@@ -133,7 +139,8 @@ class NodeJSBddAPI {
 
   Future<List<UserModel>> searchUsers(String search) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchUsers),
           headers: {"authorization": "Bearer $token", "search": search});
       if (resp.statusCode == 200) {
@@ -153,7 +160,8 @@ class NodeJSBddAPI {
 
   Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.ratingByBook + "/$bookID"),
           headers: {"authorization": "Bearer $token"});
@@ -171,7 +179,8 @@ class NodeJSBddAPI {
 
   Future<List<Book>> getUserListBook(String idUser) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.userListBooks + "/$idUser"),
           headers: {"authorization": "Bearer $token"});
@@ -200,7 +209,8 @@ class NodeJSBddAPI {
       list = list.substring(0, list.length - 1);
       print(list);
 
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.userListRatings),
           headers: {
             "authorization": "Bearer $token",
@@ -224,7 +234,8 @@ class NodeJSBddAPI {
 
   Future<bool> addBookToGallery(String idUser, Book book) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.post(Uri.parse(UrlAPI.addBookToGallery),
           headers: {"authorization": "Bearer $token", "uid": idUser},
           body: {"bookid": book.id});
@@ -242,7 +253,8 @@ class NodeJSBddAPI {
 
   Future<bool> addBookWeek(String idUser, BookWeek book) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.post(Uri.parse(UrlAPI.addBookWeek),
           headers: {"authorization": "Bearer $token", "uid": idUser},
           body: book.toJson());
@@ -260,8 +272,9 @@ class NodeJSBddAPI {
 
   Future<bool> deleteBookFromGallery(String idUser, Book book) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.delete(
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http.post(
           Uri.parse(UrlAPI.deleteBookFromGallery),
           headers: {"authorization": "Bearer $token", "uid": idUser},
           body: {"bookid": book.id});
@@ -279,7 +292,8 @@ class NodeJSBddAPI {
 
   Future<List<BookSeller>> getInitListBookSeller() async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.getInitListBookSeller),
           headers: {"authorization": "Bearer $token"});
@@ -301,7 +315,8 @@ class NodeJSBddAPI {
 
   Future<List<BookSeller>> searchBookSeller(String search) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBookSeller),
           headers: {"authorization": "Bearer $token", "search": search});
       if (resp.statusCode == 200) {
@@ -322,7 +337,8 @@ class NodeJSBddAPI {
 
   Future<List<BookWeek>> getListBooksWeek(String idBookSeller) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.getListBooksWeek + "/$idBookSeller"),
           headers: {"authorization": "Bearer $token"});
@@ -343,7 +359,8 @@ class NodeJSBddAPI {
 
   Future<bool> followUser(UserModel user, UserModel userToFollow) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http
           .post(Uri.parse(UrlAPI.followUser + "/${userToFollow.id}"), headers: {
         "authorization": "Bearer $token",
@@ -376,7 +393,8 @@ class NodeJSBddAPI {
 
   Future<List<UserModel>> getListFollowers(String userId) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.getListFollowers + "/$userId"),
           headers: {"authorization": "Bearer $token"});
@@ -398,7 +416,8 @@ class NodeJSBddAPI {
 
   Future<List<UserModel>> getListFollowing(String userId) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.getListFollowing + "/$userId"),
           headers: {"authorization": "Bearer $token"});
@@ -420,8 +439,9 @@ class NodeJSBddAPI {
 
   Future<bool> unFollowUser(UserModel user, UserModel userToUnFollow) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
-      http.Response resp = await http.delete(
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http.post(
           Uri.parse(UrlAPI.unFollowUser + "/${userToUnFollow.id}"),
           headers: {"authorization": "Bearer $token", "uid": user.id}, body: {
             "nbFollowers": (userToUnFollow.nbFollowers - 1).toString(),
@@ -441,7 +461,8 @@ class NodeJSBddAPI {
 
   Future<bool> isFollow(String user, String userToFollow) async {
     try {
-      var token = await FirebaseAuth.instance.currentUser.getIdToken();
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
           Uri.parse(UrlAPI.isFollow + "/$userToFollow"),
           headers: {"authorization": "Bearer $token", "uid": user});
