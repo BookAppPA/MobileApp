@@ -164,7 +164,7 @@ class AuthPage extends StatelessWidget {
                               margin: EdgeInsets.symmetric(vertical: 10),
                               inputType: TextInputType.number,
                               inputAction: TextInputAction.done,
-                              placeholder: "Saisissez votre n° SIREN ou SIRET",
+                              placeholder: "n° SIREN ou SIRET",
                               prefixIcon: Icon(FontAwesomeIcons.building),
                               prefixIconColor: controller.isSiretValid
                                   ? Color(0x993C3C43)

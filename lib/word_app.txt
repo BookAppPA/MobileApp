@@ -96,7 +96,7 @@ moins
 Saisissez le nom de votre librairie
 Vous êtes un libraire ? 
 Créer un compte pro
-Saisissez votre n° SIREN ou SIRET
+n° SIREN ou SIRET
 Ajouter ce livre
 Pas d'horaires spécifiés
 Aucune description

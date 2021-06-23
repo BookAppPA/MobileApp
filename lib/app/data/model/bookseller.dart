@@ -50,7 +50,6 @@ class BookSeller {
     data['lat'] = this.coord.latitude.toString();
     data['lon'] = this.coord.longitude.toString();
     data['siret'] = this.siret;
-    data['dateNextAddBookWeek'] = this.dateNextAddBookWeek;
     return data;
   }
 
