@@ -4,6 +4,7 @@ import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
+import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -109,21 +110,22 @@ class ProfilController extends GetxController {
       print("LOGOUT ERREUR....");
   }
 
-  changePicture() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      UserController.to.isLoadingPicture(true);
-      String urlPic = await userRepository.changeUserPicture(
-          UserController.to.user.id,
-          pickedFile.path,
-          UserController.to.user.picture);
-      UserController.to.updatePicture(urlPic);
-      UserController.to.isLoadingPicture(false);
-      user.picture = urlPic;
-      update();
-    } else {
-      print('No image selected.');
-    }
+  changePicture() {
+    BasicDialog.showConfirmPictureDialog(onConfirm: () async {
+      final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        UserController.to.isLoadingPicture(true);
+        String urlPic = await userRepository.changeUserPicture(
+            UserController.to.user.id,
+            pickedFile.path);
+        UserController.to.updatePicture(urlPic);
+        UserController.to.isLoadingPicture(false);
+        user.picture = urlPic;
+        update();
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 
   clickEditProfil() {

@@ -19,8 +19,8 @@ class UserRepository {
     return await _databaseAPI.getUserById(uid);
   }
 
-  changeUserPicture(String uid, String path, String urlToDelete) async {
-    String url = await _firebaseStorageAPI.uploadPicture(uid, path, urlToDelete);
+  changeUserPicture(String uid, String path) async {
+    String url = await _firebaseStorageAPI.uploadPicture(uid, path);
     if (url != null)
       await _databaseAPI.updateUser(uid, {"picture": url}, false);
     return url;

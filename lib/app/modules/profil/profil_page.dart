@@ -4,6 +4,7 @@ import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
+import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +18,7 @@ class ProfilPage extends GetWidget<ProfilController> {
   final UserModel user;
   final bool back;
   final ProfilController controller;
-  ProfilPage({this.user, this.back: false, this.controller}) {
-    if (user != null && user.pseudo != null) {
-      /*Get.put(ProfilController(
-          authRepository: AuthRepository(),
-          userRepository: UserRepository(),
-          user: user));*/
-    }
-  }
+  ProfilPage({this.user, this.back: false, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +108,37 @@ class ProfilPage extends GetWidget<ProfilController> {
                                 alignment: Alignment.topCenter,
                                 child: SizedBox(
                                   child: GestureDetector(
-                                    onTap: () => controller.isMe
+                                    onTap: () => controller.isMe &&
+                                            (controller.user.picture == null ||
+                                                controller.user.picture == "")
                                         ? controller.changePicture()
-                                        : null,
+                                        : controller.isMe
+                                            ? CustomSnackbar.snackbar(
+                                                "Vous ne pouvez plus modifier votre photo")
+                                            : null,
                                     child: CircleAvatar(
                                       radius: 42,
                                       backgroundColor: Colors.white,
                                       child: GetBuilder<UserController>(
-                                        builder: (_) => CircleAvatar(
+                                          builder: (_) {
+                                        ImageProvider picture;
+                                        if (_.isBookSeller ||
+                                            !controller.isMe) {
+                                          if (controller.user.picture != "")
+                                            picture = NetworkImage(
+                                                controller.user.picture);
+                                          else
+                                            picture = AssetImage(
+                                                'assets/defaut_user.jpeg');
+                                        } else if (controller.isMe) {
+                                          if (_.user.picture != "")
+                                            picture =
+                                                NetworkImage(_.user.picture);
+                                          else
+                                            picture = AssetImage(
+                                                'assets/defaut_user.jpeg');
+                                        }
+                                        return CircleAvatar(
                                           child: _.isBookSeller
                                               ? Container()
                                               : controller.isMe &&
@@ -148,21 +165,9 @@ class ProfilPage extends GetWidget<ProfilController> {
                                                               .accent)
                                                       : Container(),
                                           radius: 40,
-                                          backgroundImage: _.isBookSeller
-                                              ? controller.user.picture != ""
-                                                  ? NetworkImage(
-                                                      ProfilController
-                                                          .to.user.picture)
-                                                  : AssetImage(
-                                                      'assets/defaut_user.jpeg')
-                                              : _.user.picture == null ||
-                                                      _.user.picture == ""
-                                                  ? AssetImage(
-                                                      'assets/defaut_user.jpeg')
-                                                  : NetworkImage(
-                                                      _.user.picture),
-                                        ),
-                                      ),
+                                          backgroundImage: picture,
+                                        );
+                                      }),
                                     ),
                                   ),
                                 ),

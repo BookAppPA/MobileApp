@@ -114,4 +114,26 @@ abstract class BasicDialog {
       ),
     );
   }
+
+  static showConfirmPictureDialog({VoidCallback onConfirm}) {
+    Get.defaultDialog(
+      title: "Ajouter une photo",
+      content: Text(
+        "Vous ne pourrez plus modifier votre photo après cette étape",
+        textAlign: TextAlign.center,
+      ),
+      textCancel: "Annuler",
+      onCancel: () => null,
+      textConfirm: "Confirmer",
+      buttonColor: ConstantColor.accent,
+      confirmTextColor: Colors.black,
+      cancelTextColor: Colors.black,
+      onConfirm: onConfirm != null
+          ? () {
+              onConfirm();
+              Get.back();
+            }
+          : () => null,
+    );
+  }
 }
