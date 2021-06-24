@@ -110,6 +110,8 @@ class NodeJSAuthAPI {
           // The email address is already in use by another account.
           CustomSnackbar.snackbar(
               "L'adresse email est déjà utilisé par un autre compte");
+        else if (map["code"] == "siret/invalidate")
+          CustomSnackbar.snackbar("Le n° de SIRET est déjà associé à un autre compte");
         else
           CustomSnackbar.snackbar(map["message"]);
         return null;

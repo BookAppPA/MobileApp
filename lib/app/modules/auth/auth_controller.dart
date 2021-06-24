@@ -127,8 +127,14 @@ class AuthController extends GetxController {
   _checkSiretValid() async {
     var _siretTemp = _siret;
     _isSiretValid = _siretTemp.length == 9 || _siretTemp.length == 14;
-    if (!_isSiretValid) return false;
-    if (!isOnlyNumeric(_siretTemp)) return false;
+    if (!_isSiretValid) {
+      CustomSnackbar.snackbar("Le n° SIREN doit contenir 9 caractères. Le n° SIRET 14 caractères");
+      return false;
+    }
+    if (!isOnlyNumeric(_siretTemp)) {
+      CustomSnackbar.snackbar("Le n° SIREN ou SIRET doit contenir uniquement des chiffres");
+      return false;
+    }
     if (_company != null &&
         (_company.siren == _siretTemp || _company.siret == _siretTemp))
       return true;
@@ -136,27 +142,57 @@ class AuthController extends GetxController {
       _company = await authRepository.checkSiren(_siretTemp);
     else
       _company = await authRepository.checkSiret(_siretTemp);
-    if (_company == null || _company.codeActivity != "4761Z") return false;
+    if (_company == null) {
+      CustomSnackbar.snackbar("Erreur du serveur... Réessayer plus tard");
+      return false;
+    }
+    if (_company.codeActivity != "4761Z") {
+      CustomSnackbar.snackbar("Le n° SIREN ou SIRET ne correspond pas à une entreprise de Commerce de détail de livres en magasin spécialisé", shortDuration: false);
+      return false;
+    }
     return true;
   }
 
   bool _checkLoginInfo() {
     _isPasswordValid = _password.length >= 6 && _password.length <= 30;
-    if (!_validEmail(_email)) return false;
-    if (!_isPasswordValid) return false;
+    if (!_validEmail(_email)) {
+      CustomSnackbar.snackbar("Email invalide");
+      return false;
+    }
+    if (!_isPasswordValid) {
+      CustomSnackbar.snackbar("Le mot de passe doit contenir entre 6 et 30 caractères");
+      return false;
+    }
     return true;
   }
 
   bool _checkSignupInfo() {
-    _isPseudoValid =
-        _pseudo.length >= 3 && _pseudo.length <= 15 && stringIsPseudo(_pseudo);
+    _isPseudoValid = _pseudo.length >= 3 && _pseudo.length <= 15;
+    if (!_isPseudoValid) {
+      CustomSnackbar.snackbar("Le pseudo doit contenir entre 3 et 15 caractères");
+      return false;
+    }
+    _isPseudoValid = _isPseudoValid && stringIsPseudo(_pseudo);
+    if (!_isPseudoValid) {
+      CustomSnackbar.snackbar("Le pseudo peut contenir uniquement des lettres, chiffres et underscores");
+      return false;
+    }
     return _isPseudoValid && _checkLoginInfo();
   }
 
   Future<bool> _checkSignupProInfo() async {
-    _isPseudoValid =
-        _pseudo.length >= 3 && _pseudo.length <= 30 && stringIsName(_pseudo);
+    _isPseudoValid = _pseudo.length >= 3 && _pseudo.length <= 30;
+    if (!_isPseudoValid) {
+      CustomSnackbar.snackbar("Le pseudo doit contenir entre 3 et 30 caractères");
+      return false;
+    }
+    _isPseudoValid = _isPseudoValid && stringIsName(_pseudo);
+    if (!_isPseudoValid) {
+      CustomSnackbar.snackbar("Le pseudo peut contenir uniquement des lettres, espaces, tirets et apostrophes");
+      return false;
+    }
     var res = _isPseudoValid && _checkLoginInfo();
+    if (!res) return false;
     var _isValid = await _checkSiretValid();
     return res && _isValid;
   }

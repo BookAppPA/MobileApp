@@ -51,7 +51,7 @@ class BookSeller {
     data['lat'] = this.coord.latitude.toString();
     data['lon'] = this.coord.longitude.toString();
     data['siret'] = this.siret;
-    data['nbFollowers'] = this.nbFollowers;
+    data['nbFollowers'] = this.nbFollowers.toString();
     return data;
   }
 

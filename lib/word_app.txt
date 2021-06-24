@@ -17,7 +17,6 @@ Nouveau ?
 Déjà inscrit ? 
 Aperçu du livre
 Pas d'aperçu disponible pour ce livre
-Erreur du serveur...
 Ce livre à été ajouté a votre bibliothèque
 Vous avez déjà ajouté ce livre
 Ce livre à été supprimé de votre bibliothèque
@@ -132,3 +131,12 @@ Aucun abonnés
 Vous ne pouvez plus modifier votre photo
 Ajouter une photo
 Vous ne pourrez plus modifier votre photo après cette étape
+Le n° de SIRET est déjà associé à un autre compte
+Email invalide
+Le mot de passe doit contenir entre 6 et 30 caractères
+Le pseudo peut contenir uniquement des lettres, chiffres et underscores
+Le pseudo peut contenir uniquement des lettres, espaces, tirets et apostrophes
+Le n° SIREN doit contenir 9 caractères. Le n° SIRET 14 caractères
+Le n° SIREN ou SIRET doit contenir uniquement des chiffres
+Erreur du serveur... Réessayer plus tard
+Le n° SIREN ou SIRET ne correspond pas à une entreprise de Commerce de détail de livres en magasin spécialisé
