@@ -4,6 +4,7 @@ import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_det
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/profil/widgets/profil_app_bar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
+import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/description_text.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
@@ -18,41 +19,40 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
   final bool back;
   final BookSeller bookSeller;
   final BookSellerDetailController controller;
-  BookSellerDetailPage(
-      {this.bookSeller,
-      this.back: true,
-      this.controller}) {
-    if (bookSeller != null && bookSeller.name != null) {
-      /*Get.put(
-          BookSellerDetailController(
-              repository: BookSellerRepository(), bookSeller: bookSeller),
-          tag: tagController);*/
-    }
-  }
+  BookSellerDetailPage({this.bookSeller, this.back: true, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: Get.width,
-        height: Get.height,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              ProfilAppBar(
-                isBookSeller: controller.isMe,
-                isMe: controller.isMe,
-                back: back,
-                title: controller.bookSeller.name,
+      body: GetBuilder<BookSellerDetailController>(
+        builder: (_) {
+          if (_.loadData && _.errorMessage == "")
+            return CustomCircularProgress(
+                color: ConstantColor.accent, radius: 20);
+          if (_.loadData && _.errorMessage != "")
+            return Center(child: Text(_.errorMessage));
+          return Container(
+            width: Get.width,
+            height: Get.height,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  ProfilAppBar(
+                    isBookSeller: controller.isMe,
+                    isMe: controller.isMe,
+                    back: back,
+                    title: controller.bookSeller.name,
+                  ),
+                  _buildBasicInfo(),
+                  _buildLastBooksWeek(),
+                  _buildInfoBookSeller(),
+                  _buildContactInfo(),
+                ],
               ),
-              _buildBasicInfo(),
-              _buildLastBooksWeek(),
-              _buildInfoBookSeller(),
-              _buildContactInfo(),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -82,7 +82,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
               children: <Widget>[
                 _.bookSeller.phone != ""
                     ? ButtonGradient(
-                        text: "CONTACTER",
+                        text: "Contacter",
                         width: 120,
                         height: 35,
                         fontSize: 16,
@@ -91,15 +91,26 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                     : Container(),
                 UserController.to.isBookSeller
                     ? Container()
-                    : ButtonGradient(
-                        text: "SUIVRE",
-                        width: 120,
-                        height: 35,
-                        fontSize: 16,
-                        onTap: () => print("click")),
+                    : GetBuilder<UserController>(
+                        builder: (_) {
+                          bool isFollow = _.user.listFollowing.firstWhere(
+                                  (item) => item.id == bookSeller.id,
+                                  orElse: () => null) !=
+                              null;
+                          return ButtonGradient(
+                            text: isFollow ? "Ne plus suivre" : "Suivre",
+                            width: 120,
+                            height: 35,
+                            fontSize: 16,
+                            onTap: () => isFollow
+                                ? controller.unFollowUser(controller.bookSeller)
+                                : controller.followUser(controller.bookSeller),
+                          );
+                        },
+                      ),
                 _.isMe
                     ? ButtonGradient(
-                        text: "MODIFIER",
+                        text: "Modifier",
                         width: 120,
                         height: 35,
                         fontSize: 16,

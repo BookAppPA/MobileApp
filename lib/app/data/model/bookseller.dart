@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BookSeller {
   String id, name, email, phone, address, bio, siret;
+  int nbFollowers;
   DateTime timestamp, dateNextAddBookWeek;
   List<BookWeek> listBooksWeek;
   Map openHour;
@@ -15,6 +16,7 @@ class BookSeller {
       this.phone,
       this.address,
       this.bio,
+      this.nbFollowers,
       this.timestamp,
       this.listBooksWeek,
       this.openHour,
@@ -28,6 +30,7 @@ class BookSeller {
     this.phone = json['phone'] ?? "";
     this.address = json['address'];
     this.bio = json['bio'] ?? "";
+    this.nbFollowers = json["nbFollowers"] ?? 0;
     print(json["timestamp"]);
     this.timestamp = (json["timestamp"]["_seconds"] ?? json["timestamp"]["seconds"]) != null
         ? DateTime.fromMillisecondsSinceEpoch(
@@ -50,6 +53,7 @@ class BookSeller {
     data['lat'] = this.coord.latitude.toString();
     data['lon'] = this.coord.longitude.toString();
     data['siret'] = this.siret;
+    data['nbFollowers'] = this.nbFollowers;
     return data;
   }
 

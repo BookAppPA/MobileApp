@@ -18,12 +18,7 @@ class SearchBookSellerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /* var haveAlreadyBook = UserController.to.user.listBooksRead
-            .firstWhere((item) => item.id == book.id, orElse: () => null) !=
-        null;*/
-
     var address = splitAddress(bookSeller.address);
-
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.BOOKSELLER_DETAIL, arguments: bookSeller),
       child: Container(
@@ -60,11 +55,24 @@ class SearchBookSellerItem extends StatelessWidget {
                         ),
                         UserController.to.isBookSeller
                             ? Container()
-                            : GestureDetector(
-                                child:
-                                    Icon(FontAwesomeIcons.bookmark, size: 20),
-                                onTap: () => onFollow(),
-                              ),
+                            : GetBuilder<UserController>(
+                                  builder: (_) {
+                                    bool isFollow = _.user.listFollowing
+                                            .firstWhere(
+                                                (item) => item.id == bookSeller.id,
+                                                orElse: () => null) !=
+                                        null;
+                                    return GestureDetector(
+                                      child: Icon(
+                                          isFollow
+                                              ? FontAwesomeIcons.solidBookmark
+                                              : FontAwesomeIcons.bookmark,
+                                          size: 20),
+                                      onTap: () =>
+                                          isFollow ? onUnFollow() : onFollow(),
+                                    );
+                                  },
+                                )
                       ],
                     ),
                     SizedBox(height: 10),

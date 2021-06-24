@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
@@ -290,6 +291,27 @@ class NodeJSBddAPI {
     }
   }
 
+  Future<BookSeller> getBookSellerById(String uid) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http.get(
+        Uri.parse(UrlAPI.getBookSellerById + "/$uid"),
+        headers: {"authorization": "Bearer $token"},
+      );
+      if (resp.statusCode == 200) {
+        var map = json.decode(resp.body);
+        return BookSeller.fromJson(map);
+      } else {
+        print("error get http getBookSellerById --> ${resp.body}");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future<List<BookSeller>> getInitListBookSeller() async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
@@ -357,28 +379,23 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<bool> followUser(UserModel user, UserModel userToFollow) async {
+  Future<bool> followUser(UserModel user, Following userToFollow) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
-      http.Response resp = await http
-          .post(Uri.parse(UrlAPI.followUser + "/${userToFollow.id}"), headers: {
-        "authorization": "Bearer $token",
-        "uid": user.id
-      }, body: {
-        "userSrc": json.encode({
-          "uid": user.id,
-          "pseudo": user.pseudo,
-          "picture": user.picture,
-        }),
-        "userDest": json.encode({
-          "uid": userToFollow.id,
-          "pseudo": userToFollow.pseudo,
-          "picture": userToFollow.picture,
-        }),
-        "nbFollowers": (userToFollow.nbFollowers + 1).toString(),
-        "nbFollowing": (user.nbFollowing + 1).toString()
-      });
+      http.Response resp =
+          await http.post(Uri.parse(UrlAPI.followUser + "/${userToFollow.id}"),
+              headers: {"authorization": "Bearer $token", "uid": user.id},
+              body: {
+                "userSrc": json.encode({
+                  "id": user.id,
+                  "pseudo": user.pseudo,
+                  "picture": user.picture,
+                }),
+                "userDest": json.encode(userToFollow.toJson()),
+                "nbFollowers": (userToFollow.nbFollowers + 1).toString(),
+                "nbFollowing": (user.nbFollowing + 1).toString()
+              });
       if (resp.statusCode == 200) {
         return true;
       } else {
@@ -414,7 +431,7 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<List<UserModel>> getListFollowing(String userId) async {
+  Future<List<Following>> getListFollowing(String userId) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
@@ -423,9 +440,9 @@ class NodeJSBddAPI {
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var listFollowing = json.decode(resp.body);
-        List<UserModel> following = [];
+        List<Following> following = [];
         listFollowing
-            .forEach((user) => following.add(UserModel.fromJson(user)));
+            .forEach((user) => following.add(Following.fromJson(user)));
         return following;
       } else {
         print("error get http getListFollowing --> ${resp.body}");
@@ -437,13 +454,18 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<bool> unFollowUser(UserModel user, UserModel userToUnFollow) async {
+  Future<bool> unFollowUser(UserModel user, Following userToUnFollow) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.post(
           Uri.parse(UrlAPI.unFollowUser + "/${userToUnFollow.id}"),
-          headers: {"authorization": "Bearer $token", "uid": user.id}, body: {
+          headers: {
+            "authorization": "Bearer $token",
+            "uid": user.id
+          },
+          body: {
+            "isBookSeller": userToUnFollow.isBookSeller.toString(),
             "nbFollowers": (userToUnFollow.nbFollowers - 1).toString(),
             "nbFollowing": (user.nbFollowing - 1).toString()
           });

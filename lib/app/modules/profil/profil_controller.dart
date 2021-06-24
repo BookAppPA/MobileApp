@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
@@ -52,7 +53,8 @@ class ProfilController extends GetxController {
         isMe = false;
       update();
     }
-    _getData();
+    if (user != null)
+      _getData();
   }
 
   _getUser() async {
@@ -65,9 +67,12 @@ class ProfilController extends GetxController {
         isMe = user.id == UserController.to.user.id;
       else
         isMe = false;
-    } else
+    } else {
       _errorLoad();
+      return;
+    }
     update();
+    _getData();
   }
 
   _errorLoad() {
@@ -83,10 +88,18 @@ class ProfilController extends GetxController {
   _getData() async {
     if ((user != null && user.id != null) || userId != null) {
       if (!UserController.to.isBookSeller) {
-        isMe = user.id == UserController.to.user.id;
-        var isFollow = await userRepository.isFollow(UserController.to.user.id, userId ?? user.id);
-        if (!UserController.to.isBookSeller && isFollow)
-          UserController.to.addFollowingUser(user);
+        isMe = (userId ?? user.id) == UserController.to.user.id;
+        var isFollow = await userRepository.isFollow(
+            UserController.to.user.id, userId ?? user.id);
+        bool isAlreadyContain = UserController.to.user.listFollowing.firstWhere((item) => item.id == userId ?? user.id, orElse: () => null) != null;
+        if (!UserController.to.isBookSeller && isFollow && !isAlreadyContain)
+          UserController.to.addFollowingUser(Following(
+            id: userId ?? user.id,
+            pseudo: user.pseudo,
+            isBookSeller: false,
+            picture: user.picture,
+            nbFollowers: user.nbFollowers,
+          ));
         update();
       } else
         isMe = false;
@@ -116,8 +129,7 @@ class ProfilController extends GetxController {
       if (pickedFile != null) {
         UserController.to.isLoadingPicture(true);
         String urlPic = await userRepository.changeUserPicture(
-            UserController.to.user.id,
-            pickedFile.path);
+            UserController.to.user.id, pickedFile.path);
         UserController.to.updatePicture(urlPic);
         UserController.to.isLoadingPicture(false);
         user.picture = urlPic;
@@ -137,7 +149,14 @@ class ProfilController extends GetxController {
   }
 
   followUser(UserModel user) async {
-    var res = await UserController.to.followUser(user);
+    Following following = Following(
+      id: user.id,
+      pseudo: user.pseudo,
+      isBookSeller: false,
+      picture: user.picture,
+      nbFollowers: user.nbFollowers,
+    );
+    var res = await UserController.to.followUser(following);
     if (res) {
       user.nbFollowers++;
       update();
@@ -145,7 +164,14 @@ class ProfilController extends GetxController {
   }
 
   unFollowUser(UserModel user) async {
-    var res = await UserController.to.unFollowUser(user);
+    Following following = Following(
+      id: user.id,
+      pseudo: user.pseudo,
+      isBookSeller: false,
+      picture: user.picture,
+      nbFollowers: user.nbFollowers,
+    );
+    var res = await UserController.to.unFollowUser(following);
     if (res) {
       user.nbFollowers--;
       update();

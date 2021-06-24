@@ -217,6 +217,7 @@ class AuthController extends GetxController {
       address: _company.address,
       coord: _company.coord,
       siret: _company.siret,
+      nbFollowers: 0,
     );
     bookseller = await authRepository.signupBookSeller(bookseller, _password);
     _isLoading = false;

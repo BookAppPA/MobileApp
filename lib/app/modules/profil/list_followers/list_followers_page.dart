@@ -1,6 +1,6 @@
-import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/data/model/following.dart';
+import 'package:book_app/app/modules/profil/list_followers/follower_item.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
-import 'package:book_app/app/modules/search/search_user_item.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'list_followers_controller.dart';
 
 class ListFollowersPage extends StatelessWidget {
-
   final bool isFollowing;
   ListFollowersPage({this.isFollowing: false});
 
@@ -16,7 +15,8 @@ class ListFollowersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BackButtonAppBar(
-        textTitle: isFollowing ? "Liste de vos abonnements" : "Liste de vos abonnés",
+        textTitle:
+            isFollowing ? "Liste des abonnements" : "Liste des abonnés",
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -24,28 +24,46 @@ class ListFollowersPage extends StatelessWidget {
             height: Get.height,
             child: GetBuilder<UserController>(
               builder: (_) {
-                var length = isFollowing ? _.user.listFollowing.length : _.user.listFollowers.length;
+                var length = isFollowing
+                    ? _.user.listFollowing.length
+                    : _.user.listFollowers.length;
                 if (length == 0 && !ListFollowersController.to.afterLoading)
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 if (length == 0 && ListFollowersController.to.afterLoading)
                   return Center(
-                    child: Text(isFollowing ? "Aucun abonnements" : "Aucun abonnés"),
+                    child: Text(
+                        isFollowing ? "Aucun abonnements" : "Aucun abonnés"),
                   );
                 return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  child: ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: 25, horizontal: 15),
+                  child: ListView.separated(
                     itemCount: length,
                     itemBuilder: (ctx, index) {
-                      UserModel user = isFollowing ? _.user.listFollowing[index] : _.user.listFollowers[index];
-                      return SearchUserItem(
-                        user,
-                        showInfos: false,
-                        onFollow: () => ListFollowersController.to.followUser(index, user),
-                        onUnFollow: () => _.unFollowUser(user),
+                      Following following = Following(
+                        id: isFollowing
+                          ? _.user.listFollowing[index].id
+                          : _.user.listFollowers[index].id,
+                        pseudo: isFollowing
+                          ? _.user.listFollowing[index].pseudo
+                          : _.user.listFollowers[index].pseudo,
+                        isBookSeller: isFollowing
+                          ? _.user.listFollowing[index].isBookSeller
+                          : false,
+                        picture: isFollowing
+                          ? _.user.listFollowing[index].picture
+                          : _.user.listFollowers[index].picture,
+                        isBlocked: isFollowing
+                          ? _.user.listFollowing[index].isBlocked
+                          : _.user.listFollowers[index].isBlocked,
+                        address: isFollowing
+                          ? _.user.listFollowing[index].address
+                          : ""
                       );
+                      return FollowerItem(following);
                     },
+                    separatorBuilder: (ctx, index) => SizedBox(height: 10),
                   ),
                 );
               },

@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/rating.dart';
 
 class UserModel {
@@ -7,7 +8,8 @@ class UserModel {
   int nbBooks, nbRatings, nbFollowers, nbFollowing;
   List<Book> listBooksRead;
   List<Rating> listLastRatings;
-  List<UserModel> listFollowers, listFollowing;
+  List<UserModel> listFollowers;
+  List<Following> listFollowing;
   bool isBlocked;
 
   UserModel({

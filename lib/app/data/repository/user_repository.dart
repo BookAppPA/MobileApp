@@ -1,5 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_auth_api.dart';
@@ -50,7 +52,7 @@ class UserRepository {
     return await _databaseAPI.deleteBookFromGallery(idUser, book);
   }
 
-  followUser(UserModel user, UserModel userToFollow) async {
+  followUser(UserModel user, Following userToFollow) async {
     return await _databaseAPI.followUser(user, userToFollow);
   }
 
@@ -62,7 +64,7 @@ class UserRepository {
     return await _databaseAPI.getListFollowing(userId);
   }
 
-  unFollowUser(UserModel user, UserModel userToFollow) async {
+  unFollowUser(UserModel user, Following userToFollow) async {
     return await _databaseAPI.unFollowUser(user, userToFollow);
   }
 

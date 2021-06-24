@@ -1,5 +1,4 @@
 import 'package:book_app/app/data/model/book.dart';
-import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
@@ -15,10 +14,9 @@ import 'widgets/profil_app_bar.dart';
 import 'widgets/user_rating_item.dart';
 
 class ProfilPage extends GetWidget<ProfilController> {
-  final UserModel user;
   final bool back;
   final ProfilController controller;
-  ProfilPage({this.user, this.back: false, this.controller});
+  ProfilPage({this.back: false, this.controller});
 
   @override
   Widget build(BuildContext context) {

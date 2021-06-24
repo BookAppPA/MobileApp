@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
 import 'bookseller_item.dart';
 
 class BookSellerMainPage extends StatelessWidget {
@@ -64,8 +63,8 @@ class BookSellerMainPage extends StatelessWidget {
                       itemBuilder: (ctx, index) {
                         return SearchBookSellerItem(
                           _.booksellers[index],
-                          onFollow: () => print("follow bookseller"),
-                          onUnFollow: () => print("unfollow bookseller"),
+                          onFollow: () => _.followBookSeller(index, _.booksellers[index]),
+                          onUnFollow: () => _.unFollowBookSeller(index, _.booksellers[index]),
                         );
                       },
                       separatorBuilder: (ctx, index) => SizedBox(height: 10),

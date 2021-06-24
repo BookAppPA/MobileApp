@@ -1,13 +1,15 @@
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BookSellerMainController extends GetxController {
-
   static BookSellerMainController get to => Get.find();
 
-  BookSellerMainController({@required this.repository}) : assert(repository != null);
+  BookSellerMainController({@required this.repository})
+      : assert(repository != null);
 
   final BookSellerRepository repository;
 
@@ -51,4 +53,31 @@ class BookSellerMainController extends GetxController {
     }
   }
 
+  followBookSeller(int index, BookSeller bookSeller) async {
+    var res = await UserController.to.followUser(Following(
+      id: bookSeller.id,
+      pseudo: bookSeller.name,
+      isBookSeller: true,
+      address: bookSeller.address,
+      nbFollowers: bookSeller.nbFollowers,
+    ));
+    if (res) {
+      booksellers[index].nbFollowers++;
+      update();
+    }
+  }
+
+  unFollowBookSeller(int index, BookSeller bookSeller) async {
+    var res = await UserController.to.unFollowUser(Following(
+      id: bookSeller.id,
+      pseudo: bookSeller.name,
+      isBookSeller: true,
+      address: bookSeller.address,
+      nbFollowers: bookSeller.nbFollowers,
+    ));
+    if (res) {
+      booksellers[index].nbFollowers--;
+      update();
+    }
+  }
 }

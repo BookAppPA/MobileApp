@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
@@ -92,7 +93,7 @@ class UserController extends GetxController {
     update();
   }
 
-  setListFollowing(List<UserModel> list) {
+  setListFollowing(List<Following> list) {
     _user.listFollowing = list;
     update();
   }
@@ -102,7 +103,7 @@ class UserController extends GetxController {
     update();
   }
 
-  addFollowingUser(UserModel user) {
+  addFollowingUser(Following user) {
     _user.listFollowing.add(user);
     update();
   }
@@ -172,7 +173,7 @@ class UserController extends GetxController {
     return res;
   }
 
-  followUser(UserModel userToFollow) async {
+  followUser(Following userToFollow) async {
     var res = await repository.followUser(_user, userToFollow);
     if (res) {
       _user.listFollowing.add(userToFollow);
@@ -185,7 +186,7 @@ class UserController extends GetxController {
     }
   }
 
-  unFollowUser(UserModel userToFollow) async {
+  unFollowUser(Following userToFollow) async {
     var res = await repository.unFollowUser(_user, userToFollow);
     if (res) {
       _user.listFollowing.removeWhere((item) => item.id == userToFollow.id);

@@ -80,6 +80,9 @@ abstract class UrlAPI {
   static final String getInitListBookSeller =
       "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getInitListBookSeller";
 
+  static final String getBookSellerById =
+      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getBookSellerById";
+
   static final String searchBookSeller =
       "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/searchBookSeller";
 

@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:book_app/app/modules/dialog/add_book_week_bottomsheet.dart';
@@ -124,7 +125,14 @@ class SearchController extends GetxController {
   }
 
   followUser(int index, UserModel user) async {
-    var res = await UserController.to.followUser(user);
+    var following = Following(
+      id: user.id,
+      pseudo: user.pseudo,
+      isBookSeller: false,
+      picture: user.picture,
+      nbFollowers: user.nbFollowers,
+    );
+    var res = await UserController.to.followUser(following);
     if (res) {
       users[index].nbFollowers++;
       update();
@@ -132,7 +140,14 @@ class SearchController extends GetxController {
   }
 
   unFollowUser(int index, UserModel user) async {
-    var res = await UserController.to.unFollowUser(user);
+    var following = Following(
+      id: user.id,
+      pseudo: user.pseudo,
+      isBookSeller: false,
+      picture: user.picture,
+      nbFollowers: user.nbFollowers,
+    );
+    var res = await UserController.to.unFollowUser(following);
     if (res) {
       users[index].nbFollowers--;
       update();

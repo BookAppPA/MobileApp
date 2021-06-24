@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/bookseller.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/profil/profil_controller.dart';
@@ -12,22 +13,56 @@ class BookSellerDetailController extends GetxController {
   static BookSellerDetailController get to => Get.find();
 
   BookSellerDetailController(
-      {@required this.repository, @required this.bookSeller})
-      : assert(repository != null),
-        assert(bookSeller != null);
+      {@required this.repository, this.bookSeller, this.bookSellerId})
+      : assert(repository != null);
 
   final BookSellerRepository repository;
-  final BookSeller bookSeller;
+  BookSeller bookSeller;
+  final String bookSellerId;
   int bookPosition = 0;
   bool isMe;
+  String errorMessage = "";
+  bool loadData = true;
+
+  _errorLoad() {
+    errorMessage = "Erreur du serveur...";
+    update();
+  }
 
   @override
   void onInit() {
     super.onInit();
-    if (UserController.to.isBookSeller)
-      isMe = UserController.to.bookseller.id == bookSeller.id;
-    else
-      isMe = false;
+    if (bookSeller == null && bookSellerId != null)
+      _getBookSeller();
+    else if (bookSeller == null && bookSellerId == null) {
+      _errorLoad();
+      return;
+    } else {
+      loadData = false;
+      if (UserController.to.isBookSeller)
+        isMe = bookSeller.id == UserController.to.bookseller.id;
+      else
+        isMe = false;
+      update();
+    }
+    if (bookSeller != null)
+      _getListBooksWeek();
+  }
+
+  _getBookSeller() async {
+    print("GET BOOKSELLER");
+    bookSeller = await repository.getBookSellerById(bookSellerId);
+    if (bookSeller != null) {
+      loadData = false;
+      if (UserController.to.isBookSeller)
+        isMe = bookSeller.id == UserController.to.bookseller.id;
+      else
+        isMe = false;
+    } else {
+      _errorLoad();
+      return;
+    }
+    update();
     _getListBooksWeek();
   }
 
@@ -80,5 +115,33 @@ class BookSellerDetailController extends GetxController {
     }
     else
       print("LOGOUT ERREUR....");
+  }
+
+  followUser(BookSeller user) async {
+    var res = await UserController.to.followUser(Following(
+      id: bookSeller.id,
+      pseudo: bookSeller.name,
+      isBookSeller: true,
+      address: bookSeller.address,
+      nbFollowers: bookSeller.nbFollowers,
+    ));
+    if (res) {
+      bookSeller.nbFollowers++;
+      update();
+    }
+  }
+
+  unFollowUser(BookSeller user) async {
+    var res = await UserController.to.unFollowUser(Following(
+      id: bookSeller.id,
+      pseudo: bookSeller.name,
+      isBookSeller: true,
+      address: bookSeller.address,
+      nbFollowers: bookSeller.nbFollowers,
+    ));
+    if (res) {
+      bookSeller.nbFollowers--;
+      update();
+    }
   }
 }

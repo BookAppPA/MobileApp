@@ -45,36 +45,33 @@ class AppPages {
         binding: BookDetailBinding()),
     GetPage(name: Routes.BOOK_PREVIEW, page: () => BookPreviewPage()),
     GetPage(
-        name: Routes.PROFIL,
-        page: () {
-          final UserModel user = Get.arguments as UserModel;
-          Get.delete<ProfilController>();
-          var controller;
-          if (user.pseudo != null) {
-            print("AAAA");
-            controller = ProfilController(
-                authRepository: AuthRepository(),
-                userRepository: UserRepository(),
-                user: user);
-          } else if (user.id != null) {
-            print("BBBB");
-            controller = ProfilController(
-                authRepository: AuthRepository(),
-                userRepository: UserRepository(),
-                userId: user.id);
-          } else {
-            print("CCCC");
-            controller = ProfilController(
-                authRepository: AuthRepository(),
-                userRepository: UserRepository());
-          }
-          Get.create<ProfilController>(() => controller, permanent: false);
-          return ProfilPage(
-            back: true,
-            controller: controller,
-            user: user,
-          );
-        },),
+      name: Routes.PROFIL,
+      page: () {
+        final UserModel user = Get.arguments as UserModel;
+        Get.delete<ProfilController>();
+        var controller;
+        if (user.pseudo != null) {
+          controller = ProfilController(
+              authRepository: AuthRepository(),
+              userRepository: UserRepository(),
+              user: user);
+        } else if (user.id != null) {
+          controller = ProfilController(
+              authRepository: AuthRepository(),
+              userRepository: UserRepository(),
+              userId: user.id);
+        } else {
+          controller = ProfilController(
+              authRepository: AuthRepository(),
+              userRepository: UserRepository());
+        }
+        Get.create<ProfilController>(() => controller, permanent: false);
+        return ProfilPage(
+          back: true,
+          controller: controller,
+        );
+      },
+    ),
     GetPage(
         name: Routes.EDIT_PROFIL,
         page: () => EditProfilPage(),
@@ -87,11 +84,17 @@ class AppPages {
       name: Routes.BOOKSELLER_DETAIL,
       page: () {
         final BookSeller bookSeller = Get.arguments as BookSeller;
-        //Get.put(BookSellerDetailController(repository: BookSellerRepository(), bookSeller: bookSeller), tag: "BookSellerVisitor");
         Get.delete<BookSellerDetailController>();
-        var controller = BookSellerDetailController(
-            repository: BookSellerRepository(), bookSeller: bookSeller);
-        Get.create<BookSellerDetailController>(() => controller, permanent: false);
+        var controller;
+        if (bookSeller.name != null) {
+          controller = BookSellerDetailController(
+              repository: BookSellerRepository(), bookSeller: bookSeller);
+        } else if (bookSeller.id != null) {
+          controller = BookSellerDetailController(
+            repository: BookSellerRepository(), bookSellerId: bookSeller.id);
+        }
+        Get.create<BookSellerDetailController>(() => controller,
+            permanent: false);
         return BookSellerDetailPage(
             bookSeller: bookSeller, back: true, controller: controller);
       },

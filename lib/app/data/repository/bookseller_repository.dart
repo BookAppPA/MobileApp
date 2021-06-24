@@ -4,6 +4,10 @@ class BookSellerRepository {
 
   final NodeJSBddAPI _databaseAPI = NodeJSBddAPI();
 
+  getBookSellerById(String bookSellerId) async {
+    return await _databaseAPI.getBookSellerById(bookSellerId);
+  }
+
   getInitListBookSeller() async {
     return await _databaseAPI.getInitListBookSeller();
   }

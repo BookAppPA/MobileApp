@@ -1,4 +1,4 @@
-import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:flutter/material.dart';
@@ -32,14 +32,6 @@ class ListFollowersController extends GetxController {
       var list = await repository.getListFollowers(userId);
       afterLoading = true;
       UserController.to.setListFollowers(list);
-    }
-  }
-
-  followUser(int index, UserModel user) async {
-    var res = await UserController.to.followUser(user);
-    if (res) {
-      UserController.to.modifyNbFollowersOfUser(index, user.nbFollowers + 1);
-      update();
     }
   }
 }
