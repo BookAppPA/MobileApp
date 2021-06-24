@@ -20,7 +20,7 @@ class ProfilAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return isMe
         ? Container(
-            padding: EdgeInsets.only(top: 25, right: 15, left: 10),
+            padding: EdgeInsets.only(top: 35, right: 15, left: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

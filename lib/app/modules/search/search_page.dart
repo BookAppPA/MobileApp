@@ -124,7 +124,7 @@ class SearchPage extends GetView<SearchController> {
             height: 50,
             decoration: BoxDecoration(
               color: (_.searchMode == index
-                  ? ConstantColor.background
+                  ? ConstantColor.accent
                   : Colors.grey.shade300),
               borderRadius: _generateBorderRadius(index, _.searchMode),
             ),
@@ -135,11 +135,11 @@ class SearchPage extends GetView<SearchController> {
   }
 
   _generateBorderRadius(int index, int indexSelected) {
-    if ((indexSelected + 1) == index)
-      return BorderRadius.only(bottomLeft: Radius.circular(20));
-    else if ((indexSelected - 1) == index)
-      return BorderRadius.only(bottomRight: Radius.circular(20));
-    else
-      return BorderRadius.zero;
+    // if ((indexSelected + 1) == index)
+    //   return BorderRadius.only(bottomRight: Radius.circular(20));
+    // else if ((indexSelected - 1) == index)
+    //   return BorderRadius.only(bottomLeft: Radius.circular(20));
+    // else
+      return BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20));
   }
 }

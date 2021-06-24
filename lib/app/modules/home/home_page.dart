@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 25),
+              padding: EdgeInsets.symmetric(vertical: 30),
               child: CupertinoTextField(
                 maxLines: 1,
                 maxLength: 50,
