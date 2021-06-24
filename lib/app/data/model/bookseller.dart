@@ -31,7 +31,6 @@ class BookSeller {
     this.address = json['address'];
     this.bio = json['bio'] ?? "";
     this.nbFollowers = json["nbFollowers"] ?? 0;
-    print(json["timestamp"]);
     this.timestamp = (json["timestamp"]["_seconds"] ?? json["timestamp"]["seconds"]) != null
         ? DateTime.fromMillisecondsSinceEpoch(
             (json["timestamp"]["_seconds"] ?? json["timestamp"]["seconds"]) * 1000)
@@ -40,7 +39,6 @@ class BookSeller {
     this.listBooksWeek = [];
     this.coord = LatLng(json["coord"]["lat"], json["coord"]["lon"]);
     this.siret = json["siret"];
-    print(json["dateNextAddBookWeek"]);
     this.dateNextAddBookWeek = json["dateNextAddBookWeek"] != null ? DateTime.fromMillisecondsSinceEpoch(
         (json["dateNextAddBookWeek"]["_seconds"] ?? json["dateNextAddBookWeek"]["seconds"]) * 1000) : null;
   }

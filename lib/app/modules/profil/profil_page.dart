@@ -78,21 +78,33 @@ class ProfilPage extends GetWidget<ProfilController> {
                           ),
                           SizedBox(height: 20),
                           GetBuilder<UserController>(
-                            builder: (_) => Text(
-                              _.isBookSeller
-                                  ? controller.user.bio ?? "Aucune bio"
-                                  : _.user.bio ?? "Aucune bio",
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontFamily: 'SF Pro Text',
-                                fontSize: 13,
-                                color: ConstantColor.greyDark,
-                                letterSpacing: 0.16,
-                                fontWeight: FontWeight.w300,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
+                            builder: (_) {
+                              String bio;
+                              if (_.isBookSeller || !controller.isMe) {
+                                if (controller.user.bio != null)
+                                  bio = controller.user.bio;
+                                else
+                                  bio = "Aucune bio";
+                              } else if (controller.isMe) {
+                                if (_.user.bio != null)
+                                  bio = _.user.bio;
+                                else
+                                  bio = "Aucune bio";
+                              }
+                              return Text(
+                                bio,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontFamily: 'SF Pro Text',
+                                  fontSize: 13,
+                                  color: ConstantColor.greyDark,
+                                  letterSpacing: 0.16,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                textAlign: TextAlign.left,
+                              );
+                            },
                           ),
                         ],
                       ),

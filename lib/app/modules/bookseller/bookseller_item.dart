@@ -53,26 +53,34 @@ class SearchBookSellerItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        UserController.to.isBookSeller
-                            ? Container()
-                            : GetBuilder<UserController>(
-                                  builder: (_) {
-                                    bool isFollow = _.user.listFollowing
-                                            .firstWhere(
-                                                (item) => item.id == bookSeller.id,
-                                                orElse: () => null) !=
-                                        null;
-                                    return GestureDetector(
-                                      child: Icon(
-                                          isFollow
-                                              ? FontAwesomeIcons.solidBookmark
-                                              : FontAwesomeIcons.bookmark,
-                                          size: 20),
-                                      onTap: () =>
-                                          isFollow ? onUnFollow() : onFollow(),
-                                    );
-                                  },
-                                )
+                        Row(
+                          children: <Widget>[
+                            Text(bookSeller.nbFollowers.toString()),
+                            SizedBox(width: 10),
+                            UserController.to.isBookSeller
+                                ? Container()
+                                : GetBuilder<UserController>(
+                                    builder: (_) {
+                                      bool isFollow = _.user.listFollowing
+                                              .firstWhere(
+                                                  (item) =>
+                                                      item.id == bookSeller.id,
+                                                  orElse: () => null) !=
+                                          null;
+                                      return GestureDetector(
+                                        child: Icon(
+                                            isFollow
+                                                ? FontAwesomeIcons.solidBookmark
+                                                : FontAwesomeIcons.bookmark,
+                                            size: 20),
+                                        onTap: () => isFollow
+                                            ? onUnFollow()
+                                            : onFollow(),
+                                      );
+                                    },
+                                  )
+                          ],
+                        ),
                       ],
                     ),
                     SizedBox(height: 10),

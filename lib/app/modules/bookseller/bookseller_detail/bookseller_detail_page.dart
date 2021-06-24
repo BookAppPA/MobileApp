@@ -71,7 +71,37 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
               ),
             ),
           ),
-          SizedBox(height: 25),
+          Center(
+            child: Container(
+              height: 75,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    controller.bookSeller.nbFollowers.toString(),
+                    style: TextStyle(
+                      fontFamily: 'SF Pro Text',
+                      fontSize: 24,
+                      color: ConstantColor.greyDark,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "Abonnés",
+                    style: TextStyle(
+                      fontFamily: 'SF Pro Text',
+                      fontSize: 13,
+                      color: ConstantColor.greyDark,
+                      letterSpacing: 0.16,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
           GetBuilder<BookSellerDetailController>(
             builder: (_) => Row(
               mainAxisAlignment: _.bookSeller.phone != ""
