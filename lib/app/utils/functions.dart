@@ -20,6 +20,11 @@ bool stringIsName(String str) {
   return reg.hasMatch(str);
 }
 
+bool stringIsPseudo(String str) {
+  RegExp reg = RegExp(r"^[0-9A-Za-z\_]+$");
+  return reg.hasMatch(str);
+}
+
 bool isOnlyNumeric(String str) {
   RegExp reg = RegExp(r"^[0-9]+$");
   return reg.hasMatch(str);

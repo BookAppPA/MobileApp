@@ -149,7 +149,7 @@ class AuthController extends GetxController {
 
   bool _checkSignupInfo() {
     _isPseudoValid =
-        _pseudo.length >= 3 && _pseudo.length <= 15 && stringIsName(_pseudo);
+        _pseudo.length >= 3 && _pseudo.length <= 15 && stringIsPseudo(_pseudo);
     return _isPseudoValid && _checkLoginInfo();
   }
 
