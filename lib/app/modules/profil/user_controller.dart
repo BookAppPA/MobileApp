@@ -9,6 +9,7 @@ import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class UserController extends GetxController {
   static UserController get to => Get.find();
@@ -39,6 +40,8 @@ class UserController extends GetxController {
   bool get loadingPicture => this._loadingPicture;
 
   bool canAddBookWeek = false;
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
 
   updateBio(String bio, bool isBookSeller) {
     if (isBookSeller)
