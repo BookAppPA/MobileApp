@@ -118,7 +118,9 @@ class AuthController extends GetxController {
     var _index = _email.indexOf("@");
     var _valid = false;
     if (_index != -1) {
-      _valid = Constant.regexEmail.hasMatch(_email);
+      var _domain = _email.substring(_index);
+      _valid = checkIsEmailFormat(_email);
+      _valid = _valid && checkIsDomainEmailInclude(_domain);
     }
     _isEmailValid = _valid;
     return _valid;

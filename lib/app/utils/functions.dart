@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:book_app/app/utils/constant/constant.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:http/http.dart' as http;
 import 'constant/url_api.dart';
@@ -37,6 +38,14 @@ bool isOnlyNumeric(String str) {
 bool isPhoneNumber(String str) {
   RegExp reg = RegExp(r"^[0-9\-]+$");
   return reg.hasMatch(str);
+}
+
+bool checkIsEmailFormat(String email) {
+  return Constant.regexEmail.hasMatch(email);
+}
+
+bool checkIsDomainEmailInclude(String domain) {
+  return Constant.domainEmailInclude.contains(domain);
 }
 
 String splitAddress(String address) {
