@@ -15,6 +15,10 @@ DateTime timestampToDate(int timestamp) {
   return DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
 }
 
+String getYear(String str) {
+  return str.substring(0, 4);
+}
+
 bool stringIsName(String str) {
   RegExp reg = RegExp(r"^[A-Za-z \-\']+$");
   return reg.hasMatch(str);

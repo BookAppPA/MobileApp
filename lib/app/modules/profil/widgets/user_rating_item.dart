@@ -9,13 +9,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import '../user_controller.dart';
 
 class UserRatingItem extends StatelessWidget {
   final Rating rating;
   final Book book;
-  UserRatingItem(this.rating, this.book)
-      : assert(rating != null),
-        assert(book != null);
+  UserRatingItem(this.rating, this.book) {
+    assert(rating != null);
+    assert(book != null);
+    isMyRating = UserController.to.isBookSeller
+        ? false
+        : UserController.to.user.id == rating.userId
+            ? true
+            : false;
+  }
+
+  bool isMyRating;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +85,7 @@ class UserRatingItem extends StatelessWidget {
                               ),
                               SizedBox(height: 5),
                               Text(
-                                "${rating.bookAuthor}  •  ${rating.bookPublished}",
+                                "${rating.bookAuthor}  •  ${getYear(rating.bookPublished)}",
                                 style: TextStyle(
                                   fontFamily: 'SF Pro Text',
                                   fontSize: 14,
@@ -86,6 +95,21 @@ class UserRatingItem extends StatelessWidget {
                             ],
                           ),
                         ),
+                        isMyRating
+                            ? Row(
+                                children: <Widget>[
+                                  GestureDetector(
+                                    onTap: () => UserController.to.updateRating(rating),
+                                    child: Icon(Icons.edit),
+                                  ),
+                                  SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () => UserController.to.deleteRating(rating),
+                                    child: Icon(Icons.close),
+                                  ),
+                                ],
+                              )
+                            : Container()
                       ],
                     ),
                   ),
@@ -133,11 +157,12 @@ class UserRatingItem extends StatelessWidget {
               children: [
                 RatingBar.builder(
                   initialRating: rating.note.toDouble(),
-                  minRating: 1,
+                  minRating: 0,
                   direction: Axis.horizontal,
                   itemCount: 5,
                   itemSize: 20,
                   ignoreGestures: true,
+                  allowHalfRating: true,
                   itemBuilder: (context, _) => Icon(
                     Icons.star,
                     color: Colors.amber,

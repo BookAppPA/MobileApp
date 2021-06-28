@@ -1,4 +1,5 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
@@ -197,14 +198,24 @@ class ProfilPage extends GetWidget<ProfilController> {
                   children: [
                     Column(
                       children: <Widget>[
-                        Text(
-                          "${controller.user.nbBooks}",
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Text',
-                            fontSize: 24,
-                            color: ConstantColor.greyDark,
-                            fontWeight: FontWeight.w700,
-                          ),
+                        GetBuilder<UserController>(
+                          builder: (_) {
+                            int nbBooks;
+                            if (_.isBookSeller || !controller.isMe) {
+                              nbBooks = controller.user.nbBooks;
+                            } else if (controller.isMe) {
+                              nbBooks = _.user.nbBooks;
+                            }
+                            return Text(
+                              "$nbBooks",
+                              style: TextStyle(
+                                fontFamily: 'SF Pro Text',
+                                fontSize: 24,
+                                color: ConstantColor.greyDark,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            );
+                          },
                         ),
                         SizedBox(height: 5),
                         Text(
@@ -497,17 +508,27 @@ class ProfilPage extends GetWidget<ProfilController> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: _.ratings.length <= 5 ? _.ratings.length : 5,
-                      padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: 25),
-                      itemBuilder: (context, index) {
-                        var book = _.books.firstWhere(
-                            (book) => _.ratings[index].bookId == book.id,
-                            orElse: () => Book(id: _.ratings[index].bookId));
-                        return UserRatingItem(_.ratings[index], book);
+                    child: GetBuilder<UserController>(
+                      builder: (userController) {
+                        List<Rating> list;
+                        if (userController.isBookSeller || !controller.isMe) {
+                          list = controller.ratings;
+                        } else if (controller.isMe) {
+                          list = userController.user.listLastRatings;
+                        }
+                        return ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: list.length <= 5 ? list.length : 5,
+                          padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 25),
+                          itemBuilder: (context, index) {
+                            var book = _.books.firstWhere(
+                                (book) => list[index].bookId == book.id,
+                                orElse: () => Book(id: list[index].bookId));
+                            return UserRatingItem(list[index], book);
+                          },
+                        );
                       },
                     ),
                   ),

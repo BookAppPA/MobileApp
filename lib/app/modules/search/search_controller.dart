@@ -103,7 +103,7 @@ class SearchController extends GetxController {
     if (res)
       CustomSnackbar.snackbar("Ce livre à été ajouté a votre bibliothèque");
     else
-      CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
+      CustomSnackbar.snackbar("Erreur du serveur...");
     update();
   }
 

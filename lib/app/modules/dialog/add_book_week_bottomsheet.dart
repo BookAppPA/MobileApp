@@ -110,7 +110,7 @@ class _AddBookWeekBottomSheetState extends State<AddBookWeekBottomSheet> {
                 ),
                 ButtonArround(
                   onTap: () {
-                    if (_bioController.text.trim().length > 0) {
+                    if (_bioController.text.trim().length >= 3) {
                       widget.onConfirm(_bioController.text.trim());
                       Get.back();
                     } else {

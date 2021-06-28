@@ -125,11 +125,12 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                               Text("Note Moyenne"),
                               SizedBox(width: 20),
                               RatingBar.builder(
-                                initialRating: _.book.note.toDouble(),
-                                minRating: 1,
+                                initialRating: _.book.note,
+                                minRating: 0,
                                 direction: Axis.horizontal,
                                 itemCount: 5,
                                 itemSize: 20,
+                                allowHalfRating: true,
                                 ignoreGestures: true,
                                 itemBuilder: (context, _) => Icon(
                                   Icons.star,

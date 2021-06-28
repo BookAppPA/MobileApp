@@ -140,3 +140,14 @@ Le n° SIREN doit contenir 9 caractères. Le n° SIRET 14 caractères
 Le n° SIREN ou SIRET doit contenir uniquement des chiffres
 Erreur du serveur... Réessayer plus tard
 Le n° SIREN ou SIRET ne correspond pas à une entreprise de Commerce de détail de livres en magasin spécialisé
+Ajouter un avis
+Modifier votre avis
+Ajouter un titre
+Ajouter
+Ne pas envoyer
+Le titre doit contenir au moins 3 caractères
+La description doit contenir au moins 3 caractères
+Ajouter le livre sans avis
+Confirmer l'ajout du livre à votre bibliothèque sans y laisser un avis ?
+Avis modifié
+Avis supprimé

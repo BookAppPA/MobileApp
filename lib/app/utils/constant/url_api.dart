@@ -1,9 +1,6 @@
 import 'package:get/get.dart';
 
 abstract class UrlAPI {
-  // FIREBASE FUNCTION API
-  static final String readBookID =
-      'https://europe-west3-book-app-7f51e.cloudfunctions.net/app/api/readBookID/';
 
   //TODO: SI EXECUTION EMULATEUR ANDROID + API en localhost => mettre 10.0.2.2
   // + supprimer plus tard android:usesCleartextTraffic="true" dans Manifest
@@ -17,91 +14,100 @@ abstract class UrlAPI {
   // Dans Info.plist
 
   static final String dateServer =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/dateServer";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/dateServer";
 
   static final String login =
-      // 'https://europe-west3-bombr-9f62f.cloudfunctions.net/dateServer';
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/login";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/login";
+     // "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/login";
 
   static final String signup =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/signup";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/signup";
 
   static final String checkSiret =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/checkSiret";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/checkSiret";
 
   static final String checkSiren =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/checkSiren";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/checkSiren";
 
   static final String signupBookSeller =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/signupBookSeller";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/signupBookSeller";
 
   static final String logout =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/logout";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/logout";
 
   static final String getUserById =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getUserById";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/getUserById";
 
   static final String updateUser =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/updateUser";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/updateUser";
 
   static final String popularBooks =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/popularBooks";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/book/popularBooks";
 
   static final String userListBooks =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/userListBooks";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/book/userListBooks";
 
   static final String addBookToGallery =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/addBookToGallery";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/addBookToGallery";
 
   static final String addBookWeek =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/addBookWeek";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/bookseller/addBookWeek";
 
   static final String deleteBookFromGallery =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/deleteBookFromGallery";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/deleteBookFromGallery";
 
   static final String bookDetail =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/bookDetail";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/book/bookDetail";
 
   static final String searchBook =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/searchBook";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchBook";
 
   static final String searchBooksByAuthor =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/searchBooksByAuthor";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchBooksByAuthor";
 
   static final String searchUsers =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/searchUsers";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchUsers";
 
   static final String ratingByBook =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/ratingByBook";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/ratingByBook";
 
   static final String userListRatings =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/userListRatings";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/userListRatings";
 
   static final String getInitListBookSeller =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getInitListBookSeller";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/bookseller/getInitListBookSeller";
 
   static final String getBookSellerById =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getBookSellerById";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/bookseller/getBookSellerById";
 
   static final String searchBookSeller =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/searchBookSeller";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchBookSeller";
 
   static final String getListBooksWeek =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getListBooksWeek";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/bookseller/getListBooksWeek";
 
   static final String followUser =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/followUser";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/followUser";
 
   static final String getListFollowers =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getListFollowers";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/getListFollowers";
 
   static final String getListFollowing =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/getListFollowing";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/getListFollowing";
 
   static final String unFollowUser =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/unFollowUser";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/unFollowUser";
 
   static final String isFollow =
-      "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/bdd/isFollow";
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/isFollow";
+
+  static final String addRating = 
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/addRating";
+
+  static final String modifyRating =
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/modifyRating";
+
+  static final String deleteRating = 
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/deleteRating";
       
 }

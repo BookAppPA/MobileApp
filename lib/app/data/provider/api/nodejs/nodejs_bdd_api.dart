@@ -233,13 +233,13 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<bool> addBookToGallery(String idUser, Book book) async {
+  Future<bool> addBookToGallery(String idUser, Book book, int nbBooks) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.post(Uri.parse(UrlAPI.addBookToGallery),
           headers: {"authorization": "Bearer $token", "uid": idUser},
-          body: {"bookid": book.id});
+          body: {"bookid": book.id, "nbBook": nbBooks.toString()});
       if (resp.statusCode == 200) {
         return true;
       } else {
@@ -271,14 +271,105 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<bool> deleteBookFromGallery(String idUser, Book book) async {
+  Future<bool> addRating(
+      UserModel user, Book book, String title, String desc, double note) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http
+          .post(Uri.parse(UrlAPI.addRating + "/${book.id}"), headers: {
+        "authorization": "Bearer $token",
+        "uid": user.id,
+      }, body: {
+        "user_nbRatings": user.nbRatings.toString(),
+        "rating": json.encode({
+          "book_author": book.authors != null ? book.authors.first : "",
+          "book_id": book.id,
+          "book_pic": book.coverImage,
+          "book_published": book.publishedDate,
+          "book_title": book.title,
+          "message": desc,
+          "note": note,
+          "title": title,
+          "user_id": user.id,
+          "user_pic": user.picture,
+          "username": user.pseudo,
+        })
+      });
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http addRating --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> updateRating(String userId, String bookId, double previousNote,
+      String title, String desc, double note) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp =
+          await http.put(Uri.parse(UrlAPI.modifyRating + "/$bookId"), headers: {
+        "authorization": "Bearer $token",
+        "uid": userId
+      }, body: {
+        "previous_note": previousNote.toString(),
+        "rating": json.encode({
+          "title": title,
+          "message": desc,
+          "note": note,
+        })
+      });
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http updateRating --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> deleteRating(
+      String userId, String bookId, int nbRating, double note) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http
+          .post(Uri.parse(UrlAPI.deleteRating + "/$bookId"), headers: {
+        "authorization": "Bearer $token",
+        "uid": userId
+      }, body: {
+        "user_nbRatings": nbRating.toString(),
+        "note": note.toString()
+      });
+      if (resp.statusCode == 200) {
+        return true;
+      } else {
+        print("error get http deleteRating --> ${resp.body}");
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> deleteBookFromGallery(String idUser, Book book, int nbBooks) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.post(
           Uri.parse(UrlAPI.deleteBookFromGallery),
           headers: {"authorization": "Bearer $token", "uid": idUser},
-          body: {"bookid": book.id});
+          body: {"bookid": book.id, "nbBook": nbBooks.toString()});
       if (resp.statusCode == 200) {
         return true;
       } else {
@@ -383,19 +474,20 @@ class NodeJSBddAPI {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
-      http.Response resp =
-          await http.post(Uri.parse(UrlAPI.followUser + "/${userToFollow.id}"),
-              headers: {"authorization": "Bearer $token", "uid": user.id},
-              body: {
-                "userSrc": json.encode({
-                  "id": user.id,
-                  "pseudo": user.pseudo,
-                  "picture": user.picture,
-                }),
-                "userDest": json.encode(userToFollow.toJson()),
-                "nbFollowers": (userToFollow.nbFollowers + 1).toString(),
-                "nbFollowing": (user.nbFollowing + 1).toString()
-              });
+      http.Response resp = await http
+          .post(Uri.parse(UrlAPI.followUser + "/${userToFollow.id}"), headers: {
+        "authorization": "Bearer $token",
+        "uid": user.id
+      }, body: {
+        "userSrc": json.encode({
+          "id": user.id,
+          "pseudo": user.pseudo,
+          "picture": user.picture,
+        }),
+        "userDest": json.encode(userToFollow.toJson()),
+        "nbFollowers": (userToFollow.nbFollowers + 1).toString(),
+        "nbFollowing": (user.nbFollowing + 1).toString()
+      });
       if (resp.statusCode == 200) {
         return true;
       } else {

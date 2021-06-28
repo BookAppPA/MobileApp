@@ -26,7 +26,8 @@ class BookDetailBinding extends Bindings {
   @override
   void dependencies() {
     final Book book = Get.arguments as Book;
-    eventAnalytics(book);
+    if (book != null)
+      eventAnalytics(book);
     Get.delete<BookDetailController>();
     if (book.title != null)
       Get.create(() => BookDetailController(repository: BookRepository(), book: book), permanent: false);

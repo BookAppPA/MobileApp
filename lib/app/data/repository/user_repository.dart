@@ -40,16 +40,28 @@ class UserRepository {
     return await _databaseAPI.getLastRatings(idUser, listBooks);
   }
 
-  addBookToGallery(String idUser, Book book) async {
-    return await _databaseAPI.addBookToGallery(idUser, book);
+  addBookToGallery(String idUser, Book book, int nbBooks) async {
+    return await _databaseAPI.addBookToGallery(idUser, book, nbBooks);
   }
 
   addBookWeek(String idUser, BookWeek bookWeek) async {
     return await _databaseAPI.addBookWeek(idUser, bookWeek);
   }
 
-  deleteBookFromGallery(String idUser, Book book) async {
-    return await _databaseAPI.deleteBookFromGallery(idUser, book);
+  addRating(UserModel user, Book book, String titleRating, String descRating, double noteRating) async {
+    return await _databaseAPI.addRating(user, book, titleRating, descRating, noteRating);
+  }
+
+  updateRating(String userId, String bookId, double previousNote, String title, String desc, double note) async {
+    return await _databaseAPI.updateRating(userId, bookId, previousNote, title, desc, note);
+  }
+
+  deleteRating(String userId, String bookId, int nbRatings, double note) async {
+    return await _databaseAPI.deleteRating(userId, bookId, nbRatings, note);
+  }
+
+  deleteBookFromGallery(String idUser, Book book, int nbBooks) async {
+    return await _databaseAPI.deleteBookFromGallery(idUser, book, nbBooks);
   }
 
   followUser(UserModel user, Following userToFollow) async {

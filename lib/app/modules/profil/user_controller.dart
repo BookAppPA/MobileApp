@@ -5,6 +5,8 @@ import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
+import 'package:book_app/app/modules/dialog/add_rating_bottomsheet.dart';
+import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:get/get.dart';
@@ -149,10 +151,60 @@ class UserController extends GetxController {
     if (user.listBooksRead
             .firstWhere((item) => item.id == book.id, orElse: () => null) !=
         null) return false;
-    var res = await repository.addBookToGallery(_user.id, book);
+    var titleRating = "";
+    var descRating = "";
+    var noteRating = 0.0;
+    await Get.bottomSheet(
+        AddRatingBottomSheet(
+            title: "Ajouter un avis",
+            onConfirm: (title, desc, note) {
+              titleRating = title;
+              descRating = desc;
+              noteRating = note;
+            },
+            onCancel: () =>
+                BasicDialog.showConfirmAddBookWithoutRating(onConfirm: () {
+                  print("add without avis");
+                  Get.back();
+                })),
+        isDismissible: false,
+        enableDrag: false);
+    if (titleRating != "") {
+      print("rating: $titleRating, $descRating, $noteRating");
+      var resAddRating = await repository.addRating(
+          _user, book, titleRating, descRating, noteRating);
+      if (resAddRating) {
+        var res =
+            await repository.addBookToGallery(_user.id, book, _user.nbBooks);
+        print("res add book --> $res");
+        if (res) {
+          _user.listBooksRead.insert(0, book);
+          _user.listLastRatings.add(Rating(
+            bookAuthor: book.authors != null ? book.authors.first : "",
+            bookId: book.id,
+            bookImage: book.coverImage,
+            bookPublished: book.publishedDate,
+            bookTitle: book.title,
+            message: descRating,
+            note: noteRating,
+            timestamp: DateTime.now(),
+            title: titleRating,
+            userId: _user.id,
+            userImage: _user.picture,
+            userName: _user.pseudo,
+          ));
+          _user.nbBooks++;
+          update();
+        }
+        return res;
+      } else
+        return false;
+    }
+    var res = await repository.addBookToGallery(_user.id, book, _user.nbBooks);
     print("res add book --> $res");
     if (res) {
       _user.listBooksRead.insert(0, book);
+      _user.nbBooks++;
       update();
     }
     return res;
@@ -162,18 +214,72 @@ class UserController extends GetxController {
     if (user.listBooksRead
             .firstWhere((item) => item.id == book.id, orElse: () => null) ==
         null) return false;
-    var res = await repository.deleteBookFromGallery(_user.id, book);
+    var res =
+        await repository.deleteBookFromGallery(_user.id, book, _user.nbBooks);
     print("res add book --> $res");
     if (res) {
       var index = _user.listBooksRead.indexWhere((item) => item.id == book.id);
       if (index != -1) {
         _user.listBooksRead.removeAt(index);
+        _user.nbBooks--;
         update();
         return true;
       }
       return false;
     }
     return res;
+  }
+
+  updateRating(Rating rating) async {
+    var titleRating;
+    var descRating;
+    var noteRating;
+    await Get.bottomSheet(
+        AddRatingBottomSheet(
+          title: "Modifier votre avis",
+          onConfirm: (title, desc, note) {
+            titleRating = title;
+            descRating = desc;
+            noteRating = note;
+          },
+          onCancel: () => Get.back(),
+        ),
+        isDismissible: false,
+        enableDrag: false);
+
+    var title = titleRating ?? rating.title;
+    var desc = descRating ?? rating.message;
+    var note = noteRating ?? rating.note;
+
+    var res = await repository.updateRating(
+        _user.id, rating.bookId, rating.note, title, desc, note);
+    if (res) {
+      var index = _user.listLastRatings
+          .indexWhere((item) => item.bookId == rating.bookId);
+      if (index != -1) {
+        _user.listLastRatings[index].title = title;
+        _user.listLastRatings[index].message = desc;
+        _user.listLastRatings[index].note = note;
+        update();
+        CustomSnackbar.snackbar("Avis modifié");
+      }
+    }
+  }
+
+  deleteRating(Rating rating) async {
+    var res = await repository.deleteRating(
+        _user.id, rating.bookId, _user.nbRatings, rating.note);
+    if (res) {
+      var index = _user.listLastRatings
+          .indexWhere((item) => item.bookId == rating.bookId);
+      if (index != -1) {
+        _user.listLastRatings.removeAt(index);
+        _user.nbRatings--;
+        update();
+        CustomSnackbar.snackbar("Avis supprimé");
+      }
+    } else
+      CustomSnackbar.snackbar("Erreur du serveur...");
   }
 
   followUser(Following userToFollow) async {

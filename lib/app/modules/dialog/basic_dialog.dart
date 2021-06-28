@@ -46,7 +46,9 @@ abstract class BasicDialog {
     Get.defaultDialog(
       title: "Livre fini",
       content: Text(
-          "Veux-tu ajouter ce livre à ta bibliothèque et y laisser un avis ?"),
+        "Veux-tu ajouter ce livre à ta bibliothèque et y laisser un avis ?",
+        textAlign: TextAlign.center,
+      ),
       textCancel: "Non",
       onCancel: () => null,
       textConfirm: "Oui",
@@ -55,17 +57,41 @@ abstract class BasicDialog {
       cancelTextColor: Colors.black,
       onConfirm: onConfirm != null
           ? () {
-              onConfirm();
+              Future.delayed(Duration(milliseconds: 300), () => onConfirm());
               Get.back();
             }
           : () => null,
     );
   }
 
+  static showConfirmAddBookWithoutRating({@required VoidCallback onConfirm}) {
+    assert(onConfirm != null);
+    Get.defaultDialog(
+      title: "Ajouter le livre sans avis",
+      content: Text(
+        "Confirmer l'ajout du livre à votre bibliothèque sans y laisser un avis ?",
+        textAlign: TextAlign.center,
+      ),
+      textCancel: "Non",
+      onCancel: () => null,
+      textConfirm: "Oui",
+      buttonColor: ConstantColor.accent,
+      confirmTextColor: Colors.black,
+      cancelTextColor: Colors.black,
+      onConfirm: () {
+        Future.delayed(Duration(milliseconds: 300), () => onConfirm());
+        Navigator.of(Get.overlayContext).pop();
+      },
+    );
+  }
+
   static showConfirmDeleteBookDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
       title: "Supprimer le livre",
-      content: Text("Veux-tu supprimer définitivement ce livre et ton avis ?"),
+      content: Text(
+        "Veux-tu supprimer définitivement ce livre et ton avis ?",
+        textAlign: TextAlign.center,
+      ),
       textCancel: "Non",
       onCancel: () => null,
       textConfirm: "Oui",

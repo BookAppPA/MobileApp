@@ -12,7 +12,16 @@ import 'description_text.dart';
 
 class RatingItem extends StatelessWidget {
   final Rating rating;
-  RatingItem(this.rating) : assert(rating != null);
+  RatingItem(this.rating) {
+    assert(rating != null);
+    isMyRating = UserController.to.isBookSeller
+        ? false
+        : UserController.to.user.id == rating.userId
+            ? true
+            : false;
+  }
+
+  bool isMyRating;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +38,11 @@ class RatingItem extends StatelessWidget {
             GestureDetector(
               onTap: () => rating.userId != null
                   ? Get.toNamed(Routes.PROFIL,
-                      arguments: UserController.to.isBookSeller ? UserModel(id: rating.userId) : rating.userId == UserController.to.user.id
-                          ? UserController.to.user
-                          : UserModel(id: rating.userId))
+                      arguments: UserController.to.isBookSeller
+                          ? UserModel(id: rating.userId)
+                          : rating.userId == UserController.to.user.id
+                              ? UserController.to.user
+                              : UserModel(id: rating.userId))
                   : null,
               child: Container(
                 color: Colors.transparent,
@@ -58,6 +69,23 @@ class RatingItem extends StatelessWidget {
                         ),
                       ),
                     ),
+                    isMyRating
+                        ? Row(
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () =>
+                                    UserController.to.updateRating(rating),
+                                child: Icon(Icons.edit),
+                              ),
+                              SizedBox(width: 10),
+                              GestureDetector(
+                                onTap: () =>
+                                    UserController.to.deleteRating(rating),
+                                child: Icon(Icons.close),
+                              ),
+                            ],
+                          )
+                        : Container()
                   ],
                 ),
               ),
@@ -101,11 +129,12 @@ class RatingItem extends StatelessWidget {
             Row(
               children: [
                 RatingBar.builder(
-                  initialRating: rating.note.toDouble(),
-                  minRating: 1,
+                  initialRating: rating.note,
+                  minRating: 0,
                   direction: Axis.horizontal,
                   itemCount: 5,
                   itemSize: 20,
+                  allowHalfRating: true,
                   ignoreGestures: true,
                   itemBuilder: (context, _) => Icon(
                     Icons.star,

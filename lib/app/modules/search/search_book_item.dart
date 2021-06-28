@@ -77,7 +77,9 @@ class SearchBookItem extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "${book.authors.first}  •  ${stringToDate(book.publishedDate, 'yyyy').year}",
+                      book.authors != null
+                          ? "${book.authors.first}  •  ${stringToDate(book.publishedDate, 'yyyy').year}"
+                          : "${stringToDate(book.publishedDate, 'yyyy').year}",
                       style: TextStyle(
                         fontFamily: 'SF Pro Text',
                         fontSize: 14,
@@ -96,9 +98,9 @@ class SearchBookItem extends StatelessWidget {
                                           orElse: () => null) !=
                                   null;
                             else
-                              haveAlreadyBook = _.user.listBooksRead
-                                      .firstWhere((item) => item.id == book.id,
-                                          orElse: () => null) !=
+                              haveAlreadyBook = _.user.listBooksRead.firstWhere(
+                                      (item) => item.id == book.id,
+                                      orElse: () => null) !=
                                   null;
                             return GestureDetector(
                               child: Icon(haveAlreadyBook

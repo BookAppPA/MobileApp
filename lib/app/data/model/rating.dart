@@ -1,7 +1,7 @@
 class Rating {
 
   String bookId, title, message, bookTitle, bookImage, bookAuthor, bookPublished, userId, userImage, userName;
-  int note;
+  double note;
   DateTime timestamp;
 
 
@@ -28,7 +28,7 @@ class Rating {
       this.bookPublished = json['book_published'];
       this.title = json['title'];
       this.message = json['message'];
-      this.note = json['note'];
+      this.note = json['note'].toDouble();
       this.timestamp = DateTime.fromMillisecondsSinceEpoch(json["timestamp"]["_seconds"] * 1000);
       this.userId = json["user_id"];
       this.userImage = json["user_pic"];

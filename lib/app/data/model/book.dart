@@ -2,7 +2,8 @@ class Book {
 
   String id, title, description, publisher, publishedDate, coverImage, language, previewLink, buyLink;
   List authors, categories;
-  int pageCount, note, nbRating;
+  int pageCount, nbRating;
+  double note;
   Map<String, dynamic> listPrice, retailPrice;
 
   Book({
@@ -24,7 +25,7 @@ class Book {
     this.nbRating: 0,
   });
 
-  setNote(int note) => this.note = note;
+  setNote(double note) => this.note = note;
   setNbRatings(int nb) => this.nbRating = nb;
 
   Book.fromJson(Map<String, dynamic> json){

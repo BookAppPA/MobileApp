@@ -19,7 +19,7 @@ class BookDetailController extends GetxController {
   final String bookId;
   List<Rating> listRatings = [];
   int _nbRatings = 0;
-  int _note = 0;
+  double _note = 0.0;
 
   String errorMessage = "";
   bool loadData = true;
@@ -79,7 +79,7 @@ class BookDetailController extends GetxController {
             null;
       Map<String, dynamic> map =
           await repository.getRatingsByBook(bookId ?? book.id);
-      _note = map["note"] ?? 0;
+      _note = map["note"].toDouble() ?? 0.0;
       _nbRatings = map["nbRatings"] ?? 0;
       if (book != null && book.id != null) {
         book.setNote(_note);
@@ -138,9 +138,9 @@ class BookDetailController extends GetxController {
     if (res)
       CustomSnackbar.snackbar("Ce livre à été ajouté a votre bibliothèque");
     else
-      CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
-    haveAlreadyBook = true;
-    update();
+      CustomSnackbar.snackbar("Erreur du serveur...");
+    //haveAlreadyBook = true;
+   // update();
   }
 
   _deleteBookFromGallery() async {
