@@ -6,7 +6,6 @@ import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
-import 'package:book_app/app/utils/constant/constant.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -117,11 +116,8 @@ class AuthController extends GetxController {
     var _email = email.trim();
     var _index = _email.indexOf("@");
     var _valid = false;
-    if (_index != -1) {
-      var _domain = _email.substring(_index);
+    if (_index != -1)
       _valid = checkIsEmailFormat(_email);
-      _valid = _valid && checkIsDomainEmailInclude(_domain);
-    }
     _isEmailValid = _valid;
     return _valid;
   }

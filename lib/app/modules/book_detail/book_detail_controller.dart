@@ -79,7 +79,7 @@ class BookDetailController extends GetxController {
             null;
       Map<String, dynamic> map =
           await repository.getRatingsByBook(bookId ?? book.id);
-      _note = map["note"].toDouble() ?? 0.0;
+      _note = map["note"] != null ? map["note"].toDouble() : 0.0;
       _nbRatings = map["nbRatings"] ?? 0;
       if (book != null && book.id != null) {
         book.setNote(_note);

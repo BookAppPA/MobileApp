@@ -44,10 +44,6 @@ bool checkIsEmailFormat(String email) {
   return Constant.regexEmail.hasMatch(email);
 }
 
-bool checkIsDomainEmailInclude(String domain) {
-  return Constant.domainEmailInclude.contains(domain);
-}
-
 String splitAddress(String address) {
   var list = address.split(" ");
   int index = list.indexWhere((item) {

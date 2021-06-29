@@ -1,5 +1,4 @@
 import 'package:book_app/app/data/model/book.dart';
-import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/user.dart';

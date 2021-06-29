@@ -58,8 +58,6 @@ class NodeJSBddAPI {
 
   Future<List<Book>> getPopularBooks() async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.popularBooks));
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);

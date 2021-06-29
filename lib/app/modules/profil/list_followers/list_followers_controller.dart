@@ -1,4 +1,3 @@
-import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:flutter/material.dart';

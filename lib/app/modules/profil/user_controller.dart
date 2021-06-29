@@ -220,6 +220,11 @@ class UserController extends GetxController {
     if (res) {
       var index = _user.listBooksRead.indexWhere((item) => item.id == book.id);
       if (index != -1) {
+        var book = _user.listBooksRead[index];
+        var ratingIndex = _user.listLastRatings.indexWhere((item) => item.bookId == book.id);
+        if (ratingIndex != -1) {
+          _user.listLastRatings.removeAt(ratingIndex);
+        }
         _user.listBooksRead.removeAt(index);
         _user.nbBooks--;
         update();

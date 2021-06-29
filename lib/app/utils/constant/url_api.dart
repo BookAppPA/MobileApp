@@ -1,24 +1,10 @@
-import 'package:get/get.dart';
-
 abstract class UrlAPI {
-
-  //TODO: SI EXECUTION EMULATEUR ANDROID + API en localhost => mettre 10.0.2.2
-  // + supprimer plus tard android:usesCleartextTraffic="true" dans Manifest
-  /* + 
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-  */
-  // Dans Info.plist
-
   static final String dateServer =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/dateServer";
 
   static final String login =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/login";
-     // "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/login";
+  // "http://${GetPlatform.isAndroid ? "10.0.2.2" : "localhost"}:5001/book-app-7f51e/us-central1/app/api/auth/login";
 
   static final String signup =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/auth/signup";
@@ -101,13 +87,12 @@ abstract class UrlAPI {
   static final String isFollow =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/user/isFollow";
 
-  static final String addRating = 
+  static final String addRating =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/addRating";
 
   static final String modifyRating =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/modifyRating";
 
-  static final String deleteRating = 
+  static final String deleteRating =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/deleteRating";
-      
 }

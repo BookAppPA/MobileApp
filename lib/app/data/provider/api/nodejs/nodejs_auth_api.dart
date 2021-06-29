@@ -128,13 +128,8 @@ class NodeJSAuthAPI {
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.post(Uri.parse(UrlAPI.logout),
           headers: {"authorization": "Bearer $token"});
-      if (resp.statusCode == 200) {
-        FirebaseAuth.instance.signOut();
-        return true;
-      } else {
-        print("error get http call");
-        return false;
-      }
+      await FirebaseAuth.instance.signOut();
+      return true;
     } catch (e) {
       print(e.toString());
       return false;
