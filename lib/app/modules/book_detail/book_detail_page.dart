@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 class BookDetailPage extends GetWidget<BookDetailController> {
   @override
   Widget build(BuildContext context) {
+    print("category ${BookDetailController.to.book.categories}");
     return Scaffold(
       appBar: BackButtonAppBar(),
       body: GetBuilder<BookDetailController>(
@@ -119,6 +120,33 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                   ),
                                 )
                               : Container(),
+                          SizedBox(height: 25),
+                          _.book.categories != null
+                              ? Row(
+                                  // children: _.book.categories
+                                  //     .map((category) => Chip(label: Text(category)))
+                                  //     .toList(),
+                                  children: _.book.categories.map((category) {
+                                    print('category $category');
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20, right: 10, bottom: 10),
+                                      child: GestureDetector(
+                                          onTap: () => print('clic'),
+                                          child: Chip(label: Text(category))),
+                                    );
+                                  }).toList(),
+                                )
+                              : Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20, bottom: 10),
+                                      child:
+                                          Chip(label: Text("Aucune catégorie")),
+                                    ),
+                                  ],
+                                ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[

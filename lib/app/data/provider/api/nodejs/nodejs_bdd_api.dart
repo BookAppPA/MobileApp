@@ -99,7 +99,7 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBook),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -119,8 +119,9 @@ class NodeJSBddAPI {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
+      print('URI ENCODE ${Uri.encodeComponent(search)}');
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByAuthor),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -141,7 +142,7 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchUsers),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listUsers = json.decode(resp.body);
         List<UserModel> users = [];
@@ -429,7 +430,7 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBookSeller),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listBookseller = json.decode(resp.body);
         List<BookSeller> booksellers = [];

@@ -142,6 +142,7 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                         onPressed: () => widget.onCancel(),
                         child: Text(
                           "Ne pas envoyer",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'SF Pro Display',
                             fontSize: 16,
