@@ -2,6 +2,7 @@ import 'package:book_app/app/modules/book_detail/book_detail_controller.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
+import 'package:book_app/app/modules/widgets_global/chip_category.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/rating_item.dart';
 import 'package:book_app/app/routes/app_pages.dart';
@@ -121,32 +122,10 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                 )
                               : Container(),
                           SizedBox(height: 25),
-                          _.book.categories != null
-                              ? Row(
-                                  // children: _.book.categories
-                                  //     .map((category) => Chip(label: Text(category)))
-                                  //     .toList(),
-                                  children: _.book.categories.map((category) {
-                                    print('category $category');
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 20, right: 10, bottom: 10),
-                                      child: GestureDetector(
-                                          onTap: () => print('clic'),
-                                          child: Chip(label: Text(category))),
-                                    );
-                                  }).toList(),
-                                )
-                              : Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, bottom: 10),
-                                      child:
-                                          Chip(label: Text("Aucune catégorie")),
-                                    ),
-                                  ],
-                                ),
+                          ChipCategories(
+                            listCategories: _.book.categories,
+                            onSelected: () => print('select'),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[

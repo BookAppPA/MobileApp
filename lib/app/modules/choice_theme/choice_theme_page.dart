@@ -1,13 +1,17 @@
+import 'package:book_app/app/modules/choice_theme/choice_theme_controller.dart';
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
 import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/utils/constant/constant.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'widgets/theme_item.dart';
 
 class ChoiceThemePage extends StatelessWidget {
+  final controller = Get.put(ChoiceThemeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +46,16 @@ class ChoiceThemePage extends StatelessWidget {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     mainAxisSpacing: 30,
-                    crossAxisSpacing: 20,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 0.8
                   ),
-                  itemCount: 10,
+                  itemCount: Constant.categoryTitle.length,
                   itemBuilder: (context, index) {
                     return ThemeItem(
-                      onSelected: () => print("on selected"),
-                      onUnSelected: () => print("on unselected"),
+                      onSelected: () => controller.selectCategories(Constant.categoryTitle[index]),
+                      onUnSelected: () => controller.deselectCategories(Constant.categoryTitle[index]),
+                      categoryTitle: Constant.categoryTitle[index],
+                      imageCategory: ConstantImage.logo,
                     );
                   },
                 ),
@@ -57,11 +64,15 @@ class ChoiceThemePage extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 22),
-                child: ButtonArround(
-                  onTap: () => Get.toNamed(Routes.SQUELETON),
-                  width: Get.width,
-                  borderRadius: 10,
-                  text: "Terminer",
+                child: GetBuilder<ChoiceThemeController>(
+                  builder: (_) => 
+                  ButtonArround(
+                    onTap: () => _.finishSelectChoice(),
+                    width: Get.width,
+                    borderRadius: 10,
+                    text: "Terminer",
+                    colorBackground: _.isBlock ? Colors.grey : ConstantColor.accent,
+                  ),
                 ),
               ),
             ),
