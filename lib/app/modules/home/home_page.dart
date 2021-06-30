@@ -1,5 +1,4 @@
 import 'package:book_app/app/data/model/book.dart';
-import 'package:book_app/app/data/model/lastBookWeek.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/home/home_controller.dart';
@@ -119,29 +118,31 @@ class HomePage extends StatelessWidget {
                   //color: Colors.red,
                   child: Column(
                 children: <Widget>[
-                  Row(
-                    children: List.generate(
-                      3,
-                      (index) => Expanded(
-                        child: BookItem(
+                  Container(
+                    height: 180,
+                    child: ListView.separated(
+                        itemCount: _.hasDataPopularBooks ? _.listPopularBooks.length > 3 ? 3 : _.listPopularBooks.length : 3,
+                        itemBuilder: (ctx, index) => BookItem(
                           book: _.hasDataPopularBooks
                               ? _.listPopularBooks[index]
                               : Book(),
                         ),
-                      ),
+                        separatorBuilder: (ctx, index) => SizedBox(width: 20),
+                        scrollDirection: Axis.horizontal,
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: List.generate(
-                      3,
-                      (index) => Expanded(
-                        child: BookItem(
+                  SizedBox(height: 10),
+                  Container(
+                    height: 180,
+                    child: ListView.separated(
+                        itemCount: _.hasDataPopularBooks ? _.listPopularBooks.length > 3 ? _.listPopularBooks.length - 3 : 6 : 6,
+                        itemBuilder: (ctx, index) => BookItem(
                           book: _.hasDataPopularBooks
                               ? _.listPopularBooks[index + 3]
                               : Book(),
                         ),
-                      ),
+                        separatorBuilder: (ctx, index) => SizedBox(width: 20),
+                        scrollDirection: Axis.horizontal,
                     ),
                   ),
                 ],
