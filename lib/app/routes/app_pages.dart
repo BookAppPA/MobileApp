@@ -3,6 +3,7 @@ import 'package:book_app/app/bindings/book_detail_binding.dart';
 import 'package:book_app/app/bindings/edit_profil_binding.dart';
 import 'package:book_app/app/bindings/list_followers_binding.dart';
 import 'package:book_app/app/bindings/search_binding.dart';
+import 'package:book_app/app/bindings/search_categories_binding.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/data/repository/auth_repository.dart';
@@ -19,6 +20,7 @@ import 'package:book_app/app/modules/profil/edit_profil/edit_profil_page.dart';
 import 'package:book_app/app/modules/profil/list_followers/list_followers_page.dart';
 import 'package:book_app/app/modules/profil/profil_controller.dart';
 import 'package:book_app/app/modules/profil/profil_page.dart';
+import 'package:book_app/app/modules/search/searchCategories/search_categories_page.dart';
 import 'package:book_app/app/modules/search/search_page.dart';
 import 'package:book_app/app/modules/settings/settings_page.dart';
 import 'package:book_app/app/modules/splashscreen/splashscreen_page.dart';
@@ -80,6 +82,10 @@ class AppPages {
         name: Routes.SEARCH,
         page: () => SearchPage(),
         binding: SearchBinding()),
+    GetPage(
+        name: Routes.SEARCH_CATEGORIES,
+        page: () => SearchCategoriesPage(),
+        binding: SearchCategoriesBinding()),
     GetPage(
       name: Routes.BOOKSELLER_DETAIL,
       page: () {

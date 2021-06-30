@@ -51,6 +51,9 @@ abstract class UrlAPI {
   static final String searchBooksByAuthor =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchBooksByAuthor";
 
+  static final String searchBooksByCategories =
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchBooksByCategories";
+
   static final String searchUsers =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchUsers";
 

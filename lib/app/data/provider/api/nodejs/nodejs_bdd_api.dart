@@ -116,6 +116,28 @@ class NodeJSBddAPI {
     }
   }
 
+  Future<List<Book>> searchBooksByCategories(String search) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      print('URI ENCODE ${Uri.encodeComponent(search)}');
+      http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByCategories),
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
+      if (resp.statusCode == 200) {
+        var listBooks = json.decode(resp.body);
+        List<Book> books = [];
+        listBooks.forEach((book) => books.add(Book.fromJson(book)));
+        return books;
+      } else {
+        print("error get http searchBooksByCategories --> ${resp.body}");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future<List<Book>> searchBooksByAuthor(String search) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();

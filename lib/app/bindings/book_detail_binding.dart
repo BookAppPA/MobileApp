@@ -6,13 +6,14 @@ import 'package:get/get.dart';
 
 class BookDetailBinding extends Bindings {
 
-  void eventAnalytics(book) async {
+  void eventAnalytics(Book book) async {
     print('avant');
     await UserController.analytics.logViewItem(
       itemId: book.id,
       itemName: book.title,
-      itemCategory: book.authors != null ? book.authors.first : '',
       itemLocationId: UserController.to.user.id,
+      itemCategory: book.categories != null ? book.categories.first : '',
+      origin: book.authors != null ? book.authors.first : '',
     );
     print('apres');
   }

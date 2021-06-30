@@ -20,7 +20,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
       appBar: BackButtonAppBar(),
       body: GetBuilder<BookDetailController>(
         builder: (_) => _.loadData && _.errorMessage == ""
-            ? CustomCircularProgress(color: ConstantColor.accent, radius: 20)
+            ? Center(child: CustomCircularProgress(color: ConstantColor.accent, radius: 20))
             : _.loadData && _.errorMessage != ""
                 ? Center(child: Text(_.errorMessage))
                 : SingleChildScrollView(

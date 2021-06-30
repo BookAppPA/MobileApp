@@ -1,3 +1,4 @@
+import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,7 @@ class ChipCategories extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.only(left: 1, right: 2, bottom: 1.0),
               child: GestureDetector(
-                  onTap: () => onSelected(),
+                  onTap: () => Get.toNamed(Routes.SEARCH_CATEGORIES, arguments: category),
                   child: Chip(
                       label: Text(
                     category,

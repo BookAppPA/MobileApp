@@ -13,7 +13,8 @@ class BookDetailController extends GetxController {
 
   final BookRepository repository;
   final String bio;
-  BookDetailController({@required this.repository, this.book, this.bookId, this.bio})
+  BookDetailController(
+      {@required this.repository, this.book, this.bookId, this.bio})
       : assert(repository != null);
 
   Book book;
@@ -59,8 +60,9 @@ class BookDetailController extends GetxController {
       await UserController.analytics.logViewItem(
         itemId: book.id,
         itemName: book.title,
-        itemCategory: book.authors != null ? book.authors.first : '',
         itemLocationId: UserController.to.user.id,
+        itemCategory: book.categories != null ? book.categories.first : '',
+        origin: book.authors != null ? book.authors.first : '',
       );
     } else
       _errorLoad();
