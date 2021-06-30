@@ -1,3 +1,4 @@
+import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,19 +20,19 @@ class ChipCategories extends StatelessWidget {
     return Container(
       width: Get.width,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0,),
         child: Wrap(
           children: listCategories.map((category) {
             print('category $category');
             return Padding(
-              padding: EdgeInsets.only(left: 1, right: 2),
+              padding: EdgeInsets.only(left: 1, right: 2, bottom: 1.0),
               child: GestureDetector(
                   onTap: () => onSelected(),
                   child: Chip(
                       label: Text(
                     category,
-                    style: TextStyle(fontSize: 13),
-                  ))),
+                    style: TextStyle(fontSize: 13, color: ConstantColor.background),
+                  ), backgroundColor: ConstantColor.accent,)),
             );
           }).toList(),
         ),

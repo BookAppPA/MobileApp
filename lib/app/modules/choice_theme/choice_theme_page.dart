@@ -55,7 +55,7 @@ class ChoiceThemePage extends StatelessWidget {
                       onSelected: () => controller.selectCategories(Constant.categoryTitle[index]),
                       onUnSelected: () => controller.deselectCategories(Constant.categoryTitle[index]),
                       categoryTitle: Constant.categoryTitle[index],
-                      imageCategory: ConstantImage.logo,
+                      imageCategory: ConstantImage.listCategoriesPhotos[index],
                     );
                   },
                 ),

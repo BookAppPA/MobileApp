@@ -33,7 +33,7 @@ class SearchUserItem extends StatelessWidget {
         width: Get.width,
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: ConstantColor.greyWhite,
+            color: ConstantColor.accent,
             borderRadius: BorderRadius.circular(5)),
         child: Row(
           children: <Widget>[

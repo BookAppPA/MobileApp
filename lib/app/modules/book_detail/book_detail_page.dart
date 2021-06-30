@@ -121,7 +121,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                   ),
                                 )
                               : Container(),
-                          SizedBox(height: 25),
+                          SizedBox(height: 5),
                           ChipCategories(
                             listCategories: _.book.categories,
                             onSelected: () => print('select'),
@@ -129,22 +129,8 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text("Note Moyenne"),
+                              // Text("Note Moyenne"),
                               SizedBox(width: 20),
-                              RatingBar.builder(
-                                initialRating: _.book.note,
-                                minRating: 0,
-                                direction: Axis.horizontal,
-                                itemCount: 5,
-                                itemSize: 20,
-                                allowHalfRating: true,
-                                ignoreGestures: true,
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (_) {},
-                              ),
                             ],
                           ),
                           Padding(
@@ -178,6 +164,20 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                             size: 20,
                                           )
                                         : Container(),
+                                    RatingBar.builder(
+                                      initialRating: _.book.note,
+                                      minRating: 0,
+                                      direction: Axis.horizontal,
+                                      itemCount: 5,
+                                      itemSize: 20,
+                                      allowHalfRating: true,
+                                      ignoreGestures: true,
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      onRatingUpdate: (_) {},
+                                    )
                                   ],
                                 ),
                               ),

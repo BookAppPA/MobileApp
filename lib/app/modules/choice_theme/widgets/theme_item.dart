@@ -42,10 +42,10 @@ class _ThemeItemState extends State<ThemeItem> {
                 // backgroundImage: AssetImage(widget.imageCategory),
                 decoration: BoxDecoration(
                     // borderRadius: BorderRadius.circular(35.0),
-                    border: Border.all(color: selected ? ConstantColor.accent : Colors.transparent, width: 3),
+                    border: Border.all(color: selected ? ConstantColor.accent : Colors.transparent, width: 4),
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage(widget.imageCategory))),
+                        image: AssetImage(widget.imageCategory),fit: BoxFit.cover)),
               ),
             ),
             Text(widget.categoryTitle)
