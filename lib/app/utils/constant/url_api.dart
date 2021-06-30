@@ -66,6 +66,9 @@ abstract class UrlAPI {
   static final String getBookSellerById =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/bookseller/getBookSellerById";
 
+  static final String getLastBooksWeek = 
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/bookseller/getLastBooksWeek";
+
   static final String searchBookSeller =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/search/searchBookSeller";
 

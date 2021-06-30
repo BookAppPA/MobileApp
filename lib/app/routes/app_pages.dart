@@ -91,7 +91,7 @@ class AppPages {
               repository: BookSellerRepository(), bookSeller: bookSeller);
         } else if (bookSeller.id != null) {
           controller = BookSellerDetailController(
-            repository: BookSellerRepository(), bookSellerId: bookSeller.id);
+              repository: BookSellerRepository(), bookSellerId: bookSeller.id);
         }
         Get.create<BookSellerDetailController>(() => controller,
             permanent: false);

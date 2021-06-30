@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 class BookDetailPage extends GetWidget<BookDetailController> {
   @override
   Widget build(BuildContext context) {
-    print("category ${BookDetailController.to.book.categories}");
     return Scaffold(
       appBar: BackButtonAppBar(),
       body: GetBuilder<BookDetailController>(
@@ -105,12 +104,29 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                             ],
                           ),
                           SizedBox(height: 25),
-                          _.book.description != null && _.book.description != ""
-                              ? Padding(
+                          _.bio == '' || _.bio == null
+                              ? _.book.description != null &&
+                                      _.book.description != ""
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25, right: 25, bottom: 25),
+                                      child: Text(
+                                        _.book.description,
+                                        style: TextStyle(
+                                          fontFamily: 'SF Pro Text',
+                                          fontSize: 13,
+                                          color: Color(0x80212121),
+                                          letterSpacing: 0.16,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
+                                    )
+                                  : Container()
+                              : Padding(
                                   padding: EdgeInsets.only(
                                       left: 25, right: 25, bottom: 25),
                                   child: Text(
-                                    _.book.description,
+                                    _.bio,
                                     style: TextStyle(
                                       fontFamily: 'SF Pro Text',
                                       fontSize: 13,
@@ -119,8 +135,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                       fontWeight: FontWeight.w300,
                                     ),
                                   ),
-                                )
-                              : Container(),
+                                ),
                           SizedBox(height: 5),
                           ChipCategories(
                             listCategories: _.book.categories,

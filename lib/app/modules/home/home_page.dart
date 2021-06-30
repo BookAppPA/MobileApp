@@ -1,6 +1,9 @@
 import 'package:book_app/app/data/model/book.dart';
+import 'package:book_app/app/data/model/lastBookWeek.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
+import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/home/home_controller.dart';
+import 'package:book_app/app/modules/home/widget/lastBookWeekItem.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
@@ -11,7 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  final controller = Get.put(HomeController(repository: BookRepository()));
+  final controller = Get.put(HomeController(
+      repository: BookRepository(), repositorySeller: BookSellerRepository()));
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +78,17 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Expanded(
-              child: ListView.separated(
-                itemCount: 6,
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (ctx, index) {
-                  return SizedBox(width: 20);
-                },
-                itemBuilder: (ctx, index) {
-                  return BookItem(book: Book());
-                },
+              child: GetBuilder<HomeController>(
+                builder: (_) => ListView.separated(
+                  itemCount: _.listLastBooksWeek.length,
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (ctx, index) {
+                    return SizedBox(width: 20);
+                  },
+                  itemBuilder: (ctx, index) {
+                    return LastBookWeekItem(book: _.listLastBooksWeek[index]);
+                  },
+                ),
               ),
             ),
           ],

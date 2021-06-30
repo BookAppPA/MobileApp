@@ -3,6 +3,7 @@ import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/following.dart';
+import 'package:book_app/app/data/model/lastBookWeek.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
@@ -461,6 +462,28 @@ class NodeJSBddAPI {
         return booksWeek;
       } else {
         print("error get http getListBooksWeek --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<LastBookWeek>> getLastBooksWeek() async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getLastBooksWeek),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        var listBooksWeek = json.decode(resp.body);
+        List<LastBookWeek> booksWeek = [];
+        listBooksWeek.forEach((book) => booksWeek.add(LastBookWeek.fromJson(book)));
+        return booksWeek;
+      } else {
+        print("error get http getLastBooksWeek --> ${resp.body}");
         return [];
       }
     } catch (e) {
