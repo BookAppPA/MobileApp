@@ -151,9 +151,9 @@ class UserController extends GetxController {
     if (user.listBooksRead
             .firstWhere((item) => item.id == book.id, orElse: () => null) !=
         null) return false;
-    var titleRating = "";
-    var descRating = "";
-    var noteRating = 0.0;
+    var titleRating;
+    var descRating;
+    var noteRating;
     await Get.bottomSheet(
         AddRatingBottomSheet(
             title: "Ajouter un avis",
@@ -169,7 +169,7 @@ class UserController extends GetxController {
                 })),
         isDismissible: false,
         enableDrag: false);
-    if (titleRating != "") {
+    if (titleRating != null) {
       print("rating: $titleRating, $descRating, $noteRating");
       var resAddRating = await repository.addRating(
           _user, book, titleRating, descRating, noteRating);
@@ -193,6 +193,7 @@ class UserController extends GetxController {
             userImage: _user.picture,
             userName: _user.pseudo,
           ));
+          _user.nbRatings++;
           _user.nbBooks++;
           update();
         }
@@ -227,6 +228,7 @@ class UserController extends GetxController {
         }
         _user.listBooksRead.removeAt(index);
         _user.nbBooks--;
+        _user.nbRatings--;
         update();
         return true;
       }
@@ -242,6 +244,10 @@ class UserController extends GetxController {
     await Get.bottomSheet(
         AddRatingBottomSheet(
           title: "Modifier votre avis",
+          isAdd: false,
+          preTitle: rating.title,
+          preDesc: rating.message,
+          preNote: rating.note,
           onConfirm: (title, desc, note) {
             titleRating = title;
             descRating = desc;
@@ -249,8 +255,9 @@ class UserController extends GetxController {
           },
           onCancel: () => Get.back(),
         ),
-        isDismissible: false,
-        enableDrag: false);
+      );
+    if (titleRating == null)
+      return;
 
     var title = titleRating ?? rating.title;
     var desc = descRating ?? rating.message;
