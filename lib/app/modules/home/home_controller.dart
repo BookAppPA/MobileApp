@@ -36,7 +36,7 @@ class HomeController extends GetxController {
   }
 
   _configNotification() async {
-    await UserRepository().configurePushNotification(UserController.to.user.id);
+    // await UserRepository().configurePushNotification(UserController.to.user.id);
   }
 
   _getLastBooksWeek() async {
