@@ -13,14 +13,12 @@ class ChoiceThemeController extends GetxController {
   final UserRepository repository = UserRepository();
 
   selectCategories(String categoryName) {
-    print('Select $categoryName');
     listChoiceCategories.add(categoryName);
     isBlock = false;
     update();
   }
 
   deselectCategories(String categoryName){
-    print('Deselect $categoryName');
     listChoiceCategories.remove(categoryName);
     if(listChoiceCategories.length == 0){
       isBlock = true;

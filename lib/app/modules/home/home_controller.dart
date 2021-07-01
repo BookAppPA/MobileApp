@@ -30,13 +30,8 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _configNotification();
     _getLastBooksWeek();
     _getPopularBooks();
-  }
-
-  _configNotification() async {
-    // await UserRepository().configurePushNotification(UserController.to.user.id);
   }
 
   _getLastBooksWeek() async {

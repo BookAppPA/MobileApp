@@ -2,18 +2,15 @@ import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/user.dart';
-import 'package:book_app/app/data/provider/api/firebase/firebase_messaging_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_auth_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_bdd_api.dart';
-import 'package:book_app/app/modules/profil/user_controller.dart';
 
 class UserRepository {
  
   final NodeJSAuthAPI _authAPI = NodeJSAuthAPI();
   final NodeJSBddAPI _databaseAPI = NodeJSBddAPI();
   final FirebaseStorageAPI _firebaseStorageAPI = FirebaseStorageAPI();
-  final FirebaseMessagingAPI _notificationAPI = FirebaseMessagingAPI();
 
   getCurrentUser() {
     return _authAPI.getCurrentUser();
@@ -21,16 +18,6 @@ class UserRepository {
 
   getUserById(String uid) async {
     return await _databaseAPI.getUserById(uid);
-  }
-
-  configurePushNotification(String idUser) async {
-    final token = await _notificationAPI.getToken();
-    UserController.to.user.pushToken = token;
-    return await _databaseAPI.updateUser(idUser, {"pushToken": token}, false);
-  }
-
-  suscribeToTopic(String topic) async {
-    return await _notificationAPI.suscribeToTopic(topic);
   }
 
   changeUserPicture(String uid, String path) async {
@@ -77,7 +64,6 @@ class UserRepository {
   }
 
   followUser(UserModel user, Following userToFollow) async {
-    await _notificationAPI.suscribeToTopic("rating/${userToFollow.id}");
     return await _databaseAPI.followUser(user, userToFollow);
   }
 
@@ -90,7 +76,6 @@ class UserRepository {
   }
 
   unFollowUser(UserModel user, Following userToFollow) async {
-    await _notificationAPI.unSuscribeToTopic("rating/${userToFollow.id}");
     return await _databaseAPI.unFollowUser(user, userToFollow);
   }
 

@@ -24,7 +24,6 @@ class ChipCategories extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8.0,),
         child: Wrap(
           children: listCategories.map((category) {
-            print('category $category');
             return Padding(
               padding: EdgeInsets.only(left: 1, right: 2, bottom: 1.0),
               child: GestureDetector(

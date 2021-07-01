@@ -31,7 +31,7 @@ class UserModel {
   });
 
   UserModel.fromJson(Map<String, dynamic> json){
-      this.id = json['uid'];
+      this.id = json['uid'] ?? json['id'];
       this.pseudo = json['pseudo'];
       this.email = json['email'];
       this.picture = json['picture'] ?? "";
