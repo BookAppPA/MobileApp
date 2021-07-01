@@ -1,10 +1,11 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][esgi-shield]][esgi-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield-victor]][linkedin-url-victor]
+[![LinkedIn][linkedin-shield-elisa]][linkedin-url-elisa]
+[![LinkedIn][linkedin-shield-taj]][linkedin-url-taj]
 [![PlayStore][android-shield]][android-url]
 [![AppStore][ios-shield]][ios-url]
+[![Codemagic build status](https://api.codemagic.io/apps/60d3808dab5163bb06eda2b8/60ddbd3717ecbd054d86bba0/status_badge.svg)](https://codemagic.io/apps/60d3808dab5163bb06eda2b8/60ddbd3717ecbd054d86bba0/latest_build)
 
 <!-- PROJECT LOGO -->
 <br />
