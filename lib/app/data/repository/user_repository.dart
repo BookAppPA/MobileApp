@@ -29,6 +29,10 @@ class UserRepository {
     return await _databaseAPI.updateUser(idUser, {"pushToken": token}, false);
   }
 
+  suscribeToTopic(String topic) async {
+    return await _notificationAPI.suscribeToTopic(topic);
+  }
+
   changeUserPicture(String uid, String path) async {
     String url = await _firebaseStorageAPI.uploadPicture(uid, path);
     if (url != null)
@@ -73,6 +77,7 @@ class UserRepository {
   }
 
   followUser(UserModel user, Following userToFollow) async {
+    await _notificationAPI.suscribeToTopic("rating/${userToFollow.id}");
     return await _databaseAPI.followUser(user, userToFollow);
   }
 
@@ -85,6 +90,7 @@ class UserRepository {
   }
 
   unFollowUser(UserModel user, Following userToFollow) async {
+    await _notificationAPI.unSuscribeToTopic("rating/${userToFollow.id}");
     return await _databaseAPI.unFollowUser(user, userToFollow);
   }
 

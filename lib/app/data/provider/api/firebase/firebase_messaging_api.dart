@@ -8,6 +8,14 @@ class FirebaseMessagingAPI {
     return await _firebaseMessaging.getToken();
   }
 
+  suscribeToTopic(String topic) async {
+    return await _firebaseMessaging.subscribeToTopic(topic);
+  }
+
+  unSuscribeToTopic(String topic) async {
+    return await _firebaseMessaging.unsubscribeFromTopic(topic);
+  }
+
   /*configureCallback() {
     // Android: data field, pas sur IOS
     // => var notif = message['data'] ?? message;
