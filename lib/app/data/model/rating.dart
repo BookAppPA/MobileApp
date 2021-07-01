@@ -28,7 +28,7 @@ class Rating {
       this.bookPublished = json['book_published'];
       this.title = json['title'];
       this.message = json['message'];
-      this.note = json['note'].toDouble();
+      this.note = json['note'] != null ? json['note'].toDouble() : 0.0;
       this.timestamp = DateTime.fromMillisecondsSinceEpoch(json["timestamp"]["_seconds"] * 1000);
       this.userId = json["user_id"];
       this.userImage = json["user_pic"];

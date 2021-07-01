@@ -6,19 +6,14 @@ import 'package:get/get.dart';
 
 class BookDetailBinding extends Bindings {
 
-  void eventAnalytics(book) async {
+  void eventAnalytics(Book book) async {
     print('avant');
-    await UserController.analytics.logEvent(name: 'Book_details', parameters: {
-      'book_id': book.id,
-      'book_title': book.title,
-      'book_author': book.authors.first,
-      'user_id': UserController.to.user.id,
-    });
     await UserController.analytics.logViewItem(
       itemId: book.id,
       itemName: book.title,
-      itemCategory: book.authors.first,
       itemLocationId: UserController.to.user.id,
+      itemCategory: book.categories != null ? book.categories.first : '',
+      origin: book.authors != null ? book.authors.first : '',
     );
     print('apres');
   }
@@ -26,13 +21,13 @@ class BookDetailBinding extends Bindings {
   @override
   void dependencies() {
     final Book book = Get.arguments as Book;
-    if (book != null)
-      eventAnalytics(book);
     Get.delete<BookDetailController>();
-    if (book.title != null)
+    if (book.title != null){
+      eventAnalytics(book);
       Get.create(() => BookDetailController(repository: BookRepository(), book: book), permanent: false);
+    } 
     else if (book.id != null)
-      Get.create(() => BookDetailController(repository: BookRepository(), bookId: book.id), permanent: false);
+      Get.create(() => BookDetailController(repository: BookRepository(), bookId: book.id, bio: book.description ?? ''),permanent: false);
     else
       Get.put(BookDetailController(repository: BookRepository()));
   }

@@ -57,7 +57,7 @@ dependencies:
   adobe_xd: ^1.1.0+1
   flutter_rating_bar: ^4.0.0
   http:
-  webview_flutter: ^2.0.8
+  webview_flutter: ^2.0.4
   url_launcher:
   carousel_slider: ^3.0.0
   dots_indicator: ^2.0.0
@@ -96,6 +96,7 @@ flutter:
   uses-material-design: true
   assets:
      - assets/
+     - assets/categories/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

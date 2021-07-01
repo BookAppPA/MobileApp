@@ -28,7 +28,7 @@ class AuthPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(height: 10),
+                        SizedBox(height: 30),
                         Container(
                           width: 100,
                           height: 100,

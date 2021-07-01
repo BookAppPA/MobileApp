@@ -2,6 +2,7 @@ import 'package:book_app/app/modules/book_detail/book_detail_controller.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
+import 'package:book_app/app/modules/widgets_global/chip_category.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/rating_item.dart';
 import 'package:book_app/app/routes/app_pages.dart';
@@ -19,7 +20,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
       appBar: BackButtonAppBar(),
       body: GetBuilder<BookDetailController>(
         builder: (_) => _.loadData && _.errorMessage == ""
-            ? CustomCircularProgress(color: ConstantColor.accent, radius: 20)
+            ? Center(child: CustomCircularProgress(color: ConstantColor.accent, radius: 20))
             : _.loadData && _.errorMessage != ""
                 ? Center(child: Text(_.errorMessage))
                 : SingleChildScrollView(
@@ -103,12 +104,29 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                             ],
                           ),
                           SizedBox(height: 25),
-                          _.book.description != null && _.book.description != ""
-                              ? Padding(
+                          _.bio == '' || _.bio == null
+                              ? _.book.description != null &&
+                                      _.book.description != ""
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 25, right: 25, bottom: 25),
+                                      child: Text(
+                                        _.book.description,
+                                        style: TextStyle(
+                                          fontFamily: 'SF Pro Text',
+                                          fontSize: 13,
+                                          color: Color(0x80212121),
+                                          letterSpacing: 0.16,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
+                                    )
+                                  : Container()
+                              : Padding(
                                   padding: EdgeInsets.only(
                                       left: 25, right: 25, bottom: 25),
                                   child: Text(
-                                    _.book.description,
+                                    _.bio,
                                     style: TextStyle(
                                       fontFamily: 'SF Pro Text',
                                       fontSize: 13,
@@ -117,27 +135,17 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                       fontWeight: FontWeight.w300,
                                     ),
                                   ),
-                                )
-                              : Container(),
+                                ),
+                          SizedBox(height: 5),
+                          ChipCategories(
+                            listCategories: _.book.categories,
+                            onSelected: () => print('select'),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text("Note Moyenne"),
+                              // Text("Note Moyenne"),
                               SizedBox(width: 20),
-                              RatingBar.builder(
-                                initialRating: _.book.note,
-                                minRating: 0,
-                                direction: Axis.horizontal,
-                                itemCount: 5,
-                                itemSize: 20,
-                                allowHalfRating: true,
-                                ignoreGestures: true,
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (_) {},
-                              ),
                             ],
                           ),
                           Padding(
@@ -171,6 +179,20 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                             size: 20,
                                           )
                                         : Container(),
+                                    RatingBar.builder(
+                                      initialRating: _.book.note,
+                                      minRating: 0,
+                                      direction: Axis.horizontal,
+                                      itemCount: 5,
+                                      itemSize: 20,
+                                      allowHalfRating: true,
+                                      ignoreGestures: true,
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      onRatingUpdate: (_) {},
+                                    )
                                   ],
                                 ),
                               ),

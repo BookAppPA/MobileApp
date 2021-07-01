@@ -39,7 +39,7 @@ class Book {
       this.previewLink = json['volumeInfo']['previewLink'] ?? "";
       this.buyLink = json['saleInfo']['buyLink'];
       this.authors = json['volumeInfo']['authors'];
-      this.categories = json['volumeInfo']['categories'];
+      this.categories = json['volumeInfo']['categories'] ?? ["Aucune catégories"];
       this.pageCount = json['volumeInfo']['pageCount'];
       this.listPrice = json['saleInfo']['listPrice'];
       this.retailPrice = json['saleInfo']['retailPrice'];

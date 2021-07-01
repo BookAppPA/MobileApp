@@ -3,6 +3,7 @@ import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
+import 'package:book_app/app/modules/widgets_global/chip_category.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
@@ -193,6 +194,10 @@ class ProfilPage extends GetWidget<ProfilController> {
 
                 //PROFIL
                 SizedBox(height: 20),
+                ChipCategories(
+                  listCategories: controller.user.listCategories,
+                  onSelected: () => print('select'),
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

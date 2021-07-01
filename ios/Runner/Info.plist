@@ -20,8 +20,23 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>Numéro Téléphone Librairie</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Modifier la photo de profil</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Modifier la photo de profil</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Modifier la photo de profil</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -29,8 +44,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -41,26 +54,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Modifier la photo de profil</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Modifier la photo de profil</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Modifier la photo de profil</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-  		<string>Numéro Téléphone Librairie</string>
-	</array>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-  		<string>Numéro Téléphone Librairie</string>
-	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 </dict>
 </plist>

@@ -12,7 +12,9 @@ class BookDetailController extends GetxController {
   static BookDetailController get to => Get.find();
 
   final BookRepository repository;
-  BookDetailController({@required this.repository, this.book, this.bookId})
+  final String bio;
+  BookDetailController(
+      {@required this.repository, this.book, this.bookId, this.bio})
       : assert(repository != null);
 
   Book book;
@@ -55,6 +57,13 @@ class BookDetailController extends GetxController {
         haveAlreadyBook = UserController.to.user.listBooksRead
                 .firstWhere((item) => item.id == book.id, orElse: () => null) !=
             null;
+      await UserController.analytics.logViewItem(
+        itemId: book.id,
+        itemName: book.title,
+        itemLocationId: UserController.to.user.id,
+        itemCategory: book.categories != null ? book.categories.first : '',
+        origin: book.authors != null ? book.authors.first : '',
+      );
     } else
       _errorLoad();
     update();
@@ -140,7 +149,7 @@ class BookDetailController extends GetxController {
     else
       CustomSnackbar.snackbar("Erreur du serveur...");
     //haveAlreadyBook = true;
-   // update();
+    // update();
   }
 
   _deleteBookFromGallery() async {

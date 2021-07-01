@@ -3,6 +3,7 @@ import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/following.dart';
+import 'package:book_app/app/data/model/lastBookWeek.dart';
 import 'package:book_app/app/data/model/rating.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
@@ -99,7 +100,7 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBook),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -115,12 +116,35 @@ class NodeJSBddAPI {
     }
   }
 
+  Future<List<Book>> searchBooksByCategories(String search) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      print('URI ENCODE ${Uri.encodeComponent(search)}');
+      http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByCategories),
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
+      if (resp.statusCode == 200) {
+        var listBooks = json.decode(resp.body);
+        List<Book> books = [];
+        listBooks.forEach((book) => books.add(Book.fromJson(book)));
+        return books;
+      } else {
+        print("error get http searchBooksByCategories --> ${resp.body}");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future<List<Book>> searchBooksByAuthor(String search) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
+      print('URI ENCODE ${Uri.encodeComponent(search)}');
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByAuthor),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -141,7 +165,7 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchUsers),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listUsers = json.decode(resp.body);
         List<UserModel> users = [];
@@ -429,7 +453,7 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBookSeller),
-          headers: {"authorization": "Bearer $token", "search": search});
+          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
       if (resp.statusCode == 200) {
         var listBookseller = json.decode(resp.body);
         List<BookSeller> booksellers = [];
@@ -460,6 +484,28 @@ class NodeJSBddAPI {
         return booksWeek;
       } else {
         print("error get http getListBooksWeek --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<LastBookWeek>> getLastBooksWeek() async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getLastBooksWeek),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        var listBooksWeek = json.decode(resp.body);
+        List<LastBookWeek> booksWeek = [];
+        listBooksWeek.forEach((book) => booksWeek.add(LastBookWeek.fromJson(book)));
+        return booksWeek;
+      } else {
+        print("error get http getLastBooksWeek --> ${resp.body}");
         return [];
       }
     } catch (e) {
