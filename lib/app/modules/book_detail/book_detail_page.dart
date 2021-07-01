@@ -172,13 +172,6 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    _.book.nbRating > 5
-                                        ? Icon(
-                                            FontAwesomeIcons.chevronRight,
-                                            color: ConstantColor.greyDark,
-                                            size: 20,
-                                          )
-                                        : Container(),
                                     RatingBar.builder(
                                       initialRating: _.book.note,
                                       minRating: 0,

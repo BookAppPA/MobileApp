@@ -636,4 +636,28 @@ class NodeJSBddAPI {
       return false;
     }
   }
+
+  Future<List<Rating>> getFeed(String userId) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getFeed + "/$userId"),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        var listRatings = json.decode(resp.body);
+        List<Rating> ratings = [];
+        listRatings
+            .forEach((rating) => ratings.add(Rating.fromJson(rating)));
+        return ratings;
+      } else {
+        print("error get http getFeed --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+  
 }

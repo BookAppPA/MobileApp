@@ -83,4 +83,8 @@ class UserRepository {
     return await _databaseAPI.isFollow(idUser, idUserToFollow);
   }
 
+  getFeed(String userId) async {
+    return await _databaseAPI.getFeed(userId);
+  }
+
 }

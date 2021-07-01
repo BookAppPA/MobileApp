@@ -101,4 +101,7 @@ abstract class UrlAPI {
 
   static final String deleteRating =
       "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/rating/deleteRating";
+
+   static final String getFeed =
+      "https://europe-west3-book-app-7f51e.cloudfunctions.net/app/feed/getFeed";
 }
