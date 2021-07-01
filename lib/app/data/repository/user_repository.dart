@@ -2,15 +2,18 @@ import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/bookweek.dart';
 import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/user.dart';
+import 'package:book_app/app/data/provider/api/firebase/firebase_messaging_api.dart';
 import 'package:book_app/app/data/provider/api/firebase/firebase_storage_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_auth_api.dart';
 import 'package:book_app/app/data/provider/api/nodejs/nodejs_bdd_api.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 
 class UserRepository {
  
   final NodeJSAuthAPI _authAPI = NodeJSAuthAPI();
   final NodeJSBddAPI _databaseAPI = NodeJSBddAPI();
   final FirebaseStorageAPI _firebaseStorageAPI = FirebaseStorageAPI();
+  final FirebaseMessagingAPI _notificationAPI = FirebaseMessagingAPI();
 
   getCurrentUser() {
     return _authAPI.getCurrentUser();
@@ -18,6 +21,12 @@ class UserRepository {
 
   getUserById(String uid) async {
     return await _databaseAPI.getUserById(uid);
+  }
+
+  configurePushNotification(String idUser) async {
+    final token = await _notificationAPI.getToken();
+    UserController.to.user.pushToken = token;
+    return await _databaseAPI.updateUser(idUser, {"pushToken": token}, false);
   }
 
   changeUserPicture(String uid, String path) async {

@@ -4,7 +4,7 @@ import 'package:book_app/app/data/model/rating.dart';
 
 class UserModel {
 
-  String id, pseudo, email, picture, bio;
+  String id, pseudo, email, picture, bio, pushToken;
   int nbBooks, nbRatings, nbFollowers, nbFollowing;
   List<Book> listBooksRead;
   List<Rating> listLastRatings;
@@ -27,6 +27,7 @@ class UserModel {
     this.listLastRatings,
     this.isBlocked,
     this.listCategories,
+    this.pushToken,
   });
 
   UserModel.fromJson(Map<String, dynamic> json){
@@ -44,6 +45,7 @@ class UserModel {
       this.isBlocked = json['isBlocked'] ?? false;
       this.listFollowers = [];
       this.listFollowing = [];
+      this.pushToken = json['pushToken'];
       this.listCategories = json['listCategories'] ?? ["Aucune catégorie"];
   }
 
