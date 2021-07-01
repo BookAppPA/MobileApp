@@ -1,8 +1,9 @@
 import 'package:book_app/app/data/model/book.dart';
-import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/lastBookWeek.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
+import 'package:book_app/app/data/repository/user_repository.dart';
+import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 
@@ -29,8 +30,13 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _configNotification();
     _getLastBooksWeek();
     _getPopularBooks();
+  }
+
+  _configNotification() async {
+    await UserRepository().configurePushNotification(UserController.to.user.id);
   }
 
   _getLastBooksWeek() async {

@@ -209,8 +209,10 @@ class AuthController extends GetxController {
       print("USER LOGIN IS NULL");
     } else {
       print("USER LOGIN --> ${user.email}");
-      if (user is UserModel)
+      if (user is UserModel) {
         UserController.to.user = user;
+        await userRepository.configurePushNotification(user.id);
+      }
       else
         UserController.to.bookseller = user;
       Get.offAllNamed(Routes.SQUELETON);
@@ -232,6 +234,7 @@ class AuthController extends GetxController {
     } else {
       print("USER SIGNUP --> ${user.email}");
       UserController.to.user = user;
+      await userRepository.configurePushNotification(user.id);
       Get.offAllNamed(Routes.CHOICE_THEME);
     }
   }
