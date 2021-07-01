@@ -32,7 +32,7 @@ class UserRatingItem extends StatelessWidget {
       color: Colors.grey[100],
       elevation: 3,
       child: Container(
-        height: rating.message.length < 75 ? 180 : 200,
+        height: rating.message.length < 75 ? 190 : 210,
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
