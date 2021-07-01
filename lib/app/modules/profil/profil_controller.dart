@@ -21,7 +21,8 @@ class ProfilController extends GetxController {
       {@required this.authRepository,
       @required this.userRepository,
       this.user,
-      this.userId})
+      this.userId,
+      this.reloadMe: false})
       : assert(authRepository != null),
         assert(userRepository != null);
 
@@ -31,6 +32,7 @@ class ProfilController extends GetxController {
   String errorMessage = "";
   bool loadData = true;
   bool isMe = false;
+  bool reloadMe = false;
 
   List<Book> books = [];
   List<Rating> ratings = [];
@@ -40,7 +42,9 @@ class ProfilController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (user == null && userId != null)
+    loadData = true;
+    update();
+    if (reloadMe || (user == null && userId != null))
       _getUser();
     else if (user == null && userId == null) {
       _errorLoad();
@@ -59,12 +63,16 @@ class ProfilController extends GetxController {
 
   _getUser() async {
     print("GET USER");
-    user = await userRepository.getUserById(userId);
+    user = await userRepository.getUserById(userId ?? user.id);
     if (user != null) {
       if (user.isBlocked) _errorBlocked();
       loadData = false;
-      if (!UserController.to.isBookSeller)
+      if (!UserController.to.isBookSeller) {
+        if (reloadMe)
+          UserController.to.user = user;
         isMe = user.id == UserController.to.user.id;
+        update();
+      }
       else
         isMe = false;
     } else {

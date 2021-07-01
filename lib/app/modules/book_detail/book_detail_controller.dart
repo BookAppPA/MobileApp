@@ -148,8 +148,8 @@ class BookDetailController extends GetxController {
       CustomSnackbar.snackbar("Ce livre à été ajouté a votre bibliothèque");
     else
       CustomSnackbar.snackbar("Erreur du serveur...");
-    //haveAlreadyBook = true;
-    // update();
+    haveAlreadyBook = true;
+    update();
   }
 
   _deleteBookFromGallery() async {

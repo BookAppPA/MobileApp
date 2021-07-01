@@ -30,7 +30,8 @@ class SqueletonController extends GetxController {
         }
         return FeedPage();
       case 3:
-        var controller = Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: UserController.to.user));
+      Get.delete<ProfilController>();
+        var controller = Get.put(ProfilController(authRepository: AuthRepository(), userRepository: UserRepository(), user: UserController.to.user, reloadMe: true));
         return ProfilPage(controller: controller);
       default:
         return Center(child: Text("Erreur"));
@@ -38,7 +39,7 @@ class SqueletonController extends GetxController {
   }
 
   changePage(int index) {
-    if (index != _currentIndex) {
+    if (index != _currentIndex || index == 3) {
       _currentIndex = index;
       update();
     }

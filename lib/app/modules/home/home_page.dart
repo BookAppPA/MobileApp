@@ -97,28 +97,44 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildMostPopularBooks() {
-    return Container(
-      height: 430,
-      //color: Colors.yellow,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "Les Plus Populaires",
-            style: TextStyle(
-              fontFamily: 'SF Rounded',
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 20),
-          Expanded(
-            child: GetBuilder<HomeController>(
-              builder: (_) => Container(
-                  //color: Colors.red,
-                  child: Column(
+    return GetBuilder<HomeController>(
+        builder: (_) => Container(
+              height: _.listPopularBooks.length < 4 ? 250 : 430,
+              //color: Colors.yellow,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
+                  Text(
+                    "Les Plus Populaires",
+                    style: TextStyle(
+                      fontFamily: 'SF Rounded',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                        child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: _.listPopularBooks.length < 4 ? 210 : 370,
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3, childAspectRatio: 0.7),
+                            itemCount: _.listPopularBooks.length,
+                            itemBuilder: (ctx, index) {
+                              return Container(
+                                child: BookItem(
+                                  book: _.hasDataPopularBooks
+                                      ? _.listPopularBooks[index]
+                                      : Book(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        /* Container(
                     height: 180,
                     child: ListView.separated(
                         itemCount: _.hasDataPopularBooks ? _.listPopularBooks.length > 3 ? 3 : _.listPopularBooks.length : 3,
@@ -144,14 +160,13 @@ class HomePage extends StatelessWidget {
                         separatorBuilder: (ctx, index) => SizedBox(width: 20),
                         scrollDirection: Axis.horizontal,
                     ),
+                  ),*/
+                      ],
+                    )),
                   ),
                 ],
-              )),
-            ),
-          ),
-        ],
-      ),
-    );
+              ),
+            ));
   }
 
   Widget _buildBooksWant() {
