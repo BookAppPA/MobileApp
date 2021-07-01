@@ -20,4 +20,8 @@ class BookSellerRepository {
     return await _databaseAPI.getListBooksWeek(idBookSeller);
   }
 
+  getLastBooksWeek() async {
+    return await _databaseAPI.getLastBooksWeek();
+  }
+
 }

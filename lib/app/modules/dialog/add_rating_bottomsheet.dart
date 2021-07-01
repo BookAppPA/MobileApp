@@ -1,4 +1,5 @@
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
+import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +7,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class AddRatingBottomSheet extends StatefulWidget {
-  final String title;
+  final String title, preTitle, preDesc;
+  final double preNote;
+  final bool isAdd;
   final VoidCallback onCancel;
   final Function(String, String, double) onConfirm;
 
   AddRatingBottomSheet(
-      {@required this.title, @required this.onCancel, @required this.onConfirm})
+      {@required this.title, this.isAdd: true, this.preTitle: "", this.preDesc: "", this.preNote: 0.0, @required this.onCancel, @required this.onConfirm})
       : assert(title != null),
         assert(onConfirm != null),
         assert(onCancel != null);
@@ -31,6 +34,11 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
   @override
   void initState() {
     super.initState();
+    _titleController.text = widget.preTitle;
+    _messageController.text = widget.preDesc;
+    note = widget.preNote;
+    noteFinal = note;
+    noteText = noteText = removeDecimalZeroFormat(note);
     _messageController.addListener(() {
       setState(() {});
     });
@@ -107,7 +115,7 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RatingBar.builder(
-                    initialRating: 0.0,
+                    initialRating: note,
                     minRating: 0,
                     direction: Axis.horizontal,
                     itemCount: 5,
@@ -142,6 +150,7 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                         onPressed: () => widget.onCancel(),
                         child: Text(
                           "Ne pas envoyer",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'SF Pro Display',
                             fontSize: 16,
@@ -164,7 +173,20 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                     ),
                     ButtonArround(
                       onTap: () {
-                        widget.onConfirm(
+                        if (widget.isAdd) {
+                          if (_titleController.text.trim().length < 3)
+                            CustomSnackbar.notif("Le titre doit contenir au moins 3 caractères");
+                          else if (_messageController.text.trim().length < 3)
+                            CustomSnackbar.notif("La description doit contenir au moins 3 caractères");
+                          else {
+                            widget.onConfirm(
+                            _titleController.text.trim(),
+                            _messageController.text.trim(),
+                            noteFinal ?? note);
+                          Get.back();
+                          }
+                        } else {
+                          widget.onConfirm(
                             _titleController.text.trim() != ""
                                 ? _titleController.text.trim()
                                 : null,
@@ -172,9 +194,10 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                                 ? _messageController.text.trim()
                                 : null,
                             noteFinal);
-                        Get.back();
+                          Get.back();
+                        }
                       },
-                      text: "Ajouter",
+                      text: widget.isAdd ? "Ajouter" : "Modifier",
                       colorBackground: ConstantColor.grey,
                     ),
                   ],

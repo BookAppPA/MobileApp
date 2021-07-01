@@ -89,6 +89,7 @@ class _AddBookWeekBottomSheetState extends State<AddBookWeekBottomSheet> {
                         : Get.back(),
                     child: Text(
                       "Annuler",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'SF Pro Display',
                         fontSize: 17,
