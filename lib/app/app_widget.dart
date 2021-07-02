@@ -31,7 +31,8 @@ class AppWidget extends StatelessWidget {
                   },
                  // builder: DevicePreview.appBuilder,
                   getPages: AppPages.routes,
-                  locale: Locale('fr', 'FR'),
+                  locale: Get.deviceLocale,
+                  fallbackLocale: Locale('fr', 'FR'),
                   localizationsDelegates: [
                     GlobalMaterialLocalizations.delegate,
                     GlobalWidgetsLocalizations.delegate,

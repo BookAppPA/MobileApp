@@ -1,0 +1,154 @@
+No tienes permiso
+Tu cuenta ha sido bloqueada
+Este correo electrónico no existe
+Contraseña incorrecta
+La dirección de correo electrónico ya está en uso por otra cuenta
+Hola, \nFeliz de verte de nuevo!
+Oye, ¿eres nuevo?
+Introduce tu seudónimo
+Introduzca una dirección de correo electrónico
+Introduzca una contraseña
+Al crear una cuenta, usted acepta los términos y condiciones de uso 
+ de BookApp.
+Inicia sesión
+Para registrarse
+¿Nuevo?
+¿Ya está registrado?
+Descripción del libro
+No hay información general disponible para este libro
+Este libro se ha agregado a su biblioteca
+Ya has añadido este libro
+Este libro se ha eliminado de la biblioteca
+Ya has borrado este libro
+Visión general
+Eliminar este libro
+Terminé este libro
+Calificación promedio
+No hay comentarios
+Comentarios (X)
+Contacto
+Seguir
+Horario de apertura:
+Lunes:\nMartes:\nMiércoles:\nJueves:\nViernes:\nSàbado:\nDomingo:
+Descripción:
+Últimos libros de la semana
+Dirección:
+Buscar una biblioteca
+No se han encontrado bibliotecas...
+Bienvenido,\nPara empezar, ¿cuáles son tus géneros favoritos?
+Terminar
+Salir
+¿Desea salir de la aplicación?
+Sí
+No
+Cerrar sesión
+¿Desea cerrar la sesión\su cuenta?
+Libro terminado
+¿Quieres añadir este libro a tu biblioteca y dejar una reseña?
+Eliminar el libro
+¿Desea eliminar permanentemente este libro y su reseña?
+Buscar libro/autor/usuario
+Opciones de los libreros
+El más popular
+Riesgo para complacerte
+Entiendo
+Encuentra nuevos libros únicos 
+Descubre nuevos libros a través de muchas reseñas
+Comparte tu opinión
+Da tu opinión sobre tu biblioteca personal
+Error de sincronización...
+Edita tu perfil
+ACERCA DE MÍ
+Añadir una biografía
+Sin biografía
+Libros
+Suscriptores
+Modificar
+Seguir
+Terminé un libro
+Mis últimos libros
+Sus últimos libros
+Mis últimos comentarios
+Sus últimas críticas
+Buscar un libro
+Buscar un autor
+Buscar un usuario
+No se encontraron libros...
+No se encontraron autores...
+No se han encontrado usuarios...
+X Libros • X Reseñas
+Parámetros
+Lengua
+Francés
+Inglés
+Español
+Contacto
+Versión
+Internet no disponible
+Error
+Recepción
+Librero
+Perfil
+Más
+Menos
+Escriba el nombre de la biblioteca
+¿Eres librero?
+Crear una cuenta profesional
+Introduzca su número de SIRENA o SIRET
+Añadir este libro
+No se han especificado programaciones
+Sin descripción
+Agregar una descripción
+Número de teléfono
+Agregar un número de teléfono
+Horarios
+Horario de apertura de X
+Cerrado
+Cancelar
+Confirmar
+¿Abierto todo el día?
+Mañana
+Tarde
+Noche
+Lunes
+Martes
+Miércoles
+Jueves
+Viernes
+Sábado
+Domingo
+Añadir este Libro de la Semana
+Este libro ha sido añadido al Libro de la Semana
+Hay que esperar hasta la semana que viene para añadir un nuevo Libro de la Semana
+Lista de suscriptores
+Lista de suscripciones
+No rastrear más
+Editar perfil
+Suscripciones
+Sin suscripciones
+Sin suscriptores
+Ya no puedes editar tu foto
+Agregar una foto
+No podrás editar tu foto después de este paso
+El número SIRET ya está asociado a otra cuenta
+Correo electrónico no válido
+La contraseña debe tener entre 6 y 30 caracteres
+El ID de usuario solo puede contener letras, números y caracteres de subrayado
+El ID de usuario solo puede contener letras, espacios, guiones y apóstrofes
+El número SIREN debe contener 9 caracteres. Siret número 14 caracteres
+El número SIREN o SIRET debe contener sólo cifras
+Error del servidor... Inténtelo de nuevo más tarde
+El número SIREN o SIRET no corresponde a un negocio minorista de libros en una tienda especializada
+Agregar una opinión
+Cambiar la opinión
+Agregar un título
+Agregar
+No enviar
+El título debe contener al menos 3 caracteres
+La descripción debe contener al menos 3 caracteres
+Añadir el libro sin previo aviso
+¿Confirma la adición del libro a tu biblioteca sin dejar un aviso?
+Aviso modificado
+Aviso eliminado
+Sin categorías
+Tus suscriptores deben añadir una reseña\npara encontrarlos en tu feed de noticias

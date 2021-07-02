@@ -1,3 +1,4 @@
+import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +21,7 @@ class SettingsPage extends StatelessWidget {
                 title: 'Langue',
                 subtitle: 'Français',
                 leading: Icon(Icons.language),
-                onPressed: (ctx) => print("change langue"),
+                onPressed: (ctx) => BasicDialog.showLanguageDialog(),
               ),
               SettingsTile(
                 title: 'Contact',

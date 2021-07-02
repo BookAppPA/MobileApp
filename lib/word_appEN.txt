@@ -1,0 +1,154 @@
+You don't have permission
+Your account has been blocked
+This email does not exist
+Wrong password
+The email address is already in use by another account
+Hey, \nhappy to see you again!
+Hey, are you new?
+Enter your user ID
+Enter an email address
+Enter a password
+By creating an account, you agree to the terms and conditions of use 
+ of BookApp.
+Sign in
+To register
+New?
+Already registered?
+Overview of the book
+No overview available for this book
+This book has been added to your library
+You have already added this book
+This book has been removed from your library
+You have already deleted this book
+Overview
+Delete this book
+I finished this book
+Average rating
+No Reviews
+Reviews (X)
+Contact
+Follow
+Opening hours:
+Monday:\nTuesday:\nWednesday:\nThursday:\nFriday:\nSaturday:\nSunday:
+Description:
+Last Books of the Week
+Address:
+Find an autochanger
+No libraries found...
+Welcome,\nTo get started, what are your favorite genres?
+Finish
+To leave
+Do you want to exit the application?
+Yes
+No
+Logout
+Do you want to sign out\nyour account?
+Finished book
+Do you want to add this book to your library and leave a review?
+Delete the book
+Do you want to permanently delete this book and your review?
+Search book/author/user
+Booksellers' choices
+The Most Popular
+You would like 
+Got it
+Find new nuggets
+Discover new books through many reviews
+Share your opinion
+Give your opinion on your personal library
+Synchronization error...
+Edit your profile
+ABOUT ME
+Add a bio
+No bio
+Books
+Subscribers
+Modify
+Follow
+I finished a book
+My Last Books
+His Last Books
+My Latest Reviews
+His Latest Reviews
+Search for a book
+Search for an author
+Search for a user
+No books found...
+No authors found...
+No users found...
+X Books • X Reviews
+Parameters
+Language
+French
+English
+Spanish
+Contact
+Version
+Internet Unavailable
+Error
+Reception
+Bookseller
+Profile
+More
+Less
+Enter the name of your library
+Are you a bookseller?
+Create a pro account
+Enter your SIREN or SIRET number
+Add this book
+No schedules specified
+No description
+Add a description
+Phone number
+Add a phone number
+Timetables
+Opening hours of X
+Closed
+Cancel
+Confirm
+Open all day?
+Morning
+Afternoon
+Evening
+Monday
+Tuesday
+Wednesday
+Thursday
+Friday
+Saturday
+Sunday
+Add this Book of the Week
+This book has been added to the Book of the Week
+You have to wait until next week to add a new Book of the Week
+List of subscribers
+List of subscriptions
+Don't track anymore
+Edit profile
+Subscriptions
+No subscriptions
+No subscribers
+You can no longer edit your photo
+Add a photo
+You won't be able to edit your photo after this step
+The SIRET number is already associated with another account
+Invalid email
+The password must be between 6 and 30 characters long
+The user ID can contain only letters, numbers, and underscores
+The user ID can contain only letters, spaces, dashes, and apostrophes
+The SIREN number must contain 9 characters. Siret number 14 characters
+The SIREN or SIRET number must contain only figures
+Server Error... Try again later
+The SIREN or SIRET number does not correspond to a retail book business in a specialised store
+Add a review
+Change your review
+Add a title
+Add
+Do not send
+The title must contain at least 3 characters
+The description must contain at least 3 characters
+Add the book without notice
+Confirm the addition of the book to your library without leaving a notice?
+Amended notice
+Notice removed
+No categories
+Your subscribers must add a review\nto find them in your news feed

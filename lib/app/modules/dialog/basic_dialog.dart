@@ -42,6 +42,50 @@ abstract class BasicDialog {
     );
   }
 
+  static showLanguageDialog() {
+    Get.dialog(Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      child: Container(
+        height: 175,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text("Français"),
+              trailing: Icon(Icons.chevron_right_outlined),
+              onTap: () {
+                Get.updateLocale(Locale("fr", "FR"));
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: Text("Anglais"),
+              trailing: Icon(Icons.chevron_right_outlined),
+              onTap: () {
+                Get.updateLocale(Locale("en", "US"));
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: Text("Espagnol"),
+              trailing: Icon(Icons.chevron_right_outlined),
+              onTap: () {
+                Get.updateLocale(Locale("es", "ES"));
+                Get.back();
+              },
+            ),
+          ],
+        ),
+      ),
+    ));
+  }
+
   static showConfirmFinishBookDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
       title: "Livre fini",

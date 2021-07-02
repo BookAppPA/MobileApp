@@ -7,6 +7,7 @@ import 'package:book_app/app/modules/widgets_global/chip_category.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -398,7 +399,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                                     width: Get.width,
                                     height: 40,
                                     onTap: () => ctrl.clickFinishBook(),
-                                    text: "J'ai finis un livre",
+                                    text: AppTranslation.finishABook.tr,
                                   )
                                 : Container(),
                           ],
