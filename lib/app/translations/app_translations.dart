@@ -58,13 +58,19 @@ abstract class AppTranslation {
   static const String favoriteCategoryQuestion = "favorite_category_question";
   static const String finish = "finish";
   static const String leave = "leave";
-  
-
-
-
-
-
-
+  static const String wantLeaveApp = "want_leave_app";
+  static const String yes = "yes";
+  static const String no = "no";
+  static const String logout = "logout";
+  static const String logoutQuestion = "logout_question";
+  static const String finishBook = "finish_book";
+  static const String addBookToGalleryQuestion = "add_book_to_gallery_question";
+  static const String deleteBookFromGalleryQuestion = "delete_book_from_gallery_question";
+  static const String searchBookAuthorUser = "search_book_author_user";
+  static const String bookSellerChoice = "bookseller_choice";
+  static const String mostPopular = "most_popular";
+  static const String youWouldLike = "you_would_like";
+  static const String gotIt = "got_it";
 
 
 

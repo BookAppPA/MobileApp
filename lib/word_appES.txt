@@ -45,7 +45,6 @@ Cerrar sesión
 ¿Desea cerrar la sesión\su cuenta?
 Libro terminado
 ¿Quieres añadir este libro a tu biblioteca y dejar una reseña?
-Eliminar el libro
 ¿Desea eliminar permanentemente este libro y su reseña?
 Buscar libro/autor/usuario
 Opciones de los libreros

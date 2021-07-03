@@ -45,7 +45,6 @@ Logout
 Do you want to sign out\nyour account?
 Finished book
 Do you want to add this book to your library and leave a review?
-Delete the book
 Do you want to permanently delete this book and your review?
 Search book/author/user
 Booksellers' choices

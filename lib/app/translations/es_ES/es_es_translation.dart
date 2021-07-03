@@ -42,6 +42,21 @@ final Map<String, String> esES = {
   AppTranslation.favoriteCategoryQuestion: "Bienvenido,\nPara empezar, ¿cuáles son tus géneros favoritos?",
   AppTranslation.finish: "Terminar",
   AppTranslation.leave: "Salir",
+  AppTranslation.wantLeaveApp: "¿Desea salir de la aplicación?",
+  AppTranslation.yes: "Sí",
+  AppTranslation.no: "No",
+  AppTranslation.logout: "Cerrar sesión",
+  AppTranslation.logoutQuestion: "¿Desea cerrar la sesión\su cuenta?",
+  AppTranslation.finishBook: "Libro terminado",
+  AppTranslation.addBookToGalleryQuestion: "¿Quieres añadir este libro a tu biblioteca y dejar una reseña?",
+  AppTranslation.deleteBookFromGalleryQuestion: "¿Desea eliminar permanentemente este libro y su reseña?",
+  AppTranslation.searchBookAuthorUser: "Buscar libro/autor/usuario",
+  AppTranslation.bookSellerChoice: "Opciones de los libreros",
+  AppTranslation.mostPopular: "El más popular",
+  AppTranslation.youWouldLike: "Riesgo para complacerte",
+  AppTranslation.gotIt: "Entiendo",
+
+
 
 
   AppTranslation.finishABook: "Terminé un libro",
