@@ -70,10 +70,19 @@ final Map<String, String> frFR = {
 
   
 
-
-
-
-
+  AppTranslation.serverError: 'Erreur du serveur... Réessayer plus tard',
+  AppTranslation.siretError: 'Le n° SIREN ou SIRET ne correspond pas à une entreprise de Commerce de détail de livres en magasin spécialisé',
+  AppTranslation.changeReview: "Modifier votre avis",
+  AppTranslation.addTitle: 'Ajouter un titre',
+  AppTranslation.add: "Ajouter",
+  AppTranslation.doNotSend: 'Ne pas envoyer',
+  AppTranslation.titleMustThreeLength: "Le titre doit contenir au moins 3 caractères",
+  AppTranslation.descMustbeThreeLength: 'La description doit contenir au moins 3 caractères',
+  AppTranslation.addingBookWithoutReview: "Ajouter le livre sans avis",
+  AppTranslation.confirmAddingBookToLibraryWithoutReview: "Confirmer l'ajout du livre à votre bibliothèque sans y laisser un avis ?",
+  AppTranslation.viewRemoved: 'Avis supprimé',
+  AppTranslation.noCategories: "Pas de catégories",
+  AppTranslation.subscriberMustAddReview: "Vos abonnés doivent ajouter un avis\npour les retrouver dans votre fil d'actualité",
 
 
 

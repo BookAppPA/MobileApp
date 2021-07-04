@@ -58,6 +58,22 @@ abstract class AppTranslation {
   static const String favoriteCategoryQuestion = "favorite_category_question";
   static const String finish = "finish";
   static const String leave = "leave";
+  
+
+  static const String serverError = 'servor_error';
+  static const String siretError = "siret_error";
+  static const String addReview = "add_review";
+  static const String changeReview = "change_review";
+  static const String addTitle = "add_title";
+  static const String add = "add";
+  static const String doNotSend = 'do_not_send';
+  static const String titleMustThreeLength = 'title_must_be_three_length';
+  static const String descMustbeThreeLength = "desc_must_be_three_length";
+  static const String addingBookWithoutReview = 'adding_book_without_review';
+  static const String confirmAddingBookToLibraryWithoutReview = 'adding_book_to_library';
+  static const String viewRemoved = 'view_removed';
+  static const String noCategories = "no_categories";
+  static const String subscriberMustAddReview = "subscriber_must_add_review";
   static const String wantLeaveApp = "want_leave_app";
   static const String yes = "yes";
   static const String no = "no";

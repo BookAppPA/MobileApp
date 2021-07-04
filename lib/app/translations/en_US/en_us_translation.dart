@@ -70,9 +70,19 @@ final Map<String, String> enUS = {
 
 
 
-
-
-
+  AppTranslation.serverError: 'Server Error... Try again later',
+  AppTranslation.siretError: 'The SIREN or SIRET number does not correspond to a retail book business in a specialised store',
+  AppTranslation.changeReview: "Change review",
+  AppTranslation.addTitle: "Add title",
+  AppTranslation.add: "Add",
+  AppTranslation.doNotSend: 'Do not send',
+  AppTranslation.titleMustThreeLength: "The title must contain at least 3 characters",
+  AppTranslation.descMustbeThreeLength: 'The description must contain at least 3 characters',
+  AppTranslation.addingBookWithoutReview: "Add the book without notice",
+  AppTranslation.confirmAddingBookToLibraryWithoutReview: "Confirm adding the book to your library without leaving a review ?",
+  AppTranslation.viewRemoved: "Review removed",
+  AppTranslation.noCategories: "No categories",
+  AppTranslation.subscriberMustAddReview: "Your subscribers must add a review\nto find them in your news feed",
 
   AppTranslation.finishABook: "I finished a book",
   AppTranslation.locationCheckTitle : "Location Check",
