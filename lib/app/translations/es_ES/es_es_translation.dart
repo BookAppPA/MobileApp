@@ -55,6 +55,18 @@ final Map<String, String> esES = {
   AppTranslation.mostPopular: "El más popular",
   AppTranslation.youWouldLike: "Riesgo para complacerte",
   AppTranslation.gotIt: "Entiendo",
+  AppTranslation.findNuggets: "Encuentra nuevos libros únicos ",
+  AppTranslation.discoverNewBook: "Descubre nuevos libros a través de muchas reseñas",
+  AppTranslation.shareRating: "Comparte tu opinión",
+  AppTranslation.rateYourGallery: "Da tu opinión sobre tu biblioteca personal",
+  AppTranslation.errorSync: "Error de sincronización...",
+  AppTranslation.editProfil: "Edita tu perfil",
+  AppTranslation.aboutMe: "ACERCA DE MÍ",
+  AppTranslation.addBio: "Añadir una biografía",
+  AppTranslation.noBio: "Sin biografía",
+  AppTranslation.books: "Libros",
+  AppTranslation.followers: "Suscriptores",
+  AppTranslation.edit: "Modificar",
 
 
 

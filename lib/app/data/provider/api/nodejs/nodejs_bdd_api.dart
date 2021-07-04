@@ -100,7 +100,10 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBook),
-          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
+          headers: {
+            "authorization": "Bearer $token",
+            "search": Uri.encodeFull(search)
+          });
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -121,8 +124,11 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       print('URI ENCODE ${Uri.encodeComponent(search)}');
-      http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByCategories),
-          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
+      http.Response resp = await http
+          .get(Uri.parse(UrlAPI.searchBooksByCategories), headers: {
+        "authorization": "Bearer $token",
+        "search": Uri.encodeFull(search)
+      });
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -144,7 +150,10 @@ class NodeJSBddAPI {
       var token = (await t.getIdToken()).token;
       print('URI ENCODE ${Uri.encodeComponent(search)}');
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByAuthor),
-          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
+          headers: {
+            "authorization": "Bearer $token",
+            "search": Uri.encodeFull(search)
+          });
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -165,7 +174,10 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchUsers),
-          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
+          headers: {
+            "authorization": "Bearer $token",
+            "search": Uri.encodeFull(search)
+          });
       if (resp.statusCode == 200) {
         var listUsers = json.decode(resp.body);
         List<UserModel> users = [];
@@ -384,7 +396,8 @@ class NodeJSBddAPI {
     }
   }
 
-  Future<bool> deleteBookFromGallery(String idUser, Book book, int nbBooks) async {
+  Future<bool> deleteBookFromGallery(
+      String idUser, Book book, int nbBooks) async {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
@@ -453,7 +466,10 @@ class NodeJSBddAPI {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBookSeller),
-          headers: {"authorization": "Bearer $token", "search": Uri.encodeFull(search)});
+          headers: {
+            "authorization": "Bearer $token",
+            "search": Uri.encodeFull(search)
+          });
       if (resp.statusCode == 200) {
         var listBookseller = json.decode(resp.body);
         List<BookSeller> booksellers = [];
@@ -496,13 +512,13 @@ class NodeJSBddAPI {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
-      http.Response resp = await http.get(
-          Uri.parse(UrlAPI.getLastBooksWeek),
+      http.Response resp = await http.get(Uri.parse(UrlAPI.getLastBooksWeek),
           headers: {"authorization": "Bearer $token"});
       if (resp.statusCode == 200) {
         var listBooksWeek = json.decode(resp.body);
         List<LastBookWeek> booksWeek = [];
-        listBooksWeek.forEach((book) => booksWeek.add(LastBookWeek.fromJson(book)));
+        listBooksWeek
+            .forEach((book) => booksWeek.add(LastBookWeek.fromJson(book)));
         return booksWeek;
       } else {
         print("error get http getLastBooksWeek --> ${resp.body}");
@@ -647,8 +663,7 @@ class NodeJSBddAPI {
       if (resp.statusCode == 200) {
         var listRatings = json.decode(resp.body);
         List<Rating> ratings = [];
-        listRatings
-            .forEach((rating) => ratings.add(Rating.fromJson(rating)));
+        listRatings.forEach((rating) => ratings.add(Rating.fromJson(rating)));
         return ratings;
       } else {
         print("error get http getFeed --> ${resp.body}");
@@ -659,5 +674,29 @@ class NodeJSBddAPI {
       return [];
     }
   }
-  
+
+  Future<List<Book>> getRecommendationBooks(int mlID) async {
+    try {
+      var t = await FirebaseAuth.instance.currentUser();
+      var token = (await t.getIdToken()).token;
+      http.Response resp = await http.get(
+          Uri.parse(UrlAPI.getRecommendationBooks + "/$mlID"),
+          headers: {"authorization": "Bearer $token"});
+      if (resp.statusCode == 200) {
+        print(resp.body);
+        var listBooks = json.decode(resp.body)["books"];
+        List<Book> books = [];
+        listBooks.forEach((book) {
+          if (!book.isEmpty) books.add(Book.fromJson(book));
+        });
+        return books;
+      } else {
+        print("error get http getRecommendationBooks --> ${resp.body}");
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
 }

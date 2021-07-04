@@ -7,23 +7,26 @@ import 'package:get/get.dart';
 
 class BookItem extends StatelessWidget {
   final double width, height;
-  final bool showTitle, showAuthor;
+  final bool showTitle, showAuthor, isAdd;
   final Book book;
+  final VoidCallback onClickAdd;
 
   BookItem(
       {this.width: 110,
       this.height: 170,
       this.showTitle: false,
       this.showAuthor: false,
+      this.isAdd: false,
+      this.onClickAdd,
       @required this.book})
       : assert(book != null);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => book.title != null
+      onTap: () => !isAdd && book.title != null
           ? Get.toNamed(Routes.BOOK_DETAIL, arguments: book)
-          : null,
+          : isAdd && onClickAdd != null ? onClickAdd() : null,
       child: Container(
         //color: Colors.yellow,
         child: Column(
@@ -36,26 +39,40 @@ class BookItem extends StatelessWidget {
                 tag: book.id ?? DateTime.now(),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: book.coverImage != null && book.coverImage != ""
-                      ? CachedNetworkImage(
-                          imageUrl: book.coverImage,
-                          fit: BoxFit.cover,
-                          useOldImageOnUrlChange: true,
-                          placeholder: (context, url) =>
-                              CustomCircularProgress(radius: 15),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        )
-                      : Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
+                  child:
+                      !isAdd && book.coverImage != null && book.coverImage != ""
+                          ? CachedNetworkImage(
+                              imageUrl: book.coverImage,
+                              fit: BoxFit.cover,
+                              useOldImageOnUrlChange: true,
+                              placeholder: (context, url) =>
+                                  CustomCircularProgress(radius: 15),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[400],
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: !isAdd
+                                  ? Container()
+                                  : Center(
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                        size: 70,
+                                      ),
+                                    ),
+                            ),
                 ),
               ),
             ),
-            showTitle ? _buildTitle() : Container(),
-            showAuthor ? _buildAuthor() : Container(),
+            !isAdd && showTitle && book.title != null
+                ? _buildTitle()
+                : Container(),
+            !isAdd && showAuthor && book.authors != null
+                ? _buildAuthor()
+                : Container(),
           ],
         ),
       ),

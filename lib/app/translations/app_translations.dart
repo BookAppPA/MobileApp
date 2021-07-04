@@ -72,9 +72,21 @@ abstract class AppTranslation {
   static const String youWouldLike = "you_would_like";
   static const String gotIt = "got_it";
 
+  // a ajouter
+  static const String findNuggets = "find_nuggets";
+  static const String discoverNewBook = "discover_new_book";
+  static const String shareRating = "share_rating";
 
-
-
+  // ici
+  static const String rateYourGallery = "rate_your_gallery";
+  static const String errorSync = "error_sync";
+  static const String editProfil = "edit_profil";
+  static const String aboutMe = "about_me";
+  static const String addBio = "add_bio";
+  static const String noBio = "no_bio";
+  static const String books = "books";
+  static const String followers = "followers";
+  static const String edit = "edit";
 
 
 

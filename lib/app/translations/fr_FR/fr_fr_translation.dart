@@ -55,6 +55,19 @@ final Map<String, String> frFR = {
   AppTranslation.mostPopular: "Les Plus Populaires",
   AppTranslation.youWouldLike: "Risque De Vous Plaire",
   AppTranslation.gotIt: "Compris",
+  AppTranslation.findNuggets: "Dénichez de nouvelles pépites",
+  AppTranslation.discoverNewBook: "Découvrez de nouveaux livres à travers de nombreux avis ",
+  AppTranslation.shareRating: "Partagez votre avis",
+  AppTranslation.rateYourGallery: "Donnez votre avis sur votre bibliothèque personnelle ",
+  AppTranslation.errorSync: "Erreur de synchronisation...",
+  AppTranslation.editProfil: "Modifier votre profil",
+  AppTranslation.aboutMe: "A PROPOS DE MOI",
+  AppTranslation.addBio: "Ajouter une bio",
+  AppTranslation.noBio: "Aucune bio",
+  AppTranslation.books: "Livres",
+  AppTranslation.followers: "Abonnés",
+  AppTranslation.edit: "Modifier",
+
   
 
 

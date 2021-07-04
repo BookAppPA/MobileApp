@@ -55,6 +55,23 @@ final Map<String, String> enUS = {
   AppTranslation.mostPopular: "The Most Popular",
   AppTranslation.youWouldLike: "You would like",
   AppTranslation.gotIt: "Got it",
+  AppTranslation.findNuggets: "Find new nuggets",
+  AppTranslation.discoverNewBook: "Discover new books through many reviews",
+  AppTranslation.shareRating: "Share your opinion",
+  AppTranslation.rateYourGallery: "Give your opinion on your personal library",
+  AppTranslation.errorSync: "Synchronization error...",
+  AppTranslation.editProfil: "Edit your profile",
+  AppTranslation.aboutMe: "ABOUT ME",
+  AppTranslation.addBio: "Add a bio",
+  AppTranslation.noBio: "No bio",
+  AppTranslation.books: "Books",
+  AppTranslation.followers: "Subscribers",
+  AppTranslation.edit: "Modify",
+
+
+
+
+
 
 
   AppTranslation.finishABook: "I finished a book",

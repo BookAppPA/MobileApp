@@ -15,6 +15,7 @@ import 'package:book_app/app/modules/book_detail/book_preview/book_preview_page.
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_page.dart';
 import 'package:book_app/app/modules/choice_theme/choice_theme_page.dart';
+import 'package:book_app/app/modules/home/result_ml_books_page.dart';
 import 'package:book_app/app/modules/onboarding/onboarding_page.dart';
 import 'package:book_app/app/modules/profil/edit_profil/edit_profil_page.dart';
 import 'package:book_app/app/modules/profil/list_followers/list_followers_page.dart';
@@ -114,5 +115,8 @@ class AppPages {
         name: Routes.LIST_FOLLOWING,
         page: () => ListFollowersPage(isFollowing: true),
         binding: ListFollowersBinding(isFollowing: true)),
+    GetPage(
+        name: Routes.ML,
+        page: () => ResultMLBooksPage()),
   ];
 }
