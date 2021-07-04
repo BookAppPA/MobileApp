@@ -74,6 +74,36 @@ abstract class AppTranslation {
   static const String viewRemoved = 'view_removed';
   static const String noCategories = "no_categories";
   static const String subscriberMustAddReview = "subscriber_must_add_review";
+  static const String wantLeaveApp = "want_leave_app";
+  static const String yes = "yes";
+  static const String no = "no";
+  static const String logout = "logout";
+  static const String logoutQuestion = "logout_question";
+  static const String finishBook = "finish_book";
+  static const String addBookToGalleryQuestion = "add_book_to_gallery_question";
+  static const String deleteBookFromGalleryQuestion = "delete_book_from_gallery_question";
+  static const String searchBookAuthorUser = "search_book_author_user";
+  static const String bookSellerChoice = "bookseller_choice";
+  static const String mostPopular = "most_popular";
+  static const String youWouldLike = "you_would_like";
+  static const String gotIt = "got_it";
+
+  // a ajouter
+  static const String findNuggets = "find_nuggets";
+  static const String discoverNewBook = "discover_new_book";
+  static const String shareRating = "share_rating";
+
+  // ici
+  static const String rateYourGallery = "rate_your_gallery";
+  static const String errorSync = "error_sync";
+  static const String editProfil = "edit_profil";
+  static const String aboutMe = "about_me";
+  static const String addBio = "add_bio";
+  static const String noBio = "no_bio";
+  static const String books = "books";
+  static const String followers = "followers";
+  static const String edit = "edit";
+
 
 
   static const String finishABook = "finish_a_book";

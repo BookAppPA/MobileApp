@@ -42,6 +42,32 @@ final Map<String, String> frFR = {
   AppTranslation.favoriteCategoryQuestion: "Bienvenue,\nPour commencer, quels sont vos genres favoris ?",
   AppTranslation.finish: "Terminer",
   AppTranslation.leave: "Quitter",
+  AppTranslation.wantLeaveApp: "Voulez-vous quitter l'application ?",
+  AppTranslation.yes: "Oui",
+  AppTranslation.no: "Non",
+  AppTranslation.logout: "Déconnexion",
+  AppTranslation.logoutQuestion: "Voulez-vous vous déconnecter\nde votre compte ?",
+  AppTranslation.finishBook: "Livre fini",
+  AppTranslation.addBookToGalleryQuestion: "Voulez-vous ajouter ce livre à votre bibliothèque et y laisser un avis ?",
+  AppTranslation.deleteBookFromGalleryQuestion: "Voulez-vous supprimer définitivement ce livre et votre avis ?",
+  AppTranslation.searchBookAuthorUser: "Rechercher livre/auteur/utilisateur",
+  AppTranslation.bookSellerChoice: "Les choix des libraires",
+  AppTranslation.mostPopular: "Les Plus Populaires",
+  AppTranslation.youWouldLike: "Risque De Vous Plaire",
+  AppTranslation.gotIt: "Compris",
+  AppTranslation.findNuggets: "Dénichez de nouvelles pépites",
+  AppTranslation.discoverNewBook: "Découvrez de nouveaux livres à travers de nombreux avis ",
+  AppTranslation.shareRating: "Partagez votre avis",
+  AppTranslation.rateYourGallery: "Donnez votre avis sur votre bibliothèque personnelle ",
+  AppTranslation.errorSync: "Erreur de synchronisation...",
+  AppTranslation.editProfil: "Modifier votre profil",
+  AppTranslation.aboutMe: "A PROPOS DE MOI",
+  AppTranslation.addBio: "Ajouter une bio",
+  AppTranslation.noBio: "Aucune bio",
+  AppTranslation.books: "Livres",
+  AppTranslation.followers: "Abonnés",
+  AppTranslation.edit: "Modifier",
+
   
 
   AppTranslation.serverError: 'Erreur du serveur... Réessayer plus tard',
@@ -57,6 +83,12 @@ final Map<String, String> frFR = {
   AppTranslation.viewRemoved: 'Avis supprimé',
   AppTranslation.noCategories: "Pas de catégories",
   AppTranslation.subscriberMustAddReview: "Vos abonnés doivent ajouter un avis\npour les retrouver dans votre fil d'actualité",
+
+
+
+
+
+
 
   AppTranslation.finishABook: "J'ai finis un livre",
   AppTranslation.locationCheckTitle : "Localisation vérifiée",

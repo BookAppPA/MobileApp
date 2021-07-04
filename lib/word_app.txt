@@ -46,7 +46,6 @@ Déconnexion
 Voulez-vous vous déconnecter\nde votre compte ?
 Livre fini
 Voulez-vous ajouter ce livre à votre bibliothèque et y laisser un avis ?
-Supprimer le livre
 Voulez-vous supprimer définitivement ce livre et votre avis ?
 Rechercher livre/auteur/utilisateur
 Les choix des libraires
@@ -153,3 +152,4 @@ Avis modifié
 Avis supprimé
 Aucune catégories
 Vos abonnés doivent ajouter un avis\npour les retrouver dans votre fil d'actualité
+Livres recommandés

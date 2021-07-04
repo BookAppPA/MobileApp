@@ -32,4 +32,8 @@ class BookRepository {
     return await _databaseAPI.searchUsers(search);
   }
 
+  getRecommendationBooks(int mlID) async {
+    return await _databaseAPI.getRecommendationBooks(mlID);
+  }
+
 }
