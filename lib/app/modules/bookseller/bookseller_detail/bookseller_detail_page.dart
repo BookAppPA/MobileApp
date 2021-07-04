@@ -129,7 +129,9 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                                   orElse: () => null) !=
                               null;
                           return ButtonGradient(
-                            text: isFollow ? AppTranslation.noFollow.tr : AppTranslation.follow.tr,
+                            text: isFollow
+                                ? AppTranslation.noFollow.tr
+                                : AppTranslation.follow.tr,
                             width: 120,
                             height: 35,
                             fontSize: 16,
@@ -402,7 +404,9 @@ ${controller.bookSeller.openHour["sunday"] ?? AppTranslation.noOpenHoursSpecify.
             ),
           ),
           SizedBox(height: 10),
-          Expanded(
+          SizedBox(
+            width: Get.width,
+            height: 180,
             child: GetBuilder<BookSellerDetailController>(
               builder: (_) {
                 if (_.bookSeller.coord == null) return Container();
