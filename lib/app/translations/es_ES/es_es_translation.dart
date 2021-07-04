@@ -61,6 +61,8 @@ final Map<String, String> esES = {
   AppTranslation.discoverNewBook: "Descubre nuevos libros a través de muchas reseñas",
   AppTranslation.shareRating: "Comparte tu opinión",
   AppTranslation.rateYourGallery: "Da tu opinión sobre tu biblioteca personal",
+  AppTranslation.findSeller: "Dar / Recibir consejos",
+  AppTranslation.shareBookWeek: "Como librero, aconseja semanalmente ¡Como usuario, consigue algo!",
   AppTranslation.errorSync: "Error de sincronización...",
   AppTranslation.editProfil: "Edita tu perfil",
   AppTranslation.aboutMe: "ACERCA DE MÍ",

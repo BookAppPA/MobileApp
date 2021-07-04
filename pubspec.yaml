@@ -46,6 +46,7 @@ dependencies:
   cached_network_image:       # gestion cache image
   path_provider:
   flutter_svg:
+  lottie: 
 
   # Utils
   connectivity:             # gestion connection internet

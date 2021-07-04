@@ -8,6 +8,7 @@ import 'package:book_app/app/modules/widgets_global/rating_item.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -63,12 +64,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       )
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                      ),
+                                    : Image.asset(ConstantImage.noBookCover, fit: BoxFit.cover,),
                               ),
                             ),
                           ),

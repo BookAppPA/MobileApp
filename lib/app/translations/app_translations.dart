@@ -91,6 +91,8 @@ abstract class AppTranslation {
   static const String discoverNewBook = "discover_new_book";
   static const String shareRating = "share_rating";
   static const String rateYourGallery = "rate_your_gallery";
+  static const String findSeller = 'find_seller';
+  static const String shareBookWeek = 'share_book';
   static const String errorSync = "error_sync";
   static const String editProfil = "edit_profil";
   static const String aboutMe = "about_me";

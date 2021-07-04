@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,7 +51,7 @@ class BookItem extends StatelessWidget {
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),
                             )
-                          : Container(
+                          : isAdd ? Container(
                               decoration: BoxDecoration(
                                   color: Colors.grey[400],
                                   borderRadius: BorderRadius.circular(5)),
@@ -63,7 +64,9 @@ class BookItem extends StatelessWidget {
                                         size: 70,
                                       ),
                                     ),
-                            ),
+                            ) 
+                          : 
+                          Image.asset(ConstantImage.noBookCover, fit: BoxFit.cover,),
                 ),
               ),
             ),

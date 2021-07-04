@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 abstract class ConstantImage {
   static final logo = "assets/logo.png";
+  static final noBookCover = "assets/no_cover.png";
 
   static final List<String> listCategoriesPhotos = [
     "assets/categories/science.jpg",
