@@ -211,6 +211,9 @@ class AuthController extends GetxController {
       print("USER LOGIN --> ${user.email}");
       if (user is UserModel) {
         UserController.to.user = user;
+        if (user.listCategories == null || user.listCategories.length == 0)
+          Get.offAllNamed(Routes.CHOICE_THEME);
+          return;
       }
       else
         UserController.to.bookseller = user;

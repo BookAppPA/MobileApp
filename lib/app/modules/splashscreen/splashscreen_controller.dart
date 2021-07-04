@@ -45,8 +45,13 @@ class SplashScreenController extends GetxController {
         if (user is UserModel && user.isBlocked) {
           Get.offAllNamed(Routes.AUTH, arguments: true);
         } else {
-          if (user is UserModel)
+          if (user is UserModel) {
             UserController.to.user = user;
+            print("IIICI USER => ${user.listCategories}");
+            if (user.listCategories == null || user.listCategories.length == 0)
+              Get.offAllNamed(Routes.CHOICE_THEME);
+              return;
+          }
           else {
             UserController.to.bookseller = user;
             if (UserController.to.bookseller.dateNextAddBookWeek != null) {

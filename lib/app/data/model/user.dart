@@ -47,7 +47,7 @@ class UserModel {
       this.listFollowers = [];
       this.listFollowing = [];
       this.pushToken = json['pushToken'];
-      this.listCategories = json['listCategories'] ?? ["Aucune catégorie"];
+      this.listCategories = json['listCategories'] ?? [];
       this.recommendationID = json['ml_id'] ?? 1;
   }
 

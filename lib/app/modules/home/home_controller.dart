@@ -62,7 +62,7 @@ class HomeController extends GetxController {
         .getRecommendationBooks(UserController.to.user.recommendationID);
     print("recommended books => $res");
     _listRecommendationBooks = res;
-    _hasDataRecommendationBooks = true;
+    _hasDataRecommendationBooks = res.length > 0;
     update();
   }
 
