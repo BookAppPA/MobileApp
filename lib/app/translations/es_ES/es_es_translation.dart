@@ -48,6 +48,21 @@ final Map<String, String> esES = {
   AppTranslation.locationCheckTitle : "Location Check",
 
 
+  AppTranslation.serverError: "Error del servidor... Inténtelo de nuevo más tarde",
+  AppTranslation.siretError: "El número SIREN o SIRET no corresponde a un negocio minorista de libros en una tienda especializada",
+  AppTranslation.changeReview: "Cambiar la opinión",
+  AppTranslation.addTitle: 'Agregar un título',
+  AppTranslation.add: "Agregar",
+  AppTranslation.doNotSend: "No enviar",
+  AppTranslation.titleMustThreeLength: "El título debe contener al menos 3 caracteres",
+  AppTranslation.descMustbeThreeLength: 'La descripción debe contener al menos 3 caracteres',
+  AppTranslation.addingBookWithoutReview: "Añadir el libro sin previo aviso",
+  AppTranslation.confirmAddingBookToLibraryWithoutReview: "¿Confirma la adición del libro a tu biblioteca sin dejar un aviso ?",
+  AppTranslation.viewRemoved: 'Aviso eliminado',
+  AppTranslation.noCategories: "Sin categorías",
+  AppTranslation.subscriberMustAddReview: "Tus suscriptores deben añadir una reseña\npara encontrarlos en tu feed de noticias",
+
+
   // EXCEPTION FIREBASE
   AppTranslation.errorAPIdefault: "An error has been made... Please try again",
   AppTranslation.errorAPInetwork: "Error network. Please check your internet connection",
