@@ -58,13 +58,6 @@ class BookDetailController extends GetxController {
         haveAlreadyBook = UserController.to.user.listBooksRead
                 .firstWhere((item) => item.id == book.id, orElse: () => null) !=
             null;
-      await UserController.analytics.logViewItem(
-        itemId: book.id,
-        itemName: book.title,
-        itemLocationId: UserController.to.user.id,
-        itemCategory: book.categories != null ? book.categories.first : '',
-        origin: book.authors != null ? book.authors.first : '',
-      );
     } else
       _errorLoad();
     update();

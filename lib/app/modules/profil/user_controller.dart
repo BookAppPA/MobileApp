@@ -154,7 +154,7 @@ class UserController extends GetxController {
         null) return false;
     var titleRating;
     var descRating;
-    var noteRating;
+    double noteRating;
     await Get.bottomSheet(
         AddRatingBottomSheet(
             title: AppTranslation.addRating.tr,
@@ -175,6 +175,14 @@ class UserController extends GetxController {
       var resAddRating = await repository.addRating(
           _user, book, titleRating, descRating, noteRating);
       if (resAddRating) {
+        await UserController.analytics.logViewItem(
+          itemId: book.id,
+          itemName: book.title,
+          itemLocationId: UserController.to.user.id,
+          itemCategory: book.categories != null ? book.categories.first : '',
+          origin: book.authors != null ? book.authors.first : '',
+          quantity: noteRating.toInt()
+        );
         var res =
             await repository.addBookToGallery(_user.id, book, _user.nbBooks);
         print("res add book --> $res");
@@ -223,7 +231,8 @@ class UserController extends GetxController {
       var index = _user.listBooksRead.indexWhere((item) => item.id == book.id);
       if (index != -1) {
         var book = _user.listBooksRead[index];
-        var ratingIndex = _user.listLastRatings.indexWhere((item) => item.bookId == book.id);
+        var ratingIndex =
+            _user.listLastRatings.indexWhere((item) => item.bookId == book.id);
         if (ratingIndex != -1) {
           _user.listLastRatings.removeAt(ratingIndex);
         }
@@ -243,22 +252,21 @@ class UserController extends GetxController {
     var descRating;
     var noteRating;
     await Get.bottomSheet(
-        AddRatingBottomSheet(
-          title: AppTranslation.changeReview.tr,
-          isAdd: false,
-          preTitle: rating.title,
-          preDesc: rating.message,
-          preNote: rating.note,
-          onConfirm: (title, desc, note) {
-            titleRating = title;
-            descRating = desc;
-            noteRating = note;
-          },
-          onCancel: () => Get.back(),
-        ),
-      );
-    if (titleRating == null)
-      return;
+      AddRatingBottomSheet(
+        title: AppTranslation.changeReview.tr,
+        isAdd: false,
+        preTitle: rating.title,
+        preDesc: rating.message,
+        preNote: rating.note,
+        onConfirm: (title, desc, note) {
+          titleRating = title;
+          descRating = desc;
+          noteRating = note;
+        },
+        onCancel: () => Get.back(),
+      ),
+    );
+    if (titleRating == null) return;
 
     var title = titleRating ?? rating.title;
     var desc = descRating ?? rating.message;
