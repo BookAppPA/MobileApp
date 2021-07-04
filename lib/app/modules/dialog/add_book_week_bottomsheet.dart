@@ -1,5 +1,6 @@
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _AddBookWeekBottomSheetState extends State<AddBookWeekBottomSheet> {
           Padding(
             padding: EdgeInsets.only(top: 10),
             child: Text(
-              "Ajouter ce Livre de la Semaine",
+              AppTranslation.addBookWeek.tr,
               style: TextStyle(fontSize: 17),
             ),
           ),
@@ -54,7 +55,7 @@ class _AddBookWeekBottomSheetState extends State<AddBookWeekBottomSheet> {
               maxLines: 5,
               minLines: 3,
               maxLength: 500,
-              placeholder: "Ajouter une description",
+              placeholder: AppTranslation.addDescription.tr,
               padding: EdgeInsets.all(10),
             ),
           ),
@@ -88,7 +89,7 @@ class _AddBookWeekBottomSheetState extends State<AddBookWeekBottomSheet> {
                         ? widget.onCancel()
                         : Get.back(),
                     child: Text(
-                      "Annuler",
+                      AppTranslation.cancel.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'SF Pro Display',
@@ -115,11 +116,10 @@ class _AddBookWeekBottomSheetState extends State<AddBookWeekBottomSheet> {
                       widget.onConfirm(_bioController.text.trim());
                       Get.back();
                     } else {
-                      CustomSnackbar.notif(
-                          "Votre description doit contenir au moins 3 caractères");
+                      CustomSnackbar.notif(AppTranslation.descMustbeThreeLength.tr);
                     }
                   },
-                  text: "Confirmer",
+                  text: AppTranslation.confirm.tr,
                   colorBackground: ConstantColor.grey,
                 ),
               ],

@@ -5,6 +5,7 @@ import 'package:book_app/app/modules/dialog/add_book_week_bottomsheet.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -70,7 +71,7 @@ class BookDetailController extends GetxController {
   }
 
   _errorLoad() {
-    errorMessage = "Erreur du serveur...";
+    errorMessage = AppTranslation.serverError.tr;
     update();
   }
 
@@ -127,16 +128,16 @@ class BookDetailController extends GetxController {
       var res = await UserController.to.addBookWeek(book, desc);
       if (res) {
         UserController.to.isAddBookWeek(false);
-        CustomSnackbar.snackbar("Ce livre à été ajouté au Livre de la Semaine");
+        CustomSnackbar.snackbar(AppTranslation.bookHasAddBookWeek.tr);
       } else
-        CustomSnackbar.snackbar("Vous avez déjà ajouté ce livre");
+        CustomSnackbar.snackbar(AppTranslation.alreadyAddBook.tr);
       haveAlreadyBook = true;
       update();
     } else {
       Future.delayed(
         Duration(milliseconds: 500),
         () => CustomSnackbar.snackbar(
-            "Vous devez attendre la semaine prochaine pour ajouter un nouveau Livre de la Semaine",
+            AppTranslation.mustWaitToAddNewBookWeek.tr,
             shortDuration: false),
       );
     }
@@ -145,9 +146,9 @@ class BookDetailController extends GetxController {
   _addBookToGallery() async {
     var res = await UserController.to.addBookToGallery(book);
     if (res)
-      CustomSnackbar.snackbar("Ce livre à été ajouté a votre bibliothèque");
+      CustomSnackbar.snackbar(AppTranslation.bookHasAddToGallery.tr);
     else
-      CustomSnackbar.snackbar("Erreur du serveur...");
+      CustomSnackbar.snackbar(AppTranslation.serverError.tr);
     haveAlreadyBook = true;
     update();
   }
@@ -155,9 +156,9 @@ class BookDetailController extends GetxController {
   _deleteBookFromGallery() async {
     var res = await UserController.to.deleteBookFromGallery(book);
     if (res)
-      CustomSnackbar.snackbar("Ce livre à été supprimé de votre bibliothèque");
+      CustomSnackbar.snackbar(AppTranslation.bookHasDeleteFromGallery.tr);
     else
-      CustomSnackbar.snackbar("Vous avez déjà supprimé ce livre");
+      CustomSnackbar.snackbar(AppTranslation.alreadyDeleteBook.tr);
     haveAlreadyBook = false;
     update();
   }

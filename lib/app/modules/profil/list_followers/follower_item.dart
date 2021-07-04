@@ -3,6 +3,7 @@ import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class FollowerItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => user.id != null
           ? user.isBlocked
-              ? CustomSnackbar.snackbar("Ce profil à été bloqué")
+              ? CustomSnackbar.snackbar(AppTranslation.profilBlocked.tr)
               : user.isBookSeller
                   ? Get.toNamed(Routes.BOOKSELLER_DETAIL,
                       arguments: BookSeller(id: user.id))

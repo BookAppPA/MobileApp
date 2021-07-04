@@ -2,7 +2,6 @@ import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/lastBookWeek.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
-import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:get/get.dart';

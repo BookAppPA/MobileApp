@@ -1,3 +1,4 @@
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +8,11 @@ import 'package:get/get.dart';
 abstract class BasicDialog {
   static showExitAppDialog() {
     Get.defaultDialog(
-      title: "Quitter",
-      content: Text("Veux-tu quitter l'application ?"),
-      textCancel: "Non",
+      title: AppTranslation.leave.tr,
+      content: Text(AppTranslation.wantLeaveApp.tr),
+      textCancel: AppTranslation.no.tr,
       onCancel: () => null,
-      textConfirm: "Oui",
+      textConfirm: AppTranslation.yes.tr,
       buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
@@ -22,14 +23,14 @@ abstract class BasicDialog {
 
   static showLogoutDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
-      title: "Déconnexion",
+      title: AppTranslation.logout.tr,
       content: Text(
-        "Veux-tu te déconnecter\nde ton compte ?",
+        AppTranslation.logoutQuestion.tr,
         textAlign: TextAlign.center,
       ),
-      textCancel: "Non",
+      textCancel: AppTranslation.no.tr,
       onCancel: () => null,
-      textConfirm: "Oui",
+      textConfirm: AppTranslation.yes.tr,
       buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
@@ -57,7 +58,7 @@ abstract class BasicDialog {
         child: Column(
           children: <Widget>[
             ListTile(
-              title: Text("Français"),
+              title: Text(AppTranslation.french.tr),
               trailing: Icon(Icons.chevron_right_outlined),
               onTap: () {
                 Get.updateLocale(Locale("fr", "FR"));
@@ -65,7 +66,7 @@ abstract class BasicDialog {
               },
             ),
             ListTile(
-              title: Text("Anglais"),
+              title: Text(AppTranslation.english.tr),
               trailing: Icon(Icons.chevron_right_outlined),
               onTap: () {
                 Get.updateLocale(Locale("en", "US"));
@@ -73,7 +74,7 @@ abstract class BasicDialog {
               },
             ),
             ListTile(
-              title: Text("Espagnol"),
+              title: Text(AppTranslation.spanish.tr),
               trailing: Icon(Icons.chevron_right_outlined),
               onTap: () {
                 Get.updateLocale(Locale("es", "ES"));
@@ -88,14 +89,14 @@ abstract class BasicDialog {
 
   static showConfirmFinishBookDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
-      title: "Livre fini",
+      title: AppTranslation.finishBook.tr,
       content: Text(
-        "Veux-tu ajouter ce livre à ta bibliothèque et y laisser un avis ?",
+        AppTranslation.addBookToGalleryQuestion.tr,
         textAlign: TextAlign.center,
       ),
-      textCancel: "Non",
+      textCancel: AppTranslation.no.tr,
       onCancel: () => null,
-      textConfirm: "Oui",
+      textConfirm: AppTranslation.yes.tr,
       buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
@@ -111,14 +112,14 @@ abstract class BasicDialog {
   static showConfirmAddBookWithoutRating({@required VoidCallback onConfirm}) {
     assert(onConfirm != null);
     Get.defaultDialog(
-      title: "Ajouter le livre sans avis",
+      title: AppTranslation.addingBookWithoutReview.tr,
       content: Text(
-        "Confirmer l'ajout du livre à votre bibliothèque sans y laisser un avis ?",
+        AppTranslation.confirmAddingBookToLibraryWithoutReview.tr,
         textAlign: TextAlign.center,
       ),
-      textCancel: "Non",
+      textCancel: AppTranslation.no.tr,
       onCancel: () => null,
-      textConfirm: "Oui",
+      textConfirm: AppTranslation.yes.tr,
       buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
@@ -131,14 +132,14 @@ abstract class BasicDialog {
 
   static showConfirmDeleteBookDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
-      title: "Supprimer le livre",
+      title: AppTranslation.deleteBook.tr,
       content: Text(
-        "Veux-tu supprimer définitivement ce livre et ton avis ?",
+       AppTranslation.deleteBookFromGalleryQuestion.tr,
         textAlign: TextAlign.center,
       ),
-      textCancel: "Non",
+      textCancel: AppTranslation.no.tr,
       onCancel: () => null,
-      textConfirm: "Oui",
+      textConfirm: AppTranslation.yes.tr,
       buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,
@@ -187,14 +188,14 @@ abstract class BasicDialog {
 
   static showConfirmPictureDialog({VoidCallback onConfirm}) {
     Get.defaultDialog(
-      title: "Ajouter une photo",
+      title: AppTranslation.addPicture.tr,
       content: Text(
-        "Vous ne pourrez plus modifier votre photo après cette étape",
+        AppTranslation.noNewEditPicture.tr,
         textAlign: TextAlign.center,
       ),
-      textCancel: "Annuler",
+      textCancel: AppTranslation.cancel.tr,
       onCancel: () => null,
-      textConfirm: "Confirmer",
+      textConfirm: AppTranslation.confirm.tr,
       buttonColor: ConstantColor.accent,
       confirmTextColor: Colors.black,
       cancelTextColor: Colors.black,

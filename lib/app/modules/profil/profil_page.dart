@@ -89,12 +89,12 @@ class ProfilPage extends GetWidget<ProfilController> {
                                 if (ctrl.user.bio != null)
                                   bio = ctrl.user.bio;
                                 else
-                                  bio = "Aucune bio";
+                                  bio = AppTranslation.noBio.tr;
                               } else if (ctrl.isMe) {
                                 if (_.user.bio != null)
                                   bio = _.user.bio;
                                 else
-                                  bio = "Aucune bio";
+                                  bio = AppTranslation.noBio.tr;
                               }
                               return Text(
                                 bio,
@@ -128,8 +128,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                                                 ctrl.user.picture == "")
                                         ? ctrl.changePicture()
                                         : ctrl.isMe
-                                            ? CustomSnackbar.snackbar(
-                                                "Vous ne pouvez plus modifier votre photo")
+                                            ? CustomSnackbar.snackbar(AppTranslation.noNewEditProfil.tr)
                                             : null,
                                     child: CircleAvatar(
                                       radius: 42,
@@ -227,7 +226,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Livres',
+                          AppTranslation.books.tr,
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 13,
@@ -252,7 +251,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Avis',
+                          AppTranslation.reviews.tr,
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 13,
@@ -283,7 +282,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            'Abonnés',
+                            AppTranslation.followers.tr,
                             style: TextStyle(
                               fontFamily: 'SF Pro Text',
                               fontSize: 13,
@@ -320,7 +319,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                                         ),
                                         SizedBox(height: 5),
                                         Text(
-                                          'Abonnements',
+                                          AppTranslation.following.tr,
                                           style: TextStyle(
                                             fontFamily: 'SF Pro Text',
                                             fontSize: 13,
@@ -355,7 +354,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                                         : ctrl
                                             .followUser(ctrl.user),
                                     text:
-                                        isFollow ? "Ne plus suivre" : "Suivre",
+                                        isFollow ? AppTranslation.noFollow.tr : AppTranslation.follow.tr,
                                   );
                                 }),
                               ],
@@ -387,10 +386,9 @@ class ProfilPage extends GetWidget<ProfilController> {
                                         : ctrl
                                             .followUser(ctrl.user),
                                 text: ctrl.isMe
-                                    ? "Modifier le profil"
+                                    ? AppTranslation.editProfil.tr
                                     : isFollow
-                                        ? "Ne plus suivre"
-                                        : "Suivre",
+                                        ? AppTranslation.noFollow.tr : AppTranslation.follow.tr,
                               );
                             }),
                             SizedBox(height: 20),
@@ -399,7 +397,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                                     width: Get.width,
                                     height: 40,
                                     onTap: () => ctrl.clickFinishBook(),
-                                    text: AppTranslation.finishABook.tr,
+                                    text: AppTranslation.finishThisBook.tr,
                                   )
                                 : Container(),
                           ],
@@ -434,7 +432,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "${_.isMe ? 'Mes' : 'Ses'} Derniers Livres",
+                              AppTranslation.pronomLastBooks.trParams({"pronom": _.isMe ? 'Mes' : 'Ses'}),
                               style: TextStyle(
                                 fontFamily: 'SF Pro Text',
                                 fontSize: 20,
@@ -496,7 +494,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${_.isMe ? 'Mes' : 'Ses'} Derniers Avis',
+                              AppTranslation.pronomLastRatings.trParams({"pronom": _.isMe ? 'Mes' : 'Ses'}),
                               style: TextStyle(
                                 fontFamily: 'SF Pro Text',
                                 fontSize: 20,

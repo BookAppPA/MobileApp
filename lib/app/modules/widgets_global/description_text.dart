@@ -1,5 +1,7 @@
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DescriptionTextWidget extends StatefulWidget {
   final String text;
@@ -23,7 +25,6 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
   @override
   void initState() {
     super.initState();
-
     if (widget.text.length > widget.maxLength) {
       firstHalf = widget.text.substring(0, widget.maxLength);
       secondHalf = widget.text.substring(widget.maxLength, widget.text.length);
@@ -47,7 +48,7 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        flag ? "plus" : "moins",
+                        flag ? AppTranslation.more.tr : AppTranslation.less.tr,
                         style: TextStyle(color: Colors.blue),
                       ),
                     ],

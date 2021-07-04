@@ -2,12 +2,12 @@ import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/search/search_book_item.dart';
 import 'package:book_app/app/modules/search/search_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
 import 'search_user_item.dart';
 
 class SearchPage extends GetView<SearchController> {
@@ -15,7 +15,7 @@ class SearchPage extends GetView<SearchController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: BackButtonAppBar(
-          textTitle: "Recherche",
+          textTitle: AppTranslation.search.tr,
         ),
         body: GestureDetector(
           onTap: () => Get.focusScope.unfocus(),
@@ -70,15 +70,15 @@ class SearchPage extends GetView<SearchController> {
                         );
                       else if (_.searchMode == 0 && _.books == null)
                         return Center(
-                          child: Text("Aucun livre trouvé..."),
+                          child: Text(AppTranslation.noFindBook.tr),
                         );
                       else if (_.searchMode == 1 && _.booksByAuthor == null)
                         return Center(
-                          child: Text("Aucun auteur trouvé..."),
+                          child: Text(AppTranslation.noFindAuthor.tr),
                         );
                       else if (_.searchMode == 2 && _.users == null)
                         return Center(
-                          child: Text("Aucun utilisateur trouvé..."),
+                          child: Text(AppTranslation.noFindUser.tr),
                         );
                       if (_.searchMode == 0 || _.searchMode == 1)
                         return ListView.separated(

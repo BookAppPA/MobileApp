@@ -19,6 +19,7 @@ abstract class AppTranslation {
 
   static const String noPermission = "no_permission";
   static const String accountBlocked = "account_blocked";
+  static const String profilBlocked = "profil_blocked";
   static const String emailNotExist = "email_not_exist";
   static const String passwordError = "password_error";
   static const String emailAlreadyUse = "email_already_use";
@@ -44,6 +45,7 @@ abstract class AppTranslation {
   static const String deleteBook = "delete_book";
   static const String finishThisBook = "finish_this_book";
   static const String averageRating = "average_rating";
+  static const String reviews = "reviews";
   static const String noReviews = "no_reviews";
   static const String ratingWithNumber = "rating_with_number";
   static const String contact = "contact";
@@ -58,8 +60,6 @@ abstract class AppTranslation {
   static const String favoriteCategoryQuestion = "favorite_category_question";
   static const String finish = "finish";
   static const String leave = "leave";
-  
-
   static const String serverError = 'servor_error';
   static const String siretError = "siret_error";
   static const String addReview = "add_review";
@@ -87,13 +87,9 @@ abstract class AppTranslation {
   static const String mostPopular = "most_popular";
   static const String youWouldLike = "you_would_like";
   static const String gotIt = "got_it";
-
-  // a ajouter
   static const String findNuggets = "find_nuggets";
   static const String discoverNewBook = "discover_new_book";
   static const String shareRating = "share_rating";
-
-  // ici
   static const String rateYourGallery = "rate_your_gallery";
   static const String errorSync = "error_sync";
   static const String editProfil = "edit_profil";
@@ -103,14 +99,89 @@ abstract class AppTranslation {
   static const String books = "books";
   static const String followers = "followers";
   static const String edit = "edit";
+  static const String iReadBook = "i_read_book";
+  static const String pronomLastBooks = "pronom_last_books";
+  static const String pronomLastRatings = "pronom_last_ratings";
+  static const String searchBook = "search_book";
+  static const String searchAuthor = "search_author";
+  static const String searchUser = "search_user";
+  static const String noFindBook = "no_find_book";
+  static const String noFindAuthor = "no_find_author";
+  static const String noFindUser = "no_find_user";
+  static const String xBookxRating = "x_book_x_rating";
+  static const String settings = "settings";
+  static const String language = "language";
+  static const String french = "french";
+  static const String english = "english";
+  static const String spanish = "spanish";
+  static const String contactSettings = "contact_settings";
+  static const String version = "version";
+  static const String noInternet = "no_internet";
+  static const String error = "error";
+  static const String home = "home";
+  static const String bookseller = "bookseller";
+  static const String profil = "profil";
+  static const String more = "more";
+  static const String less = "less";
+  static const String enterNameOfBookStore = "enter_name_of_book_store";
+  static const String areYouBookSeller = "are_you_bookseller";
+  static const String createProAccount = "create_pro_account";
+  static const String sirenOrSiretNumber = "siren_or_siret_number";
+  static const String addThisBook = "add_this_book";
+  static const String noOpenHoursSpecify = "no_open_hours_spe";
+  static const String noDescription = "no_description";
+  static const String addDescription = "add_description";
+  static const String phoneNumber = "phone_number";
+  static const String addPhoneNumber = "add_phone_number";
+  static const String hours = "hours";
+  static const String openHoursOf = "open_hours_of";
+  static const String closed = "closed";
+  static const String cancel = "cancel";
+  static const String confirm = "confirm";
+  static const String openAllDayQuestion = "open_all_day_question";
+  static const String morning = "morning";
+  static const String afternoon = "afternoon";
+  static const String evening = "evening";
+  static const String monday = "monday";
+  static const String tuesday = "tuesday";
+  static const String wednesday = "wednesday";
+  static const String thursday = "thursday";
+  static const String friday = "friday";
+  static const String saturday = "saturday";
+  static const String sunday = "sunday";
+  static const String addBookWeek = "add_book_week";
+  static const String bookHasAddBookWeek = "book_has_add_book_week";
+  static const String mustWaitToAddNewBookWeek = "must_wait_to_add_new_book_week";
+  static const String listFollowers = "list_followers";
+  static const String listFollowing = "list_following";
+  static const String noFollow = "no_follow";
+  static const String following = "following";
+  static const String noFollowing = "no_following";
+  static const String noFollower = "no_follower";
+  static const String noNewEditProfil = "no_new_edit_profil";
+  static const String addPicture = "add_picture";
+  static const String noNewEditPicture = "no_new_edit_picture";
+  static const String siretNumberIsAnotherAccount = "siret_number_is_another_account";
+  static const String errorEmail = "error_email";
+  static const String pseudoMustContainNBCaract = "pseudo_must_contain_nb_caract";
+  static const String passwordMustContainNBCaract = "password_must_contain_nb_caract";
+  static const String pseudoMustContainUniqueLetterNumberUnderscore = "pseudo_must_contain_unique_letter_number_underscore";
+  static const String pseudoMustContainUniqueAllCaract = "pseudo_must_contain_unique_all_caract";
+  static const String siretNumberMustContainSpecificLength = "siret_number_must_contain_specific_length";
+  static const String siretNumberMustContainUniqueDigit = "siret_number_must_contain_unique_digit";
+  static const String recommendationBooks = "recommendation_books";
+  static const String addRating = "add_rating";
+  static const String ratingEditing = "rating_editing";
+  static const String ratingDeleting = "rating_deleting";
+  static const String search = "search";
+  static const String science = "science";
+  static const String fiction = "fiction";
+  static const String histoire = "histoire";
+  static const String amour = "amour";
+  static const String education = "education";
+  static const String religion = "religion";
+  static const String policier = "policier";
+  static const String sports = "sports";
+  static const String comics = "comics";
 
-
-
-  static const String finishABook = "finish_a_book";
-
-  static const String locationCheckTitle = "location_check";
-
-  // EXCEPTION API
-  static const String errorAPIdefault = "error_api_default";
-  static const String errorAPInetwork = "error_api_network";
 }

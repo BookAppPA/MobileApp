@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_detail_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,13 +31,13 @@ class EditProfilController extends GetxController {
   String get phone => _phoneController.text.trim().replaceAll(" ", "");
 
   final List<String> days = [
-    "Lundi",
-    "Mardi",
-    "Mercredi",
-    "Jeudi",
-    "Vendredi",
-    "Samedi",
-    "Dimanche"
+    AppTranslation.monday.tr,
+    AppTranslation.tuesday.tr,
+    AppTranslation.wednesday.tr,
+    AppTranslation.thursday.tr,
+    AppTranslation.friday.tr,
+    AppTranslation.saturday.tr,
+    AppTranslation.sunday.tr
   ];
 
   List<String> hoursOfDays = [];
@@ -55,16 +56,17 @@ class EditProfilController extends GetxController {
       }
       openHours = UserController.to.bookseller.openHour;
       if (openHours.isEmpty)
-        hoursOfDays = List.generate(7, (index) => "Pas d'horaires spécifiés");
+        hoursOfDays =
+            List.generate(7, (index) => AppTranslation.noOpenHoursSpecify.tr);
       else {
         hoursOfDays = [
-          openHours["monday"] ?? "Pas d'horaires spécifiés",
-          openHours["tuesday"] ?? "Pas d'horaires spécifiés",
-          openHours["wednesday"] ?? "Pas d'horaires spécifiés",
-          openHours["thursday"] ?? "Pas d'horaires spécifiés",
-          openHours["friday"] ?? "Pas d'horaires spécifiés",
-          openHours["saturday"] ?? "Pas d'horaires spécifiés",
-          openHours["sunday"] ?? "Pas d'horaires spécifiés"
+          openHours["monday"] ?? AppTranslation.noOpenHoursSpecify.tr,
+          openHours["tuesday"] ?? AppTranslation.noOpenHoursSpecify.tr,
+          openHours["wednesday"] ?? AppTranslation.noOpenHoursSpecify.tr,
+          openHours["thursday"] ?? AppTranslation.noOpenHoursSpecify.tr,
+          openHours["friday"] ?? AppTranslation.noOpenHoursSpecify.tr,
+          openHours["saturday"] ?? AppTranslation.noOpenHoursSpecify.tr,
+          openHours["sunday"] ?? AppTranslation.noOpenHoursSpecify.tr
         ];
       }
       _beforeValues
@@ -96,37 +98,22 @@ class EditProfilController extends GetxController {
     update();
   }
 
-  changeHoursDay(String day, String newOpenHours) {
-    switch (day) {
-      case "Lundi":
-        openHours["monday"] = newOpenHours;
-        _beforeValues.addAll({'open_hour': openHours});
-        break;
-      case "Mardi":
-        openHours["tuesday"] = newOpenHours;
-        _beforeValues.addAll({'open_hour': openHours});
-        break;
-      case "Mercredi":
-        openHours["wednesday"] = newOpenHours;
-        _beforeValues.addAll({'open_hour': openHours});
-        break;
-      case "Jeudi":
-        openHours["thursday"] = newOpenHours;
-        _beforeValues.addAll({'open_hour': openHours});
-        break;
-      case "Vendredi":
-        openHours["friday"] = newOpenHours;
-        _beforeValues.addAll({'open_hour': openHours});
-        break;
-      case "Samedi":
-        openHours["saturday"] = newOpenHours;
-        _beforeValues.addAll({'open_hour': openHours});
-        break;
-      case "Dimanche":
-        openHours["sunday"] = newOpenHours;
-        _beforeValues.addAll({'open_hour': openHours});
-        break;
-    }
+  changeHoursDay(int day, String newOpenHours) {
+    if (day == 0)
+      openHours["monday"] = newOpenHours;
+    else if (day == 1)
+      openHours["tuesday"] = newOpenHours;
+    else if (day == 2)
+      openHours["wednesday"] = newOpenHours;
+    else if (day == 3)
+      openHours["thursday"] = newOpenHours;
+    else if (day == 4)
+      openHours["friday"] = newOpenHours;
+    else if (day == 5)
+      openHours["saturday"] = newOpenHours;
+    else if (day == 6) openHours["sunday"] = newOpenHours;
+
+    _beforeValues.addAll({'open_hour': openHours});
   }
 
   validateModif() async {

@@ -1,6 +1,7 @@
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/modules/search/search_book_item.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,7 @@ class ResultMLBooksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BackButtonAppBar(
-        textTitle: "Livres recommandés",
+        textTitle: AppTranslation.recommendationBooks.tr,
       ),
       body: Container(
           width: Get.width,

@@ -1,4 +1,5 @@
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +21,7 @@ class OnBoardingPage extends StatelessWidget {
         color: Color(0xFFBDBDBD),
         activeSize: Size(11.0, 10.0),
       ),
-      done: Text("COMPRIS"),
+      done: Text(AppTranslation.gotIt.tr),
       pages: [
         PageViewModel(
           reverse: true,
@@ -28,7 +29,7 @@ class OnBoardingPage extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 50),
               Text(
-                  "Déniche de nouvelles pépites ",
+                  AppTranslation.findNuggets.tr,
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 30,
@@ -40,7 +41,7 @@ class OnBoardingPage extends StatelessWidget {
                 ),
                 SizedBox(height: 25),
                 Text(
-                  "Découvre de nouveaux livres à travers de nombreux avis ",
+                  AppTranslation.discoverNewBook.tr,
                   style: TextStyle(
                     fontFamily: 'Helvetica-Normal',
                     fontSize: 14,
@@ -59,7 +60,7 @@ class OnBoardingPage extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 50),
               Text(
-                  "Partage ton avis",
+                  AppTranslation.shareRating.tr,
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 30,
@@ -71,7 +72,7 @@ class OnBoardingPage extends StatelessWidget {
                 ),
                 SizedBox(height: 25),
                 Text(
-                  "Donne ton avis sur ta bibliothèque personnelle ",
+                  AppTranslation.rateYourGallery.tr,
                   style: TextStyle(
                     fontFamily: 'Helvetica-Normal',
                     fontSize: 14,
@@ -90,7 +91,7 @@ class OnBoardingPage extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 50),
               Text(
-                  "Partage ton avis",
+                  AppTranslation.shareRating.tr,
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 30,
@@ -102,7 +103,7 @@ class OnBoardingPage extends StatelessWidget {
                 ),
                 SizedBox(height: 25),
                 Text(
-                  "Donne ton avis sur ta bibliothèque personnelle ",
+                  AppTranslation.rateYourGallery.tr,
                   style: TextStyle(
                     fontFamily: 'Helvetica-Normal',
                     fontSize: 14,
@@ -121,7 +122,7 @@ class OnBoardingPage extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 50),
               Text(
-                  "Partage ton avis",
+                  AppTranslation.shareRating.tr,
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 30,
@@ -133,7 +134,7 @@ class OnBoardingPage extends StatelessWidget {
                 ),
                 SizedBox(height: 25),
                 Text(
-                  "Donne ton avis sur ta bibliothèque personnelle ",
+                  AppTranslation.rateYourGallery.tr,
                   style: TextStyle(
                     fontFamily: 'Helvetica-Normal',
                     fontSize: 14,

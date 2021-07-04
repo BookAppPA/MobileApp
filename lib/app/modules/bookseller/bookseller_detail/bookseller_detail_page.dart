@@ -7,6 +7,7 @@ import 'package:book_app/app/modules/widgets_global/button_gradient.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/description_text.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    "Abonnés",
+                    AppTranslation.followers.tr,
                     style: TextStyle(
                       fontFamily: 'SF Pro Text',
                       fontSize: 13,
@@ -112,7 +113,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
               children: <Widget>[
                 _.bookSeller.phone != ""
                     ? ButtonGradient(
-                        text: "Contacter",
+                        text: AppTranslation.contact.tr,
                         width: 120,
                         height: 35,
                         fontSize: 16,
@@ -128,7 +129,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                                   orElse: () => null) !=
                               null;
                           return ButtonGradient(
-                            text: isFollow ? "Ne plus suivre" : "Suivre",
+                            text: isFollow ? AppTranslation.noFollow.tr : AppTranslation.follow.tr,
                             width: 120,
                             height: 35,
                             fontSize: 16,
@@ -140,7 +141,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                       ),
                 _.isMe
                     ? ButtonGradient(
-                        text: "Modifier",
+                        text: AppTranslation.edit.tr,
                         width: 120,
                         height: 35,
                         fontSize: 16,
@@ -166,7 +167,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Horaires: ",
+                  AppTranslation.openHours.tr,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 17,
@@ -179,7 +180,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                       return Row(
                         children: <Widget>[
                           Text(
-                            "Pas d'horaires spécifiés",
+                            AppTranslation.noOpenHoursSpecify.tr,
                             style: TextStyle(
                               fontSize: 14,
                               color: ConstantColor.greyDark,
@@ -189,8 +190,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                       );
                     return Row(
                       children: <Widget>[
-                        Text(
-                            "Lundi:\nMardi:\nMercredi:\nJeudi:\nVendredi:\nSamedi:\nDimanche:"),
+                        Text(AppTranslation.allDays.tr),
                         SizedBox(width: 20),
                         Text(_getHorraires()),
                       ],
@@ -206,7 +206,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Description: ",
+                  AppTranslation.description.tr,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 17,
@@ -216,7 +216,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                 GetBuilder<BookSellerDetailController>(
                   builder: (_) => DescriptionTextWidget(
                     text: _.bookSeller.bio == ""
-                        ? "Aucune description"
+                        ? AppTranslation.noDescription.tr
                         : _.bookSeller.bio,
                     style: TextStyle(
                       fontSize: 14,
@@ -236,13 +236,13 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
     String res = "";
     if (controller.bookSeller.openHour != null) {
       res += """
-${controller.bookSeller.openHour["monday"] ?? "Pas d'horaires spécifiés"}
-${controller.bookSeller.openHour["tuesday"] ?? "Pas d'horaires spécifiés"}
-${controller.bookSeller.openHour["wednesday"] ?? "Pas d'horaires spécifiés"}
-${controller.bookSeller.openHour["thursday"] ?? "Pas d'horaires spécifiés"}
-${controller.bookSeller.openHour["friday"] ?? "Pas d'horaires spécifiés"}
-${controller.bookSeller.openHour["saturday"] ?? "Pas d'horaires spécifiés"}
-${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
+${controller.bookSeller.openHour["monday"] ?? AppTranslation.noOpenHoursSpecify.tr}
+${controller.bookSeller.openHour["tuesday"] ?? AppTranslation.noOpenHoursSpecify.tr}
+${controller.bookSeller.openHour["wednesday"] ?? AppTranslation.noOpenHoursSpecify.tr}
+${controller.bookSeller.openHour["thursday"] ?? AppTranslation.noOpenHoursSpecify.tr}
+${controller.bookSeller.openHour["friday"] ?? AppTranslation.noOpenHoursSpecify.tr}
+${controller.bookSeller.openHour["saturday"] ?? AppTranslation.noOpenHoursSpecify.tr}
+${controller.bookSeller.openHour["sunday"] ?? AppTranslation.noOpenHoursSpecify.tr}""";
     }
     return res;
   }
@@ -263,7 +263,7 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       child: Text(
-                        "Derniers Livres de la Semaine",
+                        AppTranslation.lastBookWeek.tr,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -303,7 +303,7 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: Text(
-                      "Derniers Livres de la Semaine",
+                      AppTranslation.lastBookWeek.tr,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -351,7 +351,7 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       child: Text(
-                        "Derniers Livres de la Semaine",
+                        AppTranslation.lastBookWeek.tr,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -395,7 +395,7 @@ ${controller.bookSeller.openHour["sunday"] ?? "Pas d'horaires spécifiés"}""";
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Adresse: ",
+            AppTranslation.address.tr,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 17,

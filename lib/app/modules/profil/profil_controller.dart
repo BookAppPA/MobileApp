@@ -8,6 +8,7 @@ import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_det
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -84,12 +85,12 @@ class ProfilController extends GetxController {
   }
 
   _errorLoad() {
-    errorMessage = "Erreur du serveur...";
+    errorMessage = AppTranslation.serverError.tr;
     update();
   }
 
   _errorBlocked() {
-    errorMessage = "Ce compte à été bloqué";
+    errorMessage = AppTranslation.profilBlocked.tr;
     update();
   }
 
