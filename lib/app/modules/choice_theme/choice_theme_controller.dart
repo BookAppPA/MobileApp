@@ -4,6 +4,7 @@ import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:get/get.dart';
 
 class ChoiceThemeController extends GetxController {
@@ -13,14 +14,12 @@ class ChoiceThemeController extends GetxController {
   final UserRepository repository = UserRepository();
 
   selectCategories(String categoryName) {
-    print('Select $categoryName');
     listChoiceCategories.add(categoryName);
     isBlock = false;
     update();
   }
 
   deselectCategories(String categoryName){
-    print('Deselect $categoryName');
     listChoiceCategories.remove(categoryName);
     if(listChoiceCategories.length == 0){
       isBlock = true;
@@ -35,7 +34,7 @@ class ChoiceThemeController extends GetxController {
         UserController.to.user.listCategories = listChoiceCategories;
         Get.toNamed(Routes.SQUELETON);
       } else {
-        CustomSnackbar.snackbar('Erreur du serveur');
+        CustomSnackbar.snackbar(AppTranslation.serverError.tr);
       }
     }
   }

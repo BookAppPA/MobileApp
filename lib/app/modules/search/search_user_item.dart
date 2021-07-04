@@ -2,6 +2,7 @@ import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,7 +26,7 @@ class SearchUserItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => user.id != null
           ? user.isBlocked
-              ? CustomSnackbar.snackbar("Ce profil à été bloqué")
+              ? CustomSnackbar.snackbar(AppTranslation.profilBlocked.tr)
               : Get.toNamed(Routes.PROFIL,
                   arguments: isBookSeller ? UserModel(id: user.id) : user)
           : null,
@@ -86,7 +87,10 @@ class SearchUserItem extends StatelessWidget {
                     children: <Widget>[
                       showInfos
                           ? Text(
-                              "${user.nbBooks} Livres  •  ${user.nbRatings} Avis",
+                              AppTranslation.xBookxRating.trParams({
+                                "book": user.nbBooks.toString(),
+                                "rating": user.nbRatings.toString()
+                              }),
                               style: TextStyle(
                                 fontFamily: 'SF Pro Text',
                                 fontSize: 14,

@@ -6,11 +6,12 @@ import 'package:book_app/app/modules/widgets_global/chip_category.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/rating_item.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class BookDetailPage extends GetWidget<BookDetailController> {
@@ -20,7 +21,9 @@ class BookDetailPage extends GetWidget<BookDetailController> {
       appBar: BackButtonAppBar(),
       body: GetBuilder<BookDetailController>(
         builder: (_) => _.loadData && _.errorMessage == ""
-            ? Center(child: CustomCircularProgress(color: ConstantColor.accent, radius: 20))
+            ? Center(
+                child: CustomCircularProgress(
+                    color: ConstantColor.accent, radius: 20))
             : _.loadData && _.errorMessage != ""
                 ? Center(child: Text(_.errorMessage))
                 : SingleChildScrollView(
@@ -61,12 +64,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       )
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                      ),
+                                    : Image.asset(ConstantImage.noBookCover, fit: BoxFit.cover,),
                               ),
                             ),
                           ),
@@ -81,7 +79,7 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                           arguments: _.book.id),
                                       width: 166,
                                       height: 40,
-                                      text: "PREVIEW",
+                                      text: AppTranslation.preview.tr,
                                       fontSize: 15,
                                     )
                                   : Container(),
@@ -92,10 +90,10 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                     width: 166,
                                     height: 40,
                                     text: _.haveAlreadyBook
-                                        ? "Supprimer ce livre".toUpperCase()
+                                        ? AppTranslation.deleteBook.tr
                                         : UserController.to.isBookSeller
-                                            ? "Ajouter ce livre".toUpperCase()
-                                            : "J'ai finis ce livre"
+                                            ? AppTranslation.addThisBook.tr
+                                            : AppTranslation.finishThisBook.tr
                                                 .toUpperCase(),
                                     onTap: () => _.handleAddOrDeleteBook(),
                                   );
@@ -163,8 +161,12 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                   children: [
                                     Text(
                                       _.book.nbRating <= 0
-                                          ? "Aucun Avis"
-                                          : "Avis (${_.book.nbRating})",
+                                          ? AppTranslation.noReviews.tr
+                                          : AppTranslation.ratingWithNumber
+                                              .trParams({
+                                              "count":
+                                                  _.book.nbRating.toString()
+                                            }),
                                       style: TextStyle(
                                         fontFamily: 'SF Pro Text',
                                         fontSize: 20,
@@ -172,13 +174,6 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    _.book.nbRating > 5
-                                        ? Icon(
-                                            FontAwesomeIcons.chevronRight,
-                                            color: ConstantColor.greyDark,
-                                            size: 20,
-                                          )
-                                        : Container(),
                                     RatingBar.builder(
                                       initialRating: _.book.note,
                                       minRating: 0,

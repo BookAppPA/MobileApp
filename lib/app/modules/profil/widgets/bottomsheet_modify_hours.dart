@@ -1,4 +1,5 @@
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,105 +52,113 @@ class _BottomSheetModifyHoursState extends State<BottomSheetModifyHours> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(top: 10),
-            child: Text("Horaires d'ouverture de ${widget.day}", style: TextStyle(
-              fontSize: 17
-            ),),
+            child: Text(
+              AppTranslation.openHoursOf.trParams({"day": widget.day}),
+              style: TextStyle(fontSize: 17),
+            ),
           ),
-          isClosed ? Container() :
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () => setState(() {
-                  openAllDay = !openAllDay;
-                }),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Checkbox(
-                      value: openAllDay,
-                      onChanged: (value) => setState(() {
-                        openAllDay = value;
+          isClosed
+              ? Container()
+              : Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => setState(() {
+                        openAllDay = !openAllDay;
                       }),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Checkbox(
+                            value: openAllDay,
+                            onChanged: (value) => setState(() {
+                              openAllDay = value;
+                            }),
+                          ),
+                          SizedBox(width: 10),
+                          Text(AppTranslation.openAllDayQuestion.tr),
+                        ],
+                      ),
                     ),
-                    SizedBox(width: 10),
-                    Text("Ouvert toute la journée ?"),
                   ],
                 ),
-              ),
-            ],
-          ),
-          isClosed ? Container() :
-          Row(
-            mainAxisAlignment: openAllDay
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Column(
+          isClosed
+              ? Container()
+              : Row(
+                  mainAxisAlignment: openAllDay
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text(
-                      "Matin",
-                      style: TextStyle(fontSize: 17),
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            AppTranslation.morning.tr,
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: List.generate(
+                                openAllDay ? 1 : 2,
+                                (index) => GestureDetector(
+                                      onTap: () => _showTimePicker(index),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            openAllDay
+                                                ? hoursAllDaySelected[index]
+                                                : hoursDaySelected[index],
+                                            style: TextStyle(fontSize: 17),
+                                          ),
+                                          SizedBox(width: 3),
+                                          Icon(Icons.edit),
+                                        ],
+                                      ),
+                                    )).toList(),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(
-                          openAllDay ? 1 : 2,
-                          (index) => GestureDetector(
-                                onTap: () => _showTimePicker(index),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      openAllDay ? hoursAllDaySelected[index] : hoursDaySelected[index],
-                                      style: TextStyle(fontSize: 17),
-                                    ),
-                                    SizedBox(width: 3),
-                                    Icon(Icons.edit),
-                                  ],
-                                ),
-                              )).toList(),
-                    ),
+                    Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            openAllDay ? AppTranslation.evening.tr : AppTranslation.afternoon.tr,
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: List.generate(
+                                openAllDay ? 1 : 2,
+                                (index) => GestureDetector(
+                                      onTap: () => _showTimePicker(
+                                          openAllDay ? index + 1 : index + 2),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            openAllDay
+                                                ? hoursAllDaySelected[index + 1]
+                                                : hoursDaySelected[index + 2],
+                                            style: TextStyle(fontSize: 17),
+                                          ),
+                                          SizedBox(width: 3),
+                                          Icon(Icons.edit),
+                                        ],
+                                      ),
+                                    )).toList(),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      openAllDay ? "Soir" : "Après-midi",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(
-                          openAllDay ? 1 : 2,
-                          (index) => GestureDetector(
-                                onTap: () => _showTimePicker(openAllDay ? index + 1 : index + 2),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
-                                      openAllDay ? hoursAllDaySelected[index + 1] : hoursDaySelected[index + 2],
-                                      style: TextStyle(fontSize: 17),
-                                    ),
-                                    SizedBox(width: 3),
-                                    Icon(Icons.edit),
-                                  ],
-                                ),
-                              )).toList(),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
           SizedBox(height: 5),
           Row(
             children: [
               GestureDetector(
                 onTap: () => setState(() {
                   isClosed = !isClosed;
-                  tempHour = isClosed ? "Fermé" : tempHour;
+                  tempHour = isClosed ? AppTranslation.closed.tr : tempHour;
                   hours = tempHour;
                 }),
                 child: Row(
@@ -160,12 +169,12 @@ class _BottomSheetModifyHoursState extends State<BottomSheetModifyHours> {
                       value: isClosed,
                       onChanged: (value) => setState(() {
                         isClosed = value;
-                        tempHour = value ? "closed" : tempHour;
+                        tempHour = value ? AppTranslation.closed.tr : tempHour;
                         hours = tempHour;
                       }),
                     ),
                     SizedBox(width: 10),
-                    Text("Fermé"),
+                    Text(AppTranslation.closed.tr),
                   ],
                 ),
               ),
@@ -181,10 +190,11 @@ class _BottomSheetModifyHoursState extends State<BottomSheetModifyHours> {
                   height: 50,
                   width: 125,
                   child: OutlinedButton(
-                    onPressed: () =>
-                        widget.onCancel != null ? widget.onCancel() : Get.back(),
+                    onPressed: () => widget.onCancel != null
+                        ? widget.onCancel()
+                        : Get.back(),
                     child: Text(
-                      "Annuler",
+                      AppTranslation.cancel.tr,
                       style: TextStyle(
                         fontFamily: 'SF Pro Display',
                         fontSize: 17,
@@ -207,15 +217,21 @@ class _BottomSheetModifyHoursState extends State<BottomSheetModifyHours> {
                 ButtonArround(
                   onTap: () {
                     if (isClosed)
-                      hours = "Fermé";
+                      hours = AppTranslation.closed.tr;
                     else if (openAllDay)
                       hours = hoursAllDaySelected.join(" - ");
                     else
-                      hours = hoursDaySelected[0] + " - " + hoursDaySelected[1] + ", " + hoursDaySelected[2] + " - " + hoursDaySelected[3];
+                      hours = hoursDaySelected[0] +
+                          " - " +
+                          hoursDaySelected[1] +
+                          ", " +
+                          hoursDaySelected[2] +
+                          " - " +
+                          hoursDaySelected[3];
                     widget.onConfirm(hours);
                     Get.back();
                   },
-                  text: "Confirmer",
+                  text: AppTranslation.confirm.tr,
                   colorBackground: ConstantColor.grey,
                 ),
               ],

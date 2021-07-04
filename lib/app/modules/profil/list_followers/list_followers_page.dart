@@ -2,6 +2,7 @@ import 'package:book_app/app/data/model/following.dart';
 import 'package:book_app/app/modules/profil/list_followers/follower_item.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,7 @@ class ListFollowersPage extends StatelessWidget {
     return Scaffold(
       appBar: BackButtonAppBar(
         textTitle:
-            isFollowing ? "Liste des abonnements" : "Liste des abonnés",
+            isFollowing ? AppTranslation.listFollowing.tr : AppTranslation.listFollowers.tr,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -34,7 +35,7 @@ class ListFollowersPage extends StatelessWidget {
                 if (length == 0 && ListFollowersController.to.afterLoading)
                   return Center(
                     child: Text(
-                        isFollowing ? "Aucun abonnements" : "Aucun abonnés"),
+                        isFollowing ? AppTranslation.noFollowing.tr : AppTranslation.noFollower.tr),
                   );
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 25, horizontal: 15),

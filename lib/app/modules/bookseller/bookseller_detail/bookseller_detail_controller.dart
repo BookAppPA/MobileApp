@@ -5,6 +5,7 @@ import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/profil/profil_controller.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,7 +26,7 @@ class BookSellerDetailController extends GetxController {
   bool loadData = true;
 
   _errorLoad() {
-    errorMessage = "Erreur du serveur...";
+    errorMessage = AppTranslation.serverError.tr;
     update();
   }
 

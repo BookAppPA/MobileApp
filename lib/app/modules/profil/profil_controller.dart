@@ -8,6 +8,7 @@ import 'package:book_app/app/modules/bookseller/bookseller_detail/bookseller_det
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,7 +22,8 @@ class ProfilController extends GetxController {
       {@required this.authRepository,
       @required this.userRepository,
       this.user,
-      this.userId})
+      this.userId,
+      this.reloadMe: false})
       : assert(authRepository != null),
         assert(userRepository != null);
 
@@ -31,6 +33,7 @@ class ProfilController extends GetxController {
   String errorMessage = "";
   bool loadData = true;
   bool isMe = false;
+  bool reloadMe = false;
 
   List<Book> books = [];
   List<Rating> ratings = [];
@@ -40,7 +43,9 @@ class ProfilController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (user == null && userId != null)
+    loadData = true;
+    update();
+    if (reloadMe || (user == null && userId != null))
       _getUser();
     else if (user == null && userId == null) {
       _errorLoad();
@@ -59,12 +64,16 @@ class ProfilController extends GetxController {
 
   _getUser() async {
     print("GET USER");
-    user = await userRepository.getUserById(userId);
+    user = await userRepository.getUserById(userId ?? user.id);
     if (user != null) {
       if (user.isBlocked) _errorBlocked();
       loadData = false;
-      if (!UserController.to.isBookSeller)
+      if (!UserController.to.isBookSeller) {
+        if (reloadMe)
+          UserController.to.user = user;
         isMe = user.id == UserController.to.user.id;
+        update();
+      }
       else
         isMe = false;
     } else {
@@ -76,12 +85,12 @@ class ProfilController extends GetxController {
   }
 
   _errorLoad() {
-    errorMessage = "Erreur du serveur...";
+    errorMessage = AppTranslation.serverError.tr;
     update();
   }
 
   _errorBlocked() {
-    errorMessage = "Ce compte à été bloqué";
+    errorMessage = AppTranslation.profilBlocked.tr;
     update();
   }
 

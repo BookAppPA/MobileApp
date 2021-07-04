@@ -1,5 +1,4 @@
 import 'package:book_app/app/utils/constant/constant_color.dart';
-import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:flutter/material.dart';
 
 class ThemeItem extends StatefulWidget {
@@ -32,16 +31,13 @@ class _ThemeItemState extends State<ThemeItem> {
     return GestureDetector(
       onTap: () => _clickItem(),
       child: Container(
-        // color: Colors.red,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: Container(
                 width: 100.0,
-                // backgroundImage: AssetImage(widget.imageCategory),
                 decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(35.0),
                     border: Border.all(color: selected ? ConstantColor.accent : Colors.transparent, width: 4),
                     shape: BoxShape.circle,
                     image: DecorationImage(

@@ -1,4 +1,5 @@
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -18,7 +19,7 @@ class _BookPreviewPageState extends State<BookPreviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BackButtonAppBar(
-        textTitle: "Aperçu du livre",
+        textTitle: AppTranslation.previewBook.tr,
       ),
       body: Stack(
         children: [
@@ -37,7 +38,7 @@ class _BookPreviewPageState extends State<BookPreviewPage> {
                     },
                   )
                 : Center(
-                    child: Text("Pas d'aperçu disponible pour ce livre"),
+                    child: Text(AppTranslation.noPreviewBook.tr),
                   ),
           ),
           _isLoading ? Center(child: CircularProgressIndicator()) : Container(),

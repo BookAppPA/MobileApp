@@ -4,6 +4,7 @@ import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dar
 import 'package:book_app/app/modules/widgets_global/description_text.dart';
 import 'package:book_app/app/routes/app_pages.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
+import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class UserRatingItem extends StatelessWidget {
       color: Colors.grey[100],
       elevation: 3,
       child: Container(
-        height: rating.message.length < 75 ? 180 : 200,
+        height: rating.message.length < 75 ? 190 : 230,
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,9 +63,7 @@ class UserRatingItem extends StatelessWidget {
                                   errorWidget: (context, url, error) =>
                                       Icon(Icons.error),
                                 )
-                              : Container(
-                                  decoration: BoxDecoration(color: Colors.grey),
-                                ),
+                              : Image.asset(ConstantImage.noBookCover, fit: BoxFit.cover,)
                         ),
                         SizedBox(width: 15),
                         Expanded(

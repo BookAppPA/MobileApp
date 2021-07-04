@@ -1,18 +1,19 @@
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bottomsheet_modify_hours.dart';
 
 class ModifyOpenHour extends StatefulWidget {
-  final String day, dayHours;
+  final String day;
+  String dayHours;
   final Function(String) onModify;
 
-  ModifyOpenHour(
-      {@required this.day,
-      this.dayHours: "Pas d'horaires spécifiés",
-      @required this.onModify})
-      : assert(day != null),
-        assert(onModify != null);
+  ModifyOpenHour({@required this.day, this.dayHours, @required this.onModify}) {
+    assert(day != null);
+    assert(onModify != null);
+    if (dayHours == null) dayHours = AppTranslation.noOpenHoursSpecify.tr;
+  }
 
   @override
   _ModifyOpenHourState createState() => _ModifyOpenHourState();

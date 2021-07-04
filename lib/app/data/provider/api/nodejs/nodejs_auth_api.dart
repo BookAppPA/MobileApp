@@ -3,8 +3,10 @@ import 'package:book_app/app/data/model/bookseller.dart';
 import 'package:book_app/app/data/model/company.dart';
 import 'package:book_app/app/data/model/user.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/url_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class NodeJSAuthAPI {
@@ -17,7 +19,7 @@ class NodeJSAuthAPI {
         if (map["type"] == "user") {
           UserModel user = UserModel.fromJson(map["data"]);
           if (user.isBlocked) {
-            CustomSnackbar.snackbar("Votre compte à été bloqué");
+            CustomSnackbar.snackbar(AppTranslation.accountBlocked.tr);
             return null;
           }
         }
@@ -28,17 +30,17 @@ class NodeJSAuthAPI {
           return map["type"] == "user" ? UserModel.fromJson(map["data"]) : BookSeller.fromJson(map["data"]);
         } on AuthException catch (e) {
           if (e.code == 'user-not-found') {
-            CustomSnackbar.snackbar("Cet email n'existe pas");
+            CustomSnackbar.snackbar(AppTranslation.emailNotExist.tr);
           } else if (e.code == 'wrong-password') {
-            CustomSnackbar.snackbar("Mot de passe erroné");
+            CustomSnackbar.snackbar(AppTranslation.passwordError.tr);
           }
           return null;
         }
       } else {
         if (map["code"] == "auth/user-not-found")
-          CustomSnackbar.snackbar("Cet email n'existe pas");
+          CustomSnackbar.snackbar(AppTranslation.emailNotExist.tr);
         else if (map["code"] == 'auth/wrong-password')
-          CustomSnackbar.snackbar("Mot de passe erroné");
+          CustomSnackbar.snackbar(AppTranslation.passwordError.tr);
         else
           CustomSnackbar.snackbar(map["message"]);
         return null;
@@ -62,9 +64,9 @@ class NodeJSAuthAPI {
           return UserModel.fromJson(map);
         } on AuthException catch (e) {
           if (e.code == 'user-not-found') {
-            CustomSnackbar.snackbar("Cet email n'existe pas");
+            CustomSnackbar.snackbar(AppTranslation.emailNotExist.tr);
           } else if (e.code == 'wrong-password') {
-            CustomSnackbar.snackbar("Mot de passe erroné");
+            CustomSnackbar.snackbar(AppTranslation.passwordError.tr);
           }
           return null;
         }
@@ -98,9 +100,9 @@ class NodeJSAuthAPI {
           return BookSeller.fromJson(map);
         } on AuthException catch (e) {
           if (e.code == 'user-not-found') {
-            CustomSnackbar.snackbar("Cet email n'existe pas");
+            CustomSnackbar.snackbar(AppTranslation.emailNotExist.tr);
           } else if (e.code == 'wrong-password') {
-            CustomSnackbar.snackbar("Mot de passe erroné");
+            CustomSnackbar.snackbar(AppTranslation.passwordError.tr);
           }
           return null;
         }

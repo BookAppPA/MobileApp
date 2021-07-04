@@ -8,6 +8,7 @@ import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/dialog/add_rating_bottomsheet.dart';
 import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
@@ -153,10 +154,10 @@ class UserController extends GetxController {
         null) return false;
     var titleRating;
     var descRating;
-    var noteRating;
+    double noteRating;
     await Get.bottomSheet(
         AddRatingBottomSheet(
-            title: "Ajouter un avis",
+            title: AppTranslation.addRating.tr,
             onConfirm: (title, desc, note) {
               titleRating = title;
               descRating = desc;
@@ -174,6 +175,14 @@ class UserController extends GetxController {
       var resAddRating = await repository.addRating(
           _user, book, titleRating, descRating, noteRating);
       if (resAddRating) {
+        await UserController.analytics.logViewItem(
+          itemId: book.id,
+          itemName: book.title,
+          itemLocationId: UserController.to.user.id,
+          itemCategory: book.categories != null ? book.categories.first : '',
+          origin: book.authors != null ? book.authors.first : '',
+          quantity: noteRating.toInt()
+        );
         var res =
             await repository.addBookToGallery(_user.id, book, _user.nbBooks);
         print("res add book --> $res");
@@ -222,7 +231,8 @@ class UserController extends GetxController {
       var index = _user.listBooksRead.indexWhere((item) => item.id == book.id);
       if (index != -1) {
         var book = _user.listBooksRead[index];
-        var ratingIndex = _user.listLastRatings.indexWhere((item) => item.bookId == book.id);
+        var ratingIndex =
+            _user.listLastRatings.indexWhere((item) => item.bookId == book.id);
         if (ratingIndex != -1) {
           _user.listLastRatings.removeAt(ratingIndex);
         }
@@ -242,22 +252,21 @@ class UserController extends GetxController {
     var descRating;
     var noteRating;
     await Get.bottomSheet(
-        AddRatingBottomSheet(
-          title: "Modifier votre avis",
-          isAdd: false,
-          preTitle: rating.title,
-          preDesc: rating.message,
-          preNote: rating.note,
-          onConfirm: (title, desc, note) {
-            titleRating = title;
-            descRating = desc;
-            noteRating = note;
-          },
-          onCancel: () => Get.back(),
-        ),
-      );
-    if (titleRating == null)
-      return;
+      AddRatingBottomSheet(
+        title: AppTranslation.changeReview.tr,
+        isAdd: false,
+        preTitle: rating.title,
+        preDesc: rating.message,
+        preNote: rating.note,
+        onConfirm: (title, desc, note) {
+          titleRating = title;
+          descRating = desc;
+          noteRating = note;
+        },
+        onCancel: () => Get.back(),
+      ),
+    );
+    if (titleRating == null) return;
 
     var title = titleRating ?? rating.title;
     var desc = descRating ?? rating.message;
@@ -273,7 +282,7 @@ class UserController extends GetxController {
         _user.listLastRatings[index].message = desc;
         _user.listLastRatings[index].note = note;
         update();
-        CustomSnackbar.snackbar("Avis modifié");
+        CustomSnackbar.snackbar(AppTranslation.ratingEditing.tr);
       }
     }
   }
@@ -288,10 +297,10 @@ class UserController extends GetxController {
         _user.listLastRatings.removeAt(index);
         _user.nbRatings--;
         update();
-        CustomSnackbar.snackbar("Avis supprimé");
+        CustomSnackbar.snackbar(AppTranslation.ratingDeleting.tr);
       }
     } else
-      CustomSnackbar.snackbar("Erreur du serveur...");
+      CustomSnackbar.snackbar(AppTranslation.serverError.tr);
   }
 
   followUser(Following userToFollow) async {
@@ -302,7 +311,7 @@ class UserController extends GetxController {
       update();
       return true;
     } else {
-      CustomSnackbar.snackbar("Erreur de synchronisation...");
+      CustomSnackbar.snackbar(AppTranslation.errorSync.tr);
       return false;
     }
   }
@@ -315,7 +324,7 @@ class UserController extends GetxController {
       update();
       return true;
     } else {
-      CustomSnackbar.snackbar("Erreur de synchronisation...");
+      CustomSnackbar.snackbar(AppTranslation.errorSync.tr);
       return false;
     }
   }

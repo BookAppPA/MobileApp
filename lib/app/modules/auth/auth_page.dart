@@ -1,6 +1,7 @@
 import 'package:book_app/app/modules/auth/auth_controller.dart';
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
 import 'package:book_app/app/modules/widgets_global/mytextfield.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,8 +41,8 @@ class AuthPage extends StatelessWidget {
                         SizedBox(height: 20),
                         Text(
                           controller.authView == AuthView.LOGIN
-                              ? "Hey, \nheureux de te revoir !"
-                              : "Hey, tu es nouveau ?",
+                              ? AppTranslation.welcome.tr
+                              : AppTranslation.welcomeBack.tr,
                           style: TextStyle(
                             fontFamily: 'Roboto',
                             fontSize: 28,
@@ -81,8 +82,8 @@ class AuthPage extends StatelessWidget {
                               inputAction: TextInputAction.next,
                               placeholder:
                                   controller.authView == AuthView.SIGNUP
-                                      ? "Saisissez votre pseudo"
-                                      : "Saisissez le nom de votre librairie",
+                                      ? AppTranslation.enterPseudo.tr
+                                      : AppTranslation.enterNameOfBookStore.tr,
                               prefixIcon: Icon(FontAwesomeIcons.user, size: 20),
                               prefixIconColor: controller.isPseudoValid
                                   ? Color(0x993C3C43)
@@ -107,7 +108,7 @@ class AuthPage extends StatelessWidget {
                         margin: EdgeInsets.symmetric(vertical: 10),
                         inputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
-                        placeholder: "Saisissez une adresse email",
+                        placeholder: AppTranslation.enterEmail.tr,
                         prefixIcon: Icon(Icons.email_outlined),
                         prefixIconColor: controller.isEmailValid
                             ? Color(0x993C3C43)
@@ -134,7 +135,7 @@ class AuthPage extends StatelessWidget {
                                 controller.authView == AuthView.LOGIN ? 10 : 0),
                         duration: Duration(milliseconds: 300),
                         inputType: TextInputType.visiblePassword,
-                        placeholder: "Saisissez un mot de passe",
+                        placeholder: AppTranslation.enterPassword.tr,
                         obscureText: true,
                         prefixIcon: Icon(Icons.lock_outline),
                         prefixIconColor: controller.isPasswordValid
@@ -164,7 +165,7 @@ class AuthPage extends StatelessWidget {
                               margin: EdgeInsets.symmetric(vertical: 10),
                               inputType: TextInputType.number,
                               inputAction: TextInputAction.done,
-                              placeholder: "n° SIREN ou SIRET",
+                              placeholder: AppTranslation.sirenOrSiretNumber.tr,
                               prefixIcon: Icon(FontAwesomeIcons.building),
                               prefixIconColor: controller.isSiretValid
                                   ? Color(0x993C3C43)
@@ -186,18 +187,19 @@ class AuthPage extends StatelessWidget {
                                     ),
                                     children: [
                                       TextSpan(
-                                        text:
-                                            'En créant un compte, vous acceptez les ',
+                                        text: AppTranslation
+                                            .termConditionBegin.tr,
                                       ),
                                       TextSpan(
-                                        text:
-                                            'conditions générales d\'utilisation',
+                                        text: AppTranslation
+                                            .termConditionMiddle.tr,
                                         style: TextStyle(
                                           decoration: TextDecoration.underline,
                                         ),
                                       ),
                                       TextSpan(
-                                        text: ' de BookApp.',
+                                        text:
+                                            AppTranslation.termConditionEnd.tr,
                                       ),
                                     ],
                                   ),
@@ -210,8 +212,8 @@ class AuthPage extends StatelessWidget {
                             borderRadius: 10,
                             isLoading: controller.isLoading,
                             text: controller.authView == AuthView.LOGIN
-                                ? "Se connecter"
-                                : "S'inscrire",
+                                ? AppTranslation.login.tr
+                                : AppTranslation.signup.tr,
                           ),
                           SizedBox(height: 10),
                           GestureDetector(
@@ -230,14 +232,15 @@ class AuthPage extends StatelessWidget {
                                       TextSpan(
                                         text: controller.authView ==
                                                 AuthView.LOGIN
-                                            ? "Nouveau ? "
-                                            : "Déjà inscrit ? ",
+                                            ? AppTranslation.newQuestion.tr
+                                            : AppTranslation
+                                                .alreadySignupQuestion.tr,
                                       ),
                                       TextSpan(
                                         text: controller.authView ==
                                                 AuthView.LOGIN
-                                            ? "S'inscrire"
-                                            : "Se connecter",
+                                            ? AppTranslation.login.tr
+                                            : AppTranslation.signup.tr,
                                         style: TextStyle(
                                           color: Color(0xff5aaabd),
                                           fontWeight: FontWeight.w700,
@@ -266,10 +269,10 @@ class AuthPage extends StatelessWidget {
                                           ),
                                           children: [
                                             TextSpan(
-                                              text: "Vous êtes un libraire ? ",
+                                              text: AppTranslation.areYouBookSeller.tr,
                                             ),
                                             TextSpan(
-                                              text: "Créer un compte pro",
+                                              text: AppTranslation.createProAccount.tr,
                                               style: TextStyle(
                                                 color: Color(0xff5aaabd),
                                                 fontWeight: FontWeight.w700,

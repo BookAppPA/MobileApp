@@ -7,6 +7,7 @@ import 'package:book_app/app/modules/widgets_global/chip_category.dart';
 import 'package:book_app/app/modules/widgets_global/custom_circular_progress.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -49,7 +50,9 @@ class ProfilPage extends GetWidget<ProfilController> {
 
   Widget _buildInfoUser() {
     return GetBuilder<ProfilController>(
-      builder: (controller) => Column(
+      builder: (ctrl) {
+        print(ctrl.user.nbFollowers);
+        return Column(
         children: [
           ProfilAppBar(
             isMe: ProfilController.to.isMe,
@@ -68,7 +71,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            controller.user.pseudo,
+                            ctrl.user.pseudo,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -82,16 +85,16 @@ class ProfilPage extends GetWidget<ProfilController> {
                           GetBuilder<UserController>(
                             builder: (_) {
                               String bio;
-                              if (_.isBookSeller || !controller.isMe) {
-                                if (controller.user.bio != null)
-                                  bio = controller.user.bio;
+                              if (_.isBookSeller || !ctrl.isMe) {
+                                if (ctrl.user.bio != null)
+                                  bio = ctrl.user.bio;
                                 else
-                                  bio = "Aucune bio";
-                              } else if (controller.isMe) {
+                                  bio = AppTranslation.noBio.tr;
+                              } else if (ctrl.isMe) {
                                 if (_.user.bio != null)
                                   bio = _.user.bio;
                                 else
-                                  bio = "Aucune bio";
+                                  bio = AppTranslation.noBio.tr;
                               }
                               return Text(
                                 bio,
@@ -120,13 +123,12 @@ class ProfilPage extends GetWidget<ProfilController> {
                                 alignment: Alignment.topCenter,
                                 child: SizedBox(
                                   child: GestureDetector(
-                                    onTap: () => controller.isMe &&
-                                            (controller.user.picture == null ||
-                                                controller.user.picture == "")
-                                        ? controller.changePicture()
-                                        : controller.isMe
-                                            ? CustomSnackbar.snackbar(
-                                                "Vous ne pouvez plus modifier votre photo")
+                                    onTap: () => ctrl.isMe &&
+                                            (ctrl.user.picture == null ||
+                                                ctrl.user.picture == "")
+                                        ? ctrl.changePicture()
+                                        : ctrl.isMe
+                                            ? CustomSnackbar.snackbar(AppTranslation.noNewEditProfil.tr)
                                             : null,
                                     child: CircleAvatar(
                                       radius: 42,
@@ -135,14 +137,14 @@ class ProfilPage extends GetWidget<ProfilController> {
                                           builder: (_) {
                                         ImageProvider picture;
                                         if (_.isBookSeller ||
-                                            !controller.isMe) {
-                                          if (controller.user.picture != "")
+                                            !ctrl.isMe) {
+                                          if (ctrl.user.picture != "")
                                             picture = NetworkImage(
-                                                controller.user.picture);
+                                                ctrl.user.picture);
                                           else
                                             picture = AssetImage(
                                                 'assets/defaut_user.jpeg');
-                                        } else if (controller.isMe) {
+                                        } else if (ctrl.isMe) {
                                           if (_.user.picture != "")
                                             picture =
                                                 NetworkImage(_.user.picture);
@@ -153,7 +155,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                                         return CircleAvatar(
                                           child: _.isBookSeller
                                               ? Container()
-                                              : controller.isMe &&
+                                              : ctrl.isMe &&
                                                       (_.user.picture == null ||
                                                           _.user.picture == "")
                                                   ? Align(
@@ -195,7 +197,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                 //PROFIL
                 SizedBox(height: 20),
                 ChipCategories(
-                  listCategories: controller.user.listCategories,
+                  listCategories: ctrl.user.listCategories,
                   onSelected: () => print('select'),
                 ),
                 Row(
@@ -206,9 +208,9 @@ class ProfilPage extends GetWidget<ProfilController> {
                         GetBuilder<UserController>(
                           builder: (_) {
                             int nbBooks;
-                            if (_.isBookSeller || !controller.isMe) {
-                              nbBooks = controller.user.nbBooks;
-                            } else if (controller.isMe) {
+                            if (_.isBookSeller || !ctrl.isMe) {
+                              nbBooks = ctrl.user.nbBooks;
+                            } else if (ctrl.isMe) {
                               nbBooks = _.user.nbBooks;
                             }
                             return Text(
@@ -224,7 +226,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Livres',
+                          AppTranslation.books.tr,
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 13,
@@ -239,7 +241,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                     Column(
                       children: <Widget>[
                         Text(
-                          "${controller.user.nbRatings}",
+                          "${ctrl.user.nbRatings}",
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 24,
@@ -249,7 +251,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Avis',
+                          AppTranslation.reviews.tr,
                           style: TextStyle(
                             fontFamily: 'SF Pro Text',
                             fontSize: 13,
@@ -263,14 +265,14 @@ class ProfilPage extends GetWidget<ProfilController> {
                     SizedBox(width: 40),
                     GestureDetector(
                       onTap: () {
-                        if (controller.user.nbFollowers > 0)
+                        if (ctrl.user.nbFollowers > 0)
                           Get.toNamed(Routes.LIST_FOLLOWERS,
-                              arguments: controller.user.id);
+                              arguments: ctrl.user.id);
                       },
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "${controller.user.nbFollowers}",
+                            "${ctrl.user.nbFollowers}",
                             style: TextStyle(
                               fontFamily: 'SF Pro Text',
                               fontSize: 24,
@@ -280,7 +282,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            'Abonnés',
+                            AppTranslation.followers.tr,
                             style: TextStyle(
                               fontFamily: 'SF Pro Text',
                               fontSize: 13,
@@ -292,7 +294,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                         ],
                       ),
                     ),
-                    controller.isMe
+                    ctrl.isMe
                         ? Row(
                             children: <Widget>[
                               SizedBox(width: 30),
@@ -317,7 +319,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                                         ),
                                         SizedBox(height: 5),
                                         Text(
-                                          'Abonnements',
+                                          AppTranslation.following.tr,
                                           style: TextStyle(
                                             fontFamily: 'SF Pro Text',
                                             fontSize: 13,
@@ -341,18 +343,18 @@ class ProfilPage extends GetWidget<ProfilController> {
                                   var isFollow = _.user.listFollowing
                                           .firstWhere(
                                               (item) =>
-                                                  item.id == controller.user.id,
+                                                  item.id == ctrl.user.id,
                                               orElse: () => null) !=
                                       null;
                                   return ButtonGradient(
                                     width: 130,
                                     onTap: () => isFollow
-                                        ? controller
-                                            .unFollowUser(controller.user)
-                                        : controller
-                                            .followUser(controller.user),
+                                        ? ctrl
+                                            .unFollowUser(ctrl.user)
+                                        : ctrl
+                                            .followUser(ctrl.user),
                                     text:
-                                        isFollow ? "Ne plus suivre" : "Suivre",
+                                        isFollow ? AppTranslation.noFollow.tr : AppTranslation.follow.tr,
                                   );
                                 }),
                               ],
@@ -360,43 +362,42 @@ class ProfilPage extends GetWidget<ProfilController> {
                           ),
                   ],
                 ),
-                UserController.to.isBookSeller || !controller.isMe
+                UserController.to.isBookSeller || !ctrl.isMe
                     ? Container()
                     : Padding(
                         padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                         child: Column(
                           children: <Widget>[
                             GetBuilder<UserController>(builder: (_) {
-                              var isFollow = !controller.isMe &&
+                              var isFollow = !ctrl.isMe &&
                                   _.user.listFollowing.firstWhere(
                                           (item) =>
-                                              item.id == controller.user.id,
+                                              item.id == ctrl.user.id,
                                           orElse: () => null) !=
                                       null;
                               return ButtonGradient(
                                 width: Get.width,
                                 height: 40,
-                                onTap: () => controller.isMe
-                                    ? controller.clickEditProfil()
+                                onTap: () => ctrl.isMe
+                                    ? ctrl.clickEditProfil()
                                     : isFollow
-                                        ? controller
-                                            .unFollowUser(controller.user)
-                                        : controller
-                                            .followUser(controller.user),
-                                text: controller.isMe
-                                    ? "Modifier le profil"
+                                        ? ctrl
+                                            .unFollowUser(ctrl.user)
+                                        : ctrl
+                                            .followUser(ctrl.user),
+                                text: ctrl.isMe
+                                    ? AppTranslation.editProfil.tr
                                     : isFollow
-                                        ? "Ne plus suivre"
-                                        : "Suivre",
+                                        ? AppTranslation.noFollow.tr : AppTranslation.follow.tr,
                               );
                             }),
                             SizedBox(height: 20),
-                            controller.isMe
+                            ctrl.isMe
                                 ? ButtonGradient(
                                     width: Get.width,
                                     height: 40,
-                                    onTap: () => controller.clickFinishBook(),
-                                    text: "J'ai finis un livre",
+                                    onTap: () => ctrl.clickFinishBook(),
+                                    text: AppTranslation.finishThisBook.tr,
                                   )
                                 : Container(),
                           ],
@@ -406,7 +407,8 @@ class ProfilPage extends GetWidget<ProfilController> {
             ),
           ),
         ],
-      ),
+      );
+      }
     );
   }
 
@@ -430,7 +432,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "${_.isMe ? 'Mes' : 'Ses'} Derniers Livres",
+                              AppTranslation.pronomLastBooks.trParams({"pronom": _.isMe ? 'Mes' : 'Ses'}),
                               style: TextStyle(
                                 fontFamily: 'SF Pro Text',
                                 fontSize: 20,
@@ -492,7 +494,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${_.isMe ? 'Mes' : 'Ses'} Derniers Avis',
+                              AppTranslation.pronomLastRatings.trParams({"pronom": _.isMe ? 'Mes' : 'Ses'}),
                               style: TextStyle(
                                 fontFamily: 'SF Pro Text',
                                 fontSize: 20,

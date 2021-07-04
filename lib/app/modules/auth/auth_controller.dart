@@ -6,6 +6,7 @@ import 'package:book_app/app/data/repository/user_repository.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,7 +63,7 @@ class AuthController extends GetxController {
     Get.put(UserController(repository: userRepository));
     if (isBlocked) {
       WidgetsBinding.instance.addPostFrameCallback(
-          (_) => CustomSnackbar.snackbar("Votre compte à été bloqué"));
+          (_) => CustomSnackbar.snackbar(AppTranslation.accountBlocked.tr));
     }
     _pseudoController.addListener(() {
       _isPseudoValid = true;
@@ -126,11 +127,11 @@ class AuthController extends GetxController {
     var _siretTemp = _siret;
     _isSiretValid = _siretTemp.length == 9 || _siretTemp.length == 14;
     if (!_isSiretValid) {
-      CustomSnackbar.snackbar("Le n° SIREN doit contenir 9 caractères. Le n° SIRET 14 caractères");
+      CustomSnackbar.snackbar(AppTranslation.siretNumberMustContainSpecificLength.tr);
       return false;
     }
     if (!isOnlyNumeric(_siretTemp)) {
-      CustomSnackbar.snackbar("Le n° SIREN ou SIRET doit contenir uniquement des chiffres");
+      CustomSnackbar.snackbar(AppTranslation.siretNumberMustContainUniqueDigit.tr);
       return false;
     }
     if (_company != null &&
@@ -141,11 +142,11 @@ class AuthController extends GetxController {
     else
       _company = await authRepository.checkSiret(_siretTemp);
     if (_company == null) {
-      CustomSnackbar.snackbar("Erreur du serveur... Réessayer plus tard");
+      CustomSnackbar.snackbar(AppTranslation.serverError.tr);
       return false;
     }
     if (_company.codeActivity != "4761Z") {
-      CustomSnackbar.snackbar("Le n° SIREN ou SIRET ne correspond pas à une entreprise de Commerce de détail de livres en magasin spécialisé", shortDuration: false);
+      CustomSnackbar.snackbar(AppTranslation.siretError.tr, shortDuration: false);
       return false;
     }
     return true;
@@ -154,11 +155,11 @@ class AuthController extends GetxController {
   bool _checkLoginInfo() {
     _isPasswordValid = _password.length >= 6 && _password.length <= 30;
     if (!_validEmail(_email)) {
-      CustomSnackbar.snackbar("Email invalide");
+      CustomSnackbar.snackbar(AppTranslation.errorEmail.tr);
       return false;
     }
     if (!_isPasswordValid) {
-      CustomSnackbar.snackbar("Le mot de passe doit contenir entre 6 et 30 caractères");
+      CustomSnackbar.snackbar(AppTranslation.passwordMustContainNBCaract.tr);
       return false;
     }
     return true;
@@ -167,12 +168,15 @@ class AuthController extends GetxController {
   bool _checkSignupInfo() {
     _isPseudoValid = _pseudo.length >= 3 && _pseudo.length <= 15;
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar("Le pseudo doit contenir entre 3 et 15 caractères");
+      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainNBCaract.trParams({
+        "min": "3",
+        "max": "15"
+      }));
       return false;
     }
     _isPseudoValid = _isPseudoValid && stringIsPseudo(_pseudo);
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar("Le pseudo peut contenir uniquement des lettres, chiffres et underscores");
+      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainUniqueLetterNumberUnderscore.tr);
       return false;
     }
     return _isPseudoValid && _checkLoginInfo();
@@ -181,12 +185,15 @@ class AuthController extends GetxController {
   Future<bool> _checkSignupProInfo() async {
     _isPseudoValid = _pseudo.length >= 3 && _pseudo.length <= 30;
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar("Le pseudo doit contenir entre 3 et 30 caractères");
+      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainNBCaract.trParams({
+        "min": "3",
+        "max": "30"
+      }));
       return false;
     }
     _isPseudoValid = _isPseudoValid && stringIsName(_pseudo);
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar("Le pseudo peut contenir uniquement des lettres, espaces, tirets et apostrophes");
+      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainUniqueAllCaract.tr);
       return false;
     }
     var res = _isPseudoValid && _checkLoginInfo();
@@ -209,8 +216,13 @@ class AuthController extends GetxController {
       print("USER LOGIN IS NULL");
     } else {
       print("USER LOGIN --> ${user.email}");
-      if (user is UserModel)
+      if (user is UserModel) {
         UserController.to.user = user;
+        if (user.listCategories == null || user.listCategories.length == 0) {
+          Get.offAllNamed(Routes.CHOICE_THEME);
+          return;
+        }
+      }
       else
         UserController.to.bookseller = user;
       Get.offAllNamed(Routes.SQUELETON);

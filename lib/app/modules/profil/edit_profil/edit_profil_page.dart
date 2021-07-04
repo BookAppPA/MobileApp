@@ -207,7 +207,7 @@ class EditProfilPage extends StatelessWidget {
         day: EditProfilController.to.days[i],
         dayHours: EditProfilController.to.hoursOfDays[i],
         onModify: (newDayHours) => EditProfilController.to
-            .changeHoursDay(EditProfilController.to.days[i], newDayHours),
+            .changeHoursDay(i, newDayHours),
       ));
     }
     return list;

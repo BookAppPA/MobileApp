@@ -1,5 +1,6 @@
 import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/bookseller/bookseller_main_controller.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class BookSellerMainPage extends StatelessWidget {
                     cursorColor: ConstantColor.black,
                     maxLines: 1,
                     maxLength: 50,
-                    placeholder: "Rechercher une librairie",
+                    placeholder: AppTranslation.findBookStore.tr,
                     padding: EdgeInsets.all(15),
                     prefix: IconButton(
                       icon: Icon(Icons.search),
@@ -56,7 +57,7 @@ class BookSellerMainPage extends StatelessWidget {
                       );
                     else if (_.booksellers == null)
                       return Center(
-                        child: Text("Aucune librairie trouvées..."),
+                        child: Text(AppTranslation.noBookStoreFound.tr),
                       );
                     return ListView.separated(
                       itemCount: _.booksellers.length,

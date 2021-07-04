@@ -1,4 +1,6 @@
+import 'package:book_app/app/modules/dialog/basic_dialog.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -10,20 +12,20 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BackButtonAppBar(textTitle: "Paramètres"),
+      appBar: BackButtonAppBar(textTitle: AppTranslation.settings.tr),
       body: SettingsList(
         backgroundColor: ConstantColor.background,
         sections: [
           SettingsSection(
             tiles: [
               SettingsTile(
-                title: 'Langue',
-                subtitle: 'Français',
+                title: AppTranslation.language.tr,
+                subtitle: AppTranslation.french.tr,
                 leading: Icon(Icons.language),
-                onPressed: (ctx) => print("change langue"),
+                onPressed: (ctx) => BasicDialog.showLanguageDialog(),
               ),
               SettingsTile(
-                title: 'Contact',
+                title: AppTranslation.contact.tr,
                 leading: Icon(Icons.mail_outline),
                 trailing: Padding(
                   padding: EdgeInsets.only(right: 10),
@@ -31,7 +33,7 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               SettingsTile(
-                title: 'Version',
+                title: AppTranslation.version.tr,
                 leading: Icon(
                   GetPlatform.isAndroid
                       ? FontAwesomeIcons.android

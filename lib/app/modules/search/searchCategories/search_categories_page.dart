@@ -1,8 +1,8 @@
 import 'package:book_app/app/modules/search/searchCategories/search_categories_controller.dart';
 import 'package:book_app/app/modules/widgets_global/back_button_appbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../search_book_item.dart';
 
 class SearchCategoriesPage extends StatelessWidget {
@@ -10,7 +10,7 @@ class SearchCategoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: BackButtonAppBar(
-          textTitle: "Recherche",
+          textTitle: AppTranslation.search.tr,
         ),
         body: GestureDetector(
           onTap: () => Get.focusScope.unfocus(),
@@ -31,7 +31,7 @@ class SearchCategoriesPage extends StatelessWidget {
                         );
                       else if (_.booksByCategories.length == 0)
                         return Center(
-                          child: Text("Aucun livre trouvé..."),
+                          child: Text(AppTranslation.noFindBook.tr),
                         );
                       return ListView.separated(
                         itemCount: _.booksByCategories.length,

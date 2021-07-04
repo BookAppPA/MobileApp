@@ -1,3 +1,5 @@
+import 'package:book_app/app/utils/constant/constant_image.dart';
+
 class Book {
 
   String id, title, description, publisher, publishedDate, coverImage, language, previewLink, buyLink;
@@ -34,7 +36,7 @@ class Book {
       this.description = json['volumeInfo']['description'];
       this.publisher = json['volumeInfo']['publisher'];
       this.publishedDate = json['volumeInfo']['publishedDate'];
-      this.coverImage = json['volumeInfo']['imageLinks']['thumbnail'];
+      this.coverImage = json['volumeInfo']['imageLinks'] != null ? json['volumeInfo']['imageLinks']['thumbnail'] : "";
       this.language = json['volumeInfo']['language'];
       this.previewLink = json['volumeInfo']['previewLink'] ?? "";
       this.buyLink = json['saleInfo']['buyLink'];

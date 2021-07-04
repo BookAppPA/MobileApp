@@ -1,13 +1,12 @@
 import 'package:book_app/app/modules/choice_theme/choice_theme_controller.dart';
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
 import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
-import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:book_app/app/utils/constant/constant_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'widgets/theme_item.dart';
 
 class ChoiceThemePage extends StatelessWidget {
@@ -25,7 +24,7 @@ class ChoiceThemePage extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 22, top: 50, right: 22),
                 child: Text(
-                  'Bienvenue,\nPour commencer, quels sont tes genres favoris ?',
+                  AppTranslation.favoriteCategoryQuestion.tr,
                   style: TextStyle(
                     fontFamily: 'SF Rounded',
                     fontSize: 22,
@@ -40,7 +39,6 @@ class ChoiceThemePage extends StatelessWidget {
           Expanded(
               flex: 3,
               child: Container(
-                //color: Colors.red,
                 child: GridView.builder(
                   padding: EdgeInsets.all(25),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -70,7 +68,7 @@ class ChoiceThemePage extends StatelessWidget {
                     onTap: () => _.finishSelectChoice(),
                     width: Get.width,
                     borderRadius: 10,
-                    text: "Terminer",
+                    text: AppTranslation.finish.tr,
                     colorBackground: _.isBlock ? Colors.grey : ConstantColor.accent,
                   ),
                 ),

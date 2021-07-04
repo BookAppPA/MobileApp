@@ -7,6 +7,7 @@ import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/book_item.dart';
 import 'package:book_app/app/modules/widgets_global/curve_painter.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,7 @@ class HomePage extends StatelessWidget {
               child: CupertinoTextField(
                 maxLines: 1,
                 maxLength: 50,
-                placeholder: "Rechercher livre/auteur/utilisateur",
+                placeholder: AppTranslation.searchBookAuthorUser.tr,
                 readOnly: true,
                 padding: EdgeInsets.all(15),
                 prefix: IconButton(
@@ -67,7 +68,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Text(
-              'Les choix des libraires',
+              AppTranslation.bookSellerChoice.tr,
               style: TextStyle(
                 fontFamily: 'SF Rounded',
                 fontSize: 24,
@@ -97,28 +98,44 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildMostPopularBooks() {
-    return Container(
-      height: 430,
-      //color: Colors.yellow,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "Les Plus Populaires",
-            style: TextStyle(
-              fontFamily: 'SF Rounded',
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 20),
-          Expanded(
-            child: GetBuilder<HomeController>(
-              builder: (_) => Container(
-                  //color: Colors.red,
-                  child: Column(
+    return GetBuilder<HomeController>(
+        builder: (_) => Container(
+              height: _.listPopularBooks.length < 4 ? 250 : 430,
+              //color: Colors.yellow,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
+                  Text(
+                    AppTranslation.mostPopular.tr,
+                    style: TextStyle(
+                      fontFamily: 'SF Rounded',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                        child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: _.listPopularBooks.length < 4 ? 210 : 370,
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3, childAspectRatio: 0.7),
+                            itemCount: _.listPopularBooks.length,
+                            itemBuilder: (ctx, index) {
+                              return Container(
+                                child: BookItem(
+                                  book: _.hasDataPopularBooks
+                                      ? _.listPopularBooks[index]
+                                      : Book(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        /* Container(
                     height: 180,
                     child: ListView.separated(
                         itemCount: _.hasDataPopularBooks ? _.listPopularBooks.length > 3 ? 3 : _.listPopularBooks.length : 3,
@@ -144,14 +161,13 @@ class HomePage extends StatelessWidget {
                         separatorBuilder: (ctx, index) => SizedBox(width: 20),
                         scrollDirection: Axis.horizontal,
                     ),
+                  ),*/
+                      ],
+                    )),
                   ),
                 ],
-              )),
-            ),
-          ),
-        ],
-      ),
-    );
+              ),
+            ));
   }
 
   Widget _buildBooksWant() {
@@ -163,7 +179,7 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Risque De Vous Plaire",
+            AppTranslation.youWouldLike.tr,
             style: TextStyle(
               fontFamily: 'SF Rounded',
               fontSize: 24,
@@ -172,22 +188,30 @@ class HomePage extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Expanded(
-            child: ListView.separated(
-              itemCount: 6,
-              separatorBuilder: (ctx, index) {
-                return SizedBox(width: 25);
-              },
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return BookItem(
-                  book: Book(
-                      title: "Fatherhood", authors: ["Christopher Wilson"]),
-                  showAuthor: true,
-                  showTitle: true,
-                  width: 125,
-                  height: 200,
-                );
-              },
+            child: GetBuilder<HomeController>(
+              builder: (_) {
+                print(_.hasDataRecommendationBooks);
+                return ListView.separated(
+                itemCount: 5,
+                separatorBuilder: (ctx, index) {
+                  return SizedBox(width: 25);
+                },
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return BookItem(
+                    book: _.hasDataRecommendationBooks
+                        ? _.listRecommendationBooks[index]
+                        : Book(),
+                    showAuthor: true,
+                    showTitle: true,
+                    width: 125,
+                    height: 200,
+                    isAdd: index == 4,
+                    onClickAdd: () => _.showMoreBooks(),
+                  );
+                },
+              );
+              }
             ),
           ),
         ],

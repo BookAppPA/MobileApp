@@ -1,5 +1,6 @@
 import 'package:book_app/app/modules/widgets_global/button_arround.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                   cursorColor: ConstantColor.black,
                   maxLines: 1,
                   maxLength: 50,
-                  placeholder: "Ajouter un titre",
+                  placeholder: AppTranslation.addTitle.tr,
                   padding: EdgeInsets.all(10),
                 ),
               ),
@@ -91,7 +92,7 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                   maxLines: 5,
                   minLines: 5,
                   maxLength: 500,
-                  placeholder: "Ajouter une description",
+                  placeholder: AppTranslation.addDescription.tr,
                   padding: EdgeInsets.all(10),
                 ),
               ),
@@ -149,7 +150,7 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                       child: OutlinedButton(
                         onPressed: () => widget.onCancel(),
                         child: Text(
-                          "Ne pas envoyer",
+                          AppTranslation.doNotSend.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'SF Pro Display',
@@ -175,9 +176,9 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                       onTap: () {
                         if (widget.isAdd) {
                           if (_titleController.text.trim().length < 3)
-                            CustomSnackbar.notif("Le titre doit contenir au moins 3 caractères");
+                            CustomSnackbar.notif(AppTranslation.titleMustThreeLength.tr);
                           else if (_messageController.text.trim().length < 3)
-                            CustomSnackbar.notif("La description doit contenir au moins 3 caractères");
+                            CustomSnackbar.notif(AppTranslation.descMustbeThreeLength.tr);
                           else {
                             widget.onConfirm(
                             _titleController.text.trim(),
@@ -197,7 +198,7 @@ class _AddRatingBottomSheetState extends State<AddRatingBottomSheet> {
                           Get.back();
                         }
                       },
-                      text: widget.isAdd ? "Ajouter" : "Modifier",
+                      text: widget.isAdd ? AppTranslation.add.tr : AppTranslation.edit.tr,
                       colorBackground: ConstantColor.grey,
                     ),
                   ],

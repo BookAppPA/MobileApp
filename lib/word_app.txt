@@ -3,12 +3,15 @@ Votre compte à été bloqué
 Cet email n'existe pas
 Mot de passe erroné
 L'adresse email est déjà utilisée par un autre compte
-Hey, \nheureux de vous revoir !
-Hey, vous êtes nouveau ?
+Hey
+ \nheureux de vous revoir !
+Hey
+ vous êtes nouveau ?
 Saisissez votre pseudo
 Saisissez une adresse email
 Saisissez un mot de passe
-En créant un compte, vous acceptez les 
+En créant un compte
+ vous acceptez les 
 conditions générales d\'utilisation
  de BookApp.
 Se connecter
@@ -36,7 +39,9 @@ Derniers Livres de la Semaine
 Adresse: 
 Rechercher une librairie
 Aucune librairies trouvées...
-Bienvenue,\nPour commencer, quels sont vos genres favoris ?
+Bienvenue
+\nPour commencer
+ quels sont vos genres favoris ?
 Terminer
 Quitter
 Voulez-vous quitter l'application ?
@@ -46,12 +51,11 @@ Déconnexion
 Voulez-vous vous déconnecter\nde votre compte ?
 Livre fini
 Voulez-vous ajouter ce livre à votre bibliothèque et y laisser un avis ?
-Supprimer le livre
 Voulez-vous supprimer définitivement ce livre et votre avis ?
 Rechercher livre/auteur/utilisateur
 Les choix des libraires
 Les Plus Populaires
-Risque De Vous Plaire
+Notre Selection Pour Vous
 COMPRIS
 Dénichez de nouvelles pépites 
 Découvrez de nouveaux livres à travers de nombreux avis 
@@ -66,7 +70,7 @@ Livres
 Abonnés
 Modifier
 Suivre
-J'ai finis un livre
+J'ai lu un livre
 Mes Derniers Livres
 Ses Derniers Livres
 Mes Derniers Avis
@@ -134,8 +138,11 @@ Vous ne pourrez plus modifier votre photo après cette étape
 Le n° de SIRET est déjà associé à un autre compte
 Email invalide
 Le mot de passe doit contenir entre 6 et 30 caractères
-Le pseudo peut contenir uniquement des lettres, chiffres et underscores
-Le pseudo peut contenir uniquement des lettres, espaces, tirets et apostrophes
+Le pseudo peut contenir uniquement des lettres
+ chiffres et underscores
+Le pseudo peut contenir uniquement des lettres
+ espaces
+ tirets et apostrophes
 Le n° SIREN doit contenir 9 caractères. Le n° SIRET 14 caractères
 Le n° SIREN ou SIRET doit contenir uniquement des chiffres
 Erreur du serveur... Réessayer plus tard
@@ -152,3 +159,14 @@ Confirmer l'ajout du livre à votre bibliothèque sans y laisser un avis ?
 Avis modifié
 Avis supprimé
 Aucune catégories
+Vos abonnés doivent ajouter un avis\npour les retrouver dans votre fil d'actualité
+Livres recommandés
+Science
+Fiction
+Histoire
+Amour
+Education
+Religion
+Policier
+Sports
+Comics

@@ -5,6 +5,7 @@ import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:book_app/app/modules/widgets_global/my_check_internet.dart';
 import 'package:book_app/app/modules/widgets_global/snackbar.dart';
 import 'package:book_app/app/routes/app_pages.dart';
+import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class SplashScreenController extends GetxController {
       if (!value.values.first) {
         // Pas internet
         Future.delayed(Duration(seconds: 2), () {
-          CustomSnackbar.notif("Internet Indisponible", fixed: true);
+          CustomSnackbar.notif(AppTranslation.noInternet.tr, fixed: true);
         });
         isAlreadyCheck = false;
       } else {
@@ -45,8 +46,14 @@ class SplashScreenController extends GetxController {
         if (user is UserModel && user.isBlocked) {
           Get.offAllNamed(Routes.AUTH, arguments: true);
         } else {
-          if (user is UserModel)
+          if (user is UserModel) {
             UserController.to.user = user;
+            print("IIICI USER => ${user.listCategories}");
+            if (user.listCategories == null || user.listCategories.length == 0){
+              Get.offAllNamed(Routes.CHOICE_THEME);
+              return;
+            }
+          }
           else {
             UserController.to.bookseller = user;
             if (UserController.to.bookseller.dateNextAddBookWeek != null) {
