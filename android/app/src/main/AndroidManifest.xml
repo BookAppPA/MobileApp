@@ -5,7 +5,7 @@
 
    <application
         android:usesCleartextTraffic="true"
-        android:label="BookWormNoAuth"
+        android:label="BookWorm"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round">
         <activity
