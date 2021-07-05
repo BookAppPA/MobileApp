@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "276286363904-9i7t9sala17jksq6tsq67dms1tiilkr5.apps.googleusercontent.com",
+          "client_id": "276286363904-dtlgeqab0llh4qvphaicnv1hdgv6e7o9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.esgi.bookapp",
+            "certificate_hash": "f9141bb45ccf851abecf4f5f670ea05eba0f0ee0"
+          }
+        },
+        {
+          "client_id": "276286363904-2jp2apgv4p7efqt36avvs82r8957948r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "276286363904-9i7t9sala17jksq6tsq67dms1tiilkr5.apps.googleusercontent.com",
+              "client_id": "276286363904-2jp2apgv4p7efqt36avvs82r8957948r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "276286363904-8qj566fkqtmph1e0hd158fgpi08es775.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.esgi.bookapp"
+              }
             }
           ]
         }
