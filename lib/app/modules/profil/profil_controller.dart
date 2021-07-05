@@ -58,8 +58,7 @@ class ProfilController extends GetxController {
         isMe = false;
       update();
     }
-    if (user != null)
-      _getData();
+    if (user != null) _getData();
   }
 
   _getUser() async {
@@ -69,12 +68,10 @@ class ProfilController extends GetxController {
       if (user.isBlocked) _errorBlocked();
       loadData = false;
       if (!UserController.to.isBookSeller) {
-        if (reloadMe)
-          UserController.to.user = user;
+        if (reloadMe) UserController.to.user = user;
         isMe = user.id == UserController.to.user.id;
         update();
-      }
-      else
+      } else
         isMe = false;
     } else {
       _errorLoad();
@@ -100,7 +97,10 @@ class ProfilController extends GetxController {
         isMe = (userId ?? user.id) == UserController.to.user.id;
         var isFollow = await userRepository.isFollow(
             UserController.to.user.id, userId ?? user.id);
-        bool isAlreadyContain = UserController.to.user.listFollowing.firstWhere((item) => item.id == userId ?? user.id, orElse: () => null) != null;
+        bool isAlreadyContain = UserController.to.user.listFollowing.firstWhere(
+                (item) => item.id == userId ?? user.id,
+                orElse: () => null) !=
+            null;
         if (!UserController.to.isBookSeller && isFollow && !isAlreadyContain)
           UserController.to.addFollowingUser(Following(
             id: userId ?? user.id,
@@ -133,20 +133,27 @@ class ProfilController extends GetxController {
   }
 
   changePicture() {
-    BasicDialog.showConfirmPictureDialog(onConfirm: () async {
-      final pickedFile = await _picker.getImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        UserController.to.isLoadingPicture(true);
-        String urlPic = await userRepository.changeUserPicture(
-            UserController.to.user.id, pickedFile.path);
-        UserController.to.updatePicture(urlPic);
-        UserController.to.isLoadingPicture(false);
-        user.picture = urlPic;
-        update();
-      } else {
-        print('No image selected.');
-      }
-    });
+    if (GetPlatform.isAndroid)
+      BasicDialog.showConfirmPictureDialog(onConfirm: () async {
+        _getPhoto();
+      });
+    else 
+      _getPhoto();
+  }
+
+  _getPhoto() async {
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      UserController.to.isLoadingPicture(true);
+      String urlPic = await userRepository.changeUserPicture(
+          UserController.to.user.id, pickedFile.path);
+      UserController.to.updatePicture(urlPic);
+      UserController.to.isLoadingPicture(false);
+      user.picture = urlPic;
+      update();
+    } else {
+      print('No image selected.');
+    }
   }
 
   clickEditProfil() {

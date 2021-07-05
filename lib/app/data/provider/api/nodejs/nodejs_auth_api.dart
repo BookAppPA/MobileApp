@@ -128,7 +128,7 @@ class NodeJSAuthAPI {
     try {
       var t = await FirebaseAuth.instance.currentUser();
       var token = (await t.getIdToken()).token;
-      http.Response resp = await http.post(Uri.parse(UrlAPI.logout),
+      await http.post(Uri.parse(UrlAPI.logout),
           headers: {"authorization": "Bearer $token"});
       await FirebaseAuth.instance.signOut();
       return true;

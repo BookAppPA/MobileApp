@@ -1,5 +1,3 @@
-import 'package:book_app/app/utils/constant/constant_image.dart';
-
 class Book {
 
   String id, title, description, publisher, publishedDate, coverImage, language, previewLink, buyLink;

@@ -239,8 +239,8 @@ class AuthPage extends StatelessWidget {
                                       TextSpan(
                                         text: controller.authView ==
                                                 AuthView.LOGIN
-                                            ? AppTranslation.login.tr
-                                            : AppTranslation.signup.tr,
+                                            ? AppTranslation.signup.tr
+                                            : AppTranslation.login.tr,
                                         style: TextStyle(
                                           color: Color(0xff5aaabd),
                                           fontWeight: FontWeight.w700,
