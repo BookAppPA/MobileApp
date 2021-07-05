@@ -11,7 +11,7 @@ class OnBoardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntroductionScreen(
       globalBackgroundColor: ConstantColor.background,
-      onDone: () => Get.offAllNamed(Routes.AUTH),
+      onDone: () => Get.offAllNamed(Routes.SQUELETON),
       showDoneButton: true,
       showNextButton: false,
       curve: Curves.fastLinearToSlowEaseIn,
@@ -125,7 +125,7 @@ class OnBoardingPage extends StatelessWidget {
     return Container(
       child: Center(
         child: Lottie.asset('assets/book-loading.json', width: 600,
-          height: 600,
+          height: 300,
           fit: BoxFit.contain,),
       ),
     );

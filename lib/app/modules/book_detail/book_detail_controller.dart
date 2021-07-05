@@ -9,6 +9,8 @@ import 'package:book_app/app/translations/app_translations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../profil/user_controller.dart';
+
 class BookDetailController extends GetxController {
   static BookDetailController get to => Get.find();
 
@@ -55,7 +57,7 @@ class BookDetailController extends GetxController {
                 .firstWhere((item) => item.id == book.id, orElse: () => null) !=
             null;
       else
-        haveAlreadyBook = UserController.to.user.listBooksRead
+        haveAlreadyBook = !UserController.to.isAuth ? false : UserController.to.user.listBooksRead
                 .firstWhere((item) => item.id == book.id, orElse: () => null) !=
             null;
     } else
@@ -76,7 +78,7 @@ class BookDetailController extends GetxController {
                 orElse: () => null) !=
             null;
       else
-        haveAlreadyBook = UserController.to.user.listBooksRead.firstWhere(
+        haveAlreadyBook = !UserController.to.isAuth ? false : UserController.to.user.listBooksRead.firstWhere(
                 (item) => item.id == (book != null ? book.id : bookId),
                 orElse: () => null) !=
             null;

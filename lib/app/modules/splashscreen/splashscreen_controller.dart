@@ -46,6 +46,7 @@ class SplashScreenController extends GetxController {
         if (user is UserModel && user.isBlocked) {
           Get.offAllNamed(Routes.AUTH, arguments: true);
         } else {
+          UserController.to.isAuth = true;
           if (user is UserModel) {
             UserController.to.user = user;
             print("IIICI USER => ${user.listCategories}");
@@ -73,14 +74,17 @@ class SplashScreenController extends GetxController {
           }
           Get.offAllNamed(Routes.SQUELETON);
         }
-      } else
-        Get.offAllNamed(Routes.AUTH);
+      } else {
+        UserController.to.isAuth = false;
+        Get.offAllNamed(Routes.SQUELETON);
+      }
     } else {
+      UserController.to.isAuth = false;
       if (await SharePreferenceHelper.instance.isFirstTime()) {
         await SharePreferenceHelper.instance.setFirstTime(false);
         Get.offAllNamed(Routes.ONBOARDING);
       } else
-        Get.offAllNamed(Routes.AUTH);
+        Get.offAllNamed(Routes.SQUELETON);
     }
   }
 }

@@ -6,13 +6,12 @@ import 'package:get/get.dart';
 class ChipCategories extends StatelessWidget {
 
   final List listCategories; 
-  final VoidCallback onSelected;
 
   ChipCategories(
-      {@required this.onSelected,
+      {
       @required this.listCategories,
       })
-      : assert(onSelected != null),
+      :
         assert(listCategories != null);
 
 

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../profil/user_controller.dart';
+
 class SqueletonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class SqueletonPage extends StatelessWidget {
         tooltip: "",
       ),
     ];
-    if (UserController.to.isBookSeller) list.removeAt(2);
+    if (UserController.to.isBookSeller || !UserController.to.isAuth) list.removeAt(2);
     return list;
   }
 }

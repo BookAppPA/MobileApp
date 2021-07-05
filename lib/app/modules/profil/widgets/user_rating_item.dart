@@ -18,7 +18,7 @@ class UserRatingItem extends StatelessWidget {
   UserRatingItem(this.rating, this.book) {
     assert(rating != null);
     assert(book != null);
-    isMyRating = UserController.to.isBookSeller
+    isMyRating = UserController.to.isBookSeller || !UserController.to.isAuth
         ? false
         : UserController.to.user.id == rating.userId
             ? true

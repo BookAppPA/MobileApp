@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../profil/user_controller.dart';
+
 class SearchBookSellerItem extends StatelessWidget {
   final BookSeller bookSeller;
   final VoidCallback onFollow, onUnFollow;
@@ -57,7 +59,7 @@ class SearchBookSellerItem extends StatelessWidget {
                           children: <Widget>[
                             Text(bookSeller.nbFollowers.toString()),
                             SizedBox(width: 10),
-                            UserController.to.isBookSeller
+                            UserController.to.isBookSeller || !UserController.to.isAuth
                                 ? Container()
                                 : GetBuilder<UserController>(
                                     builder: (_) {

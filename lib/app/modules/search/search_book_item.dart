@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../profil/user_controller.dart';
+
 class SearchBookItem extends StatelessWidget {
   final Book book;
   final VoidCallback onAdd, onDelete;
@@ -20,6 +22,7 @@ class SearchBookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(book.publishedDate);
     return GestureDetector(
       onTap: () => book.id != null
           ? Get.toNamed(Routes.BOOK_DETAIL, arguments: book)
@@ -75,14 +78,15 @@ class SearchBookItem extends StatelessWidget {
                     SizedBox(height: 10),
                     Text(
                       book.authors != null
-                          ? "${book.authors.first}  •  ${stringToDate(book.publishedDate, 'yyyy').year}"
-                          : "${stringToDate(book.publishedDate, 'yyyy').year}",
+                          ? "${book.authors.first}  •  ${extractYear(book.publishedDate)}"
+                          : "${extractYear(book.publishedDate)}",
                       style: TextStyle(
                         fontFamily: 'SF Pro Text',
                         fontSize: 14,
                         color: ConstantColor.greyDark,
                       ),
                     ),
+                    !UserController.to.isAuth ? Container() :
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[

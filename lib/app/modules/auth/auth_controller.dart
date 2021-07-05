@@ -11,6 +11,8 @@ import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../profil/user_controller.dart';
+
 enum AuthView { LOGIN, SIGNUP, PRO }
 
 class AuthController extends GetxController {
@@ -214,8 +216,10 @@ class AuthController extends GetxController {
     update();
     if (user == null) {
       print("USER LOGIN IS NULL");
+      UserController.to.isAuth = false;
     } else {
       print("USER LOGIN --> ${user.email}");
+      UserController.to.isAuth = true;
       if (user is UserModel) {
         UserController.to.user = user;
         if (user.listCategories == null || user.listCategories.length == 0) {
@@ -241,9 +245,11 @@ class AuthController extends GetxController {
     update();
     if (user == null) {
       print("USER SIGNUP IS NULL");
+      UserController.to.isAuth = false;
     } else {
       print("USER SIGNUP --> ${user.email}");
       UserController.to.user = user;
+      UserController.to.isAuth = true;
       Get.offAllNamed(Routes.CHOICE_THEME);
     }
   }
@@ -270,9 +276,11 @@ class AuthController extends GetxController {
     update();
     if (bookseller == null) {
       print("USER PRO SIGNUP IS NULL");
+      UserController.to.isAuth = false;
     } else {
       print("USER PRO SIGNUP --> ${bookseller.email}");
       UserController.to.bookseller = bookseller;
+      UserController.to.isAuth = true;
       Get.offAllNamed(Routes.SQUELETON);
     }
   }

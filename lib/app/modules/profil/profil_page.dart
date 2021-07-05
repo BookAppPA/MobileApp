@@ -12,7 +12,9 @@ import 'package:book_app/app/utils/constant/constant_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'list_followers/list_followers_controller.dart';
 import 'profil_controller.dart';
+import 'user_controller.dart';
 import 'widgets/profil_app_bar.dart';
 import 'widgets/user_rating_item.dart';
 
@@ -39,6 +41,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                             _buildInfoUser(),
                             _buildLastBooks(),
                             _buildLastRatings(),
+                            SizedBox(height: 20),
                           ],
                         ),
                       ),
@@ -198,7 +201,6 @@ class ProfilPage extends GetWidget<ProfilController> {
                 SizedBox(height: 20),
                 ChipCategories(
                   listCategories: ctrl.user.listCategories,
-                  onSelected: () => print('select'),
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,9 +267,11 @@ class ProfilPage extends GetWidget<ProfilController> {
                     SizedBox(width: 40),
                     GestureDetector(
                       onTap: () {
-                        if (ctrl.user.nbFollowers > 0)
+                        if (ctrl.user.nbFollowers > 0) {
+                          Get.delete<ListFollowersController>();
                           Get.toNamed(Routes.LIST_FOLLOWERS,
                               arguments: ctrl.user.id);
+                        }
                       },
                       child: Column(
                         children: <Widget>[
@@ -335,7 +339,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                               ),
                             ],
                           )
-                        : Expanded(
+                        : !UserController.to.isAuth ? Container() : Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -362,7 +366,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                           ),
                   ],
                 ),
-                UserController.to.isBookSeller || !ctrl.isMe
+                UserController.to.isBookSeller || !ctrl.isMe || !UserController.to.isAuth
                     ? Container()
                     : Padding(
                         padding: EdgeInsets.fromLTRB(10, 20, 10, 0),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:book_app/app/data/model/book.dart';
 import 'package:book_app/app/data/model/lastBookWeek.dart';
 import 'package:book_app/app/data/repository/book_repository.dart';
@@ -57,8 +59,15 @@ class HomeController extends GetxController {
   }
 
   _getRecommendationBooks() async {
+    int mlID = 1;
+    if (UserController.to.isAuth)
+      mlID = UserController.to.user.recommendationID;
+    else {
+      var rnd = Random();
+      mlID = rnd.nextInt(25000);
+    }
     var res = await repository
-        .getRecommendationBooks(UserController.to.user.recommendationID);
+        .getRecommendationBooks(mlID);
     print("recommended books => $res");
     _listRecommendationBooks = res;
     _hasDataRecommendationBooks = res.length > 0;

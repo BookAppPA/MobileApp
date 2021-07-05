@@ -7,14 +7,14 @@ import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-
+import '../profil/user_controller.dart';
 import 'description_text.dart';
 
 class RatingItem extends StatelessWidget {
   final Rating rating;
   RatingItem(this.rating) {
     assert(rating != null);
-    isMyRating = UserController.to.isBookSeller
+    isMyRating = UserController.to.isBookSeller || !UserController.to.isAuth
         ? false
         : UserController.to.user.id == rating.userId
             ? true
@@ -38,7 +38,7 @@ class RatingItem extends StatelessWidget {
             GestureDetector(
               onTap: () => rating.userId != null
                   ? Get.toNamed(Routes.PROFIL,
-                      arguments: UserController.to.isBookSeller
+                      arguments: UserController.to.isBookSeller || !UserController.to.isAuth
                           ? UserModel(id: rating.userId)
                           : rating.userId == UserController.to.user.id
                               ? UserController.to.user

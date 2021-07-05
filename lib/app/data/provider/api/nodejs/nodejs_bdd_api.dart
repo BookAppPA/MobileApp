@@ -13,11 +13,8 @@ import 'package:http/http.dart' as http;
 class NodeJSBddAPI {
   Future<dynamic> getUserById(String uid) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
         Uri.parse(UrlAPI.getUserById + "/$uid"),
-        headers: {"authorization": "Bearer $token"},
       );
       if (resp.statusCode == 200) {
         Map<String, dynamic> map = json.decode(resp.body);
@@ -77,11 +74,8 @@ class NodeJSBddAPI {
 
   Future<Book> getBook(String bookID) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.bookDetail + "/$bookID"),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.bookDetail + "/$bookID"));
       if (resp.statusCode == 200) {
         var book = json.decode(resp.body);
         return Book.fromJson(book);
@@ -97,12 +91,9 @@ class NodeJSBddAPI {
 
   Future<List<Book>> searchBooks(String search) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBook),
           headers: {
-            "authorization": "Bearer $token",
-            "search": Uri.encodeFull(search)
+            "search": search
           });
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
@@ -121,13 +112,9 @@ class NodeJSBddAPI {
 
   Future<List<Book>> searchBooksByCategories(String search) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
-      print('URI ENCODE ${Uri.encodeComponent(search)}');
       http.Response resp = await http
           .get(Uri.parse(UrlAPI.searchBooksByCategories), headers: {
-        "authorization": "Bearer $token",
-        "search": Uri.encodeFull(search)
+        "search": search
       });
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
@@ -146,13 +133,9 @@ class NodeJSBddAPI {
 
   Future<List<Book>> searchBooksByAuthor(String search) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
-      print('URI ENCODE ${Uri.encodeComponent(search)}');
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBooksByAuthor),
           headers: {
-            "authorization": "Bearer $token",
-            "search": Uri.encodeFull(search)
+            "search": search.toString()
           });
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
@@ -171,12 +154,9 @@ class NodeJSBddAPI {
 
   Future<List<UserModel>> searchUsers(String search) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchUsers),
           headers: {
-            "authorization": "Bearer $token",
-            "search": Uri.encodeFull(search)
+            "search": search
           });
       if (resp.statusCode == 200) {
         var listUsers = json.decode(resp.body);
@@ -195,11 +175,8 @@ class NodeJSBddAPI {
 
   Future<Map<String, dynamic>> getRatingsByBook(String bookID) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.ratingByBook + "/$bookID"),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.ratingByBook + "/$bookID"));
       if (resp.statusCode == 200) {
         return json.decode(resp.body);
       } else {
@@ -214,11 +191,8 @@ class NodeJSBddAPI {
 
   Future<List<Book>> getUserListBook(String idUser) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.userListBooks + "/$idUser"),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.userListBooks + "/$idUser"));
       if (resp.statusCode == 200) {
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
@@ -244,11 +218,8 @@ class NodeJSBddAPI {
       list = list.substring(0, list.length - 1);
       print(list);
 
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.userListRatings),
           headers: {
-            "authorization": "Bearer $token",
             "uid": idUser,
             "listbooks": list
           });
@@ -419,11 +390,8 @@ class NodeJSBddAPI {
 
   Future<BookSeller> getBookSellerById(String uid) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-        Uri.parse(UrlAPI.getBookSellerById + "/$uid"),
-        headers: {"authorization": "Bearer $token"},
+        Uri.parse(UrlAPI.getBookSellerById + "/$uid")
       );
       if (resp.statusCode == 200) {
         var map = json.decode(resp.body);
@@ -440,11 +408,8 @@ class NodeJSBddAPI {
 
   Future<List<BookSeller>> getInitListBookSeller() async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.getInitListBookSeller),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.getInitListBookSeller));
       if (resp.statusCode == 200) {
         var listBookseller = json.decode(resp.body);
         List<BookSeller> booksellers = [];
@@ -463,12 +428,9 @@ class NodeJSBddAPI {
 
   Future<List<BookSeller>> searchBookSeller(String search) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(Uri.parse(UrlAPI.searchBookSeller),
           headers: {
-            "authorization": "Bearer $token",
-            "search": Uri.encodeFull(search)
+            "search": search
           });
       if (resp.statusCode == 200) {
         var listBookseller = json.decode(resp.body);
@@ -488,11 +450,8 @@ class NodeJSBddAPI {
 
   Future<List<BookWeek>> getListBooksWeek(String idBookSeller) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.getListBooksWeek + "/$idBookSeller"),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.getListBooksWeek + "/$idBookSeller"));
       if (resp.statusCode == 200) {
         var listBooksWeek = json.decode(resp.body);
         List<BookWeek> booksWeek = [];
@@ -510,10 +469,7 @@ class NodeJSBddAPI {
 
   Future<List<LastBookWeek>> getLastBooksWeek() async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
-      http.Response resp = await http.get(Uri.parse(UrlAPI.getLastBooksWeek),
-          headers: {"authorization": "Bearer $token"});
+      http.Response resp = await http.get(Uri.parse(UrlAPI.getLastBooksWeek));
       if (resp.statusCode == 200) {
         var listBooksWeek = json.decode(resp.body);
         List<LastBookWeek> booksWeek = [];
@@ -562,11 +518,8 @@ class NodeJSBddAPI {
 
   Future<List<UserModel>> getListFollowers(String userId) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.getListFollowers + "/$userId"),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.getListFollowers + "/$userId"));
       if (resp.statusCode == 200) {
         var listFollowers = json.decode(resp.body);
         List<UserModel> followers = [];
@@ -585,11 +538,8 @@ class NodeJSBddAPI {
 
   Future<List<Following>> getListFollowing(String userId) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.getListFollowing + "/$userId"),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.getListFollowing + "/$userId"));
       if (resp.statusCode == 200) {
         var listFollowing = json.decode(resp.body);
         List<Following> following = [];
@@ -677,11 +627,8 @@ class NodeJSBddAPI {
 
   Future<List<Book>> getRecommendationBooks(int mlID) async {
     try {
-      var t = await FirebaseAuth.instance.currentUser();
-      var token = (await t.getIdToken()).token;
       http.Response resp = await http.get(
-          Uri.parse(UrlAPI.getRecommendationBooks + "/$mlID"),
-          headers: {"authorization": "Bearer $token"});
+          Uri.parse(UrlAPI.getRecommendationBooks + "/$mlID"));
       if (resp.statusCode == 200) {
         print(resp.body);
         var listBooks = json.decode(resp.body)["books"];

@@ -43,6 +43,7 @@ class UserController extends GetxController {
   bool get loadingPicture => this._loadingPicture;
 
   bool canAddBookWeek = false;
+  bool isAuth = false;
 
   static FirebaseAnalytics analytics = FirebaseAnalytics();
 

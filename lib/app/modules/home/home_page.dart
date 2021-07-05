@@ -118,15 +118,19 @@ class HomePage extends StatelessWidget {
                         child: Column(
                       children: <Widget>[
                         Container(
-                          height: _.listPopularBooks.length < 4 ? 210 : 370,
+                          height: _.listPopularBooks.length < 4 ? 200 : 360,
+                          width: Get.width,
                           child: GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3, childAspectRatio: 0.7),
+                                    crossAxisCount: 3, childAspectRatio: 0.7, crossAxisSpacing: 10),
                             itemCount: _.listPopularBooks.length,
                             itemBuilder: (ctx, index) {
                               return Container(
                                 child: BookItem(
+                                  width: 100,
+                                  height: 150,
                                   book: _.hasDataPopularBooks
                                       ? _.listPopularBooks[index]
                                       : Book(),

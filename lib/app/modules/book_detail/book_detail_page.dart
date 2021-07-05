@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
+import '../profil/user_controller.dart';
+
 class BookDetailPage extends GetWidget<BookDetailController> {
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,9 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                                       fontSize: 15,
                                     )
                                   : Container(),
+                              !UserController.to.isAuth ? Container() :
                               SizedBox(width: 25),
+                              !UserController.to.isAuth ? Container() :
                               GetBuilder<UserController>(
                                 builder: (controller) {
                                   return ButtonGradient(
@@ -137,7 +141,6 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                           SizedBox(height: 5),
                           ChipCategories(
                             listCategories: _.book.categories,
-                            onSelected: () => print('select'),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

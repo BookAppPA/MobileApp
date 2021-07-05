@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../profil/user_controller.dart';
+
 class SearchUserItem extends StatelessWidget {
   final UserModel user;
   final VoidCallback onFollow, onUnFollow;
@@ -98,7 +100,7 @@ class SearchUserItem extends StatelessWidget {
                               ),
                             )
                           : Container(),
-                      UserController.to.isBookSeller
+                      UserController.to.isBookSeller || !UserController.to.isAuth
                           ? Container()
                           : UserController.to.user.id == user.id
                               ? Container()

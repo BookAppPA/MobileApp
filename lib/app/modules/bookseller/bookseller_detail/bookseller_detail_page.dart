@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../profil/user_controller.dart';
 import 'book_week_item.dart';
 
 class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
@@ -106,7 +107,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
           GetBuilder<BookSellerDetailController>(
             builder: (_) => Row(
               mainAxisAlignment: _.bookSeller.phone != ""
-                  ? UserController.to.isBookSeller && !_.isMe
+                  ? (UserController.to.isBookSeller || !UserController.to.isAuth) && !_.isMe
                       ? MainAxisAlignment.center
                       : MainAxisAlignment.spaceEvenly
                   : MainAxisAlignment.center,
@@ -120,7 +121,7 @@ class BookSellerDetailPage extends GetWidget<BookSellerDetailController> {
                         onTap: () => controller.callBookSeller(),
                       )
                     : Container(),
-                UserController.to.isBookSeller
+                UserController.to.isBookSeller || !UserController.to.isAuth
                     ? Container()
                     : GetBuilder<UserController>(
                         builder: (_) {

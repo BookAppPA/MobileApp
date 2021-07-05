@@ -9,7 +9,13 @@ String parseDateTime(DateTime date, String regex) {
 }
 
 DateTime stringToDate(String date, String regex) {
+  if (date == "") return null;
   return Jiffy(date, regex).dateTime;
+}
+
+String extractYear(String str) {
+  if (str == "") return "";
+  return Jiffy(str, "yyy").dateTime.year.toString();
 }
 
 DateTime timestampToDate(int timestamp) {

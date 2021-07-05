@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'user_controller.dart';
+
 class ProfilController extends GetxController {
   static ProfilController get to => Get.find();
 
@@ -53,7 +55,7 @@ class ProfilController extends GetxController {
     } else {
       loadData = false;
       if (!UserController.to.isBookSeller)
-        isMe = user.id == UserController.to.user.id;
+        isMe = user.id == (UserController.to.isAuth ? UserController.to.user.id : false);
       else
         isMe = false;
       update();
@@ -69,7 +71,7 @@ class ProfilController extends GetxController {
       loadData = false;
       if (!UserController.to.isBookSeller) {
         if (reloadMe) UserController.to.user = user;
-        isMe = user.id == UserController.to.user.id;
+        isMe = user.id == (UserController.to.isAuth ? UserController.to.user.id : false);
         update();
       } else
         isMe = false;
@@ -94,10 +96,10 @@ class ProfilController extends GetxController {
   _getData() async {
     if ((user != null && user.id != null) || userId != null) {
       if (!UserController.to.isBookSeller) {
-        isMe = (userId ?? user.id) == UserController.to.user.id;
-        var isFollow = await userRepository.isFollow(
+        isMe = (userId ?? user.id) == (UserController.to.isAuth ? UserController.to.user.id : false);
+        var isFollow = !UserController.to.isAuth ? false : await userRepository.isFollow(
             UserController.to.user.id, userId ?? user.id);
-        bool isAlreadyContain = UserController.to.user.listFollowing.firstWhere(
+        bool isAlreadyContain = !UserController.to.isAuth ? false : UserController.to.user.listFollowing.firstWhere(
                 (item) => item.id == userId ?? user.id,
                 orElse: () => null) !=
             null;
