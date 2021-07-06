@@ -148,7 +148,7 @@ class AuthController extends GetxController {
       CustomSnackbar.snackbar(AppTranslation.serverError.tr);
       return false;
     }
-    if (_company.codeActivity != "4761Z") {
+    if (_company.codeActivity != "4761Z" || _company.codeActivity != "5811Z") {
       CustomSnackbar.snackbar(AppTranslation.siretError.tr,
           shortDuration: false);
       return false;
