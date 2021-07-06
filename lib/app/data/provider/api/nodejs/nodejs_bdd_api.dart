@@ -102,11 +102,11 @@ class NodeJSBddAPI {
         return books;
       } else {
         print("error get http searchBook --> ${resp.body}");
-        return null;
+        return [];
       }
     } catch (e) {
       print(e.toString());
-      return null;
+      return [];
     }
   }
 
@@ -117,17 +117,18 @@ class NodeJSBddAPI {
         "search": search
       });
       if (resp.statusCode == 200) {
+        print(resp.body);
         var listBooks = json.decode(resp.body);
         List<Book> books = [];
         listBooks.forEach((book) => books.add(Book.fromJson(book)));
         return books;
       } else {
         print("error get http searchBooksByCategories --> ${resp.body}");
-        return null;
+        return [];
       }
     } catch (e) {
       print(e.toString());
-      return null;
+      return [];
     }
   }
 
@@ -144,11 +145,11 @@ class NodeJSBddAPI {
         return books;
       } else {
         print("error get http searchBooksByAuthor --> ${resp.body}");
-        return null;
+        return [];
       }
     } catch (e) {
       print(e.toString());
-      return null;
+      return [];
     }
   }
 
@@ -165,11 +166,11 @@ class NodeJSBddAPI {
         return users;
       } else {
         print("error get http searchUsers --> ${resp.body}");
-        return null;
+        return [];
       }
     } catch (e) {
       print(e.toString());
-      return null;
+      return [];
     }
   }
 
@@ -440,11 +441,11 @@ class NodeJSBddAPI {
         return booksellers;
       } else {
         print("error get http searchBookSeller --> ${resp.body}");
-        return null;
+        return [];
       }
     } catch (e) {
       print(e.toString());
-      return null;
+      return [];
     }
   }
 
