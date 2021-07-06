@@ -11,8 +11,10 @@ import 'package:book_app/app/modules/profil/profil_page.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '../../data/repository/book_repository.dart';
 import '../auth/auth_controller.dart';
 import '../auth/auth_page.dart';
+import '../home/home_controller.dart';
 import '../profil/user_controller.dart';
 
 class SqueletonController extends GetxController {
@@ -23,6 +25,9 @@ class SqueletonController extends GetxController {
   Widget get page {
     switch (_currentIndex) {
       case 0:
+        Get.delete<HomeController>();
+        Get.put(HomeController(
+          repository: BookRepository(), repositorySeller: BookSellerRepository()));
         return HomePage();
       case 1:
         return BookSellerMainPage();

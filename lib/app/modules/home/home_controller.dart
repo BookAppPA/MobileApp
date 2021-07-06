@@ -45,7 +45,7 @@ class HomeController extends GetxController {
 
   _getLastBooksWeek() async {
     var res = await repositorySeller.getLastBooksWeek();
-    print("books popular => $res");
+    print("books last book week => $res");
     _listLastBooksWeek = res;
     update();
   }

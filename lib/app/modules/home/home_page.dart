@@ -1,6 +1,4 @@
 import 'package:book_app/app/data/model/book.dart';
-import 'package:book_app/app/data/repository/book_repository.dart';
-import 'package:book_app/app/data/repository/bookseller_repository.dart';
 import 'package:book_app/app/modules/home/home_controller.dart';
 import 'package:book_app/app/modules/home/widget/lastBookWeekItem.dart';
 import 'package:book_app/app/modules/profil/user_controller.dart';
@@ -14,9 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  final controller = Get.put(HomeController(
-      repository: BookRepository(), repositorySeller: BookSellerRepository()));
-
   @override
   Widget build(BuildContext context) {
     return Container(

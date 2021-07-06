@@ -10,7 +10,7 @@ import 'package:book_app/app/translations/app_translations.dart';
 import 'package:book_app/app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:jiffy/jiffy.dart';
 import '../profil/user_controller.dart';
 
 enum AuthView { LOGIN, SIGNUP, PRO }
@@ -119,8 +119,7 @@ class AuthController extends GetxController {
     var _email = email.trim();
     var _index = _email.indexOf("@");
     var _valid = false;
-    if (_index != -1)
-      _valid = checkIsEmailFormat(_email);
+    if (_index != -1) _valid = checkIsEmailFormat(_email);
     _isEmailValid = _valid;
     return _valid;
   }
@@ -129,11 +128,13 @@ class AuthController extends GetxController {
     var _siretTemp = _siret;
     _isSiretValid = _siretTemp.length == 9 || _siretTemp.length == 14;
     if (!_isSiretValid) {
-      CustomSnackbar.snackbar(AppTranslation.siretNumberMustContainSpecificLength.tr);
+      CustomSnackbar.snackbar(
+          AppTranslation.siretNumberMustContainSpecificLength.tr);
       return false;
     }
     if (!isOnlyNumeric(_siretTemp)) {
-      CustomSnackbar.snackbar(AppTranslation.siretNumberMustContainUniqueDigit.tr);
+      CustomSnackbar.snackbar(
+          AppTranslation.siretNumberMustContainUniqueDigit.tr);
       return false;
     }
     if (_company != null &&
@@ -148,7 +149,8 @@ class AuthController extends GetxController {
       return false;
     }
     if (_company.codeActivity != "4761Z") {
-      CustomSnackbar.snackbar(AppTranslation.siretError.tr, shortDuration: false);
+      CustomSnackbar.snackbar(AppTranslation.siretError.tr,
+          shortDuration: false);
       return false;
     }
     return true;
@@ -170,15 +172,14 @@ class AuthController extends GetxController {
   bool _checkSignupInfo() {
     _isPseudoValid = _pseudo.length >= 3 && _pseudo.length <= 15;
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainNBCaract.trParams({
-        "min": "3",
-        "max": "15"
-      }));
+      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainNBCaract
+          .trParams({"min": "3", "max": "15"}));
       return false;
     }
     _isPseudoValid = _isPseudoValid && stringIsPseudo(_pseudo);
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainUniqueLetterNumberUnderscore.tr);
+      CustomSnackbar.snackbar(
+          AppTranslation.pseudoMustContainUniqueLetterNumberUnderscore.tr);
       return false;
     }
     return _isPseudoValid && _checkLoginInfo();
@@ -187,15 +188,14 @@ class AuthController extends GetxController {
   Future<bool> _checkSignupProInfo() async {
     _isPseudoValid = _pseudo.length >= 3 && _pseudo.length <= 30;
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainNBCaract.trParams({
-        "min": "3",
-        "max": "30"
-      }));
+      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainNBCaract
+          .trParams({"min": "3", "max": "30"}));
       return false;
     }
     _isPseudoValid = _isPseudoValid && stringIsName(_pseudo);
     if (!_isPseudoValid) {
-      CustomSnackbar.snackbar(AppTranslation.pseudoMustContainUniqueAllCaract.tr);
+      CustomSnackbar.snackbar(
+          AppTranslation.pseudoMustContainUniqueAllCaract.tr);
       return false;
     }
     var res = _isPseudoValid && _checkLoginInfo();
@@ -226,9 +226,21 @@ class AuthController extends GetxController {
           Get.offAllNamed(Routes.CHOICE_THEME);
           return;
         }
-      }
-      else
+      } else {
         UserController.to.bookseller = user;
+        if (UserController.to.bookseller.dateNextAddBookWeek != null) {
+          var dateServer = await getDateServer();
+          int diff = diffDateToDateServer(dateServer,
+              UserController.to.bookseller.dateNextAddBookWeek, Units.MINUTE);
+          print("diff date -> $diff");
+          if (diff > 0) {
+            // > 24H
+            UserController.to.isAddBookWeek(true);
+          }
+        } else {
+          UserController.to.isAddBookWeek(true);
+        }
+      }
       Get.offAllNamed(Routes.SQUELETON);
     }
   }
@@ -281,6 +293,7 @@ class AuthController extends GetxController {
       print("USER PRO SIGNUP --> ${bookseller.email}");
       UserController.to.bookseller = bookseller;
       UserController.to.isAuth = true;
+      UserController.to.isAddBookWeek(true);
       Get.offAllNamed(Routes.SQUELETON);
     }
   }
