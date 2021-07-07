@@ -478,9 +478,7 @@ class ProfilPage extends GetWidget<ProfilController> {
     return controller.ratings.length > 0
         ? GetBuilder<ProfilController>(
             builder: (_) => Container(
-              height: _.ratings.length <= 5
-                  ? (_.ratings.length * 250).toDouble()
-                  : 800,
+              height: 550,
               //color: Colors.blue,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -528,7 +526,6 @@ class ProfilPage extends GetWidget<ProfilController> {
                           list = userController.user.listLastRatings;
                         }
                         return ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
                           itemCount: list.length <= 5 ? list.length : 5,
                           padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
                           separatorBuilder: (context, index) =>

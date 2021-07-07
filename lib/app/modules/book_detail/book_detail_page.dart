@@ -197,11 +197,8 @@ class BookDetailPage extends GetWidget<BookDetailController> {
                           ),
                           SizedBox(height: 15),
                           Container(
-                            height: _.book.nbRating <= 5
-                                ? (_.book.nbRating * 225).toDouble()
-                                : 800,
+                            height: 400,
                             child: ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
                               itemCount: _.listRatings.length <= 5
                                   ? _.listRatings.length
                                   : 5,
