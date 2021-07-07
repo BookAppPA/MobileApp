@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../routes/app_pages.dart';
+
 abstract class BasicDialog {
   static showExitAppDialog() {
     Get.defaultDialog(
@@ -62,7 +64,7 @@ abstract class BasicDialog {
               trailing: Icon(Icons.chevron_right_outlined),
               onTap: () {
                 Get.updateLocale(Locale("fr", "FR"));
-                Get.back();
+                Get.offAllNamed(Routes.SQUELETON);
               },
             ),
             ListTile(
@@ -70,7 +72,7 @@ abstract class BasicDialog {
               trailing: Icon(Icons.chevron_right_outlined),
               onTap: () {
                 Get.updateLocale(Locale("en", "US"));
-                Get.back();
+                Get.offAllNamed(Routes.SQUELETON);
               },
             ),
             ListTile(
@@ -78,7 +80,7 @@ abstract class BasicDialog {
               trailing: Icon(Icons.chevron_right_outlined),
               onTap: () {
                 Get.updateLocale(Locale("es", "ES"));
-                Get.back();
+                Get.offAllNamed(Routes.SQUELETON);
               },
             ),
           ],

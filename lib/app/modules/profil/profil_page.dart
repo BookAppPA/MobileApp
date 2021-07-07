@@ -339,7 +339,7 @@ class ProfilPage extends GetWidget<ProfilController> {
                               ),
                             ],
                           )
-                        : !UserController.to.isAuth ? Container() : Expanded(
+                        : !UserController.to.isAuth || UserController.to.isBookSeller ? Container() : Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[

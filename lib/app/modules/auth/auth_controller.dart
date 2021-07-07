@@ -67,6 +67,10 @@ class AuthController extends GetxController {
       WidgetsBinding.instance.addPostFrameCallback(
           (_) => CustomSnackbar.snackbar(AppTranslation.accountBlocked.tr));
     }
+    _pseudoController.text = "";
+    _emailController.text = "";
+    _passwordController.text = "";
+    _siretController.text = "";
     _pseudoController.addListener(() {
       _isPseudoValid = true;
       update();

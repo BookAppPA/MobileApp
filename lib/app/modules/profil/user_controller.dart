@@ -179,7 +179,7 @@ class UserController extends GetxController {
         await UserController.analytics.logViewItem(
           itemId: book.id,
           itemName: book.title,
-          itemLocationId: UserController.to.user.id,
+          itemLocationId: UserController.to.user.recommendationID.toString(),
           itemCategory: book.categories != null ? book.categories.first : '',
           origin: book.authors != null ? book.authors.first : '',
           quantity: noteRating.toInt()
