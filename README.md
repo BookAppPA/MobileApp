@@ -7,8 +7,8 @@
 [![AppStore][ios-shield]][ios-url]
 [![Codemagic build status](https://api.codemagic.io/apps/60d3808dab5163bb06eda2b8/60ddbd3717ecbd054d86bba0/status_badge.svg)](https://codemagic.io/apps/60d3808dab5163bb06eda2b8/60ddbd3717ecbd054d86bba0/latest_build)
 
-<!-- PROJECT LOGO -->
 <br />
+
 <p align="center">
   <a href="https://github.com/BookAppPA">
     <img src="assets/logo.png" alt="Logo" width="100" height="100">
@@ -32,7 +32,6 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -57,47 +56,40 @@
   </ol>
 
 
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![BookWorm Screen Shot][product-screenshot]]
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+BookWorm is a mobile application available on Android and IOS that lives up to its name because it is intended for book lovers. The objective of this application is simple, to help you find your future favorite book. To do this, you will get advice from passionate booksellers and recommendations made by an algorithm that learns from your previous readings / reviews that you have completed on the application. But that's not all, you can follow readers who love the same literary genre (or not for that matter...) and have access to their library and their opinion on each book. You can feed your profile with your readings and the comments you want to send to people following your profile.
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [Flutter](https://flutter.dev/)
 * [Firebase](https://firebase.google.com/)
 * [NodeJS](https://nodejs.org/en/)
 
-
-<!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
+
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
+```sh
+git clone git@github.com:BookAppPA/MobileApp.git
+```
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+```sh
+cd MobileApp
+```
+
+```sh
+flutter pub get 
+```
+
+
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get a Firebase ProjectId at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
@@ -114,15 +106,13 @@ This is an example of how to list things you need to use the software and how to
 
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
@@ -150,6 +140,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 
 <!-- CONTACT -->
+
 ## Contact
 
 Taj Singh - tsingh@myges.fr
@@ -174,9 +165,9 @@ Elisa Gougerot - egougerot@myges.fr
 [esgi-shield]: https://img.shields.io/badge/ESGI-PA-blue
 [esgi-url]: https://www.esgi.fr/
 [linkedin-shield-victor]: https://img.shields.io/badge/LinkedIn-Victor-blue
-[linkedin-url-victor]: https://linkedin.com/in/othneildrew
+[linkedin-url-victor]: https://www.linkedin.com/in/victor-d-a32055163/
 [linkedin-shield-elisa]: https://img.shields.io/badge/LinkedIn-Elisa-blue
-[linkedin-url-elisa]: https://linkedin.com/in/othneildrew
+[linkedin-url-elisa]: https://www.linkedin.com/in/elisa-gougerot/
 [linkedin-shield-taj]: https://img.shields.io/badge/LinkedIn-Taj-blue
 [linkedin-url-taj]: https://www.linkedin.com/in/tajsingh1596
-[product-screenshot]: assets/logo.png
+[product-screenshot]: assets/store.png
