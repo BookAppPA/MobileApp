@@ -58,7 +58,7 @@
 
 ## About The Project
 
-[![BookWorm Screen Shot][product-screenshot]]
+![BookWorm Screen Shot][product-screenshot]
 
 BookWorm is a mobile application available on Android and IOS that lives up to its name because it is intended for book lovers. The objective of this application is simple, to help you find your future favorite book. To do this, you will get advice from passionate booksellers and recommendations made by an algorithm that learns from your previous readings / reviews that you have completed on the application. But that's not all, you can follow readers who love the same literary genre (or not for that matter...) and have access to their library and their opinion on each book. You can feed your profile with your readings and the comments you want to send to people following your profile.
 
